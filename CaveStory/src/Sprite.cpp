@@ -4,9 +4,8 @@
 Sprite::Sprite(Graphics& graphics, const std::string& path)
 	: Sprite(graphics, path, SDL_Rect()) {}
 
-Sprite::Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip)
-	: srcPos_(clip) {
-	texture_ = graphics.loadFromFile(filename, true);
+Sprite::Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip) {
+	reset(graphics, filename, clip);
 }
 
 Sprite::~Sprite() {
@@ -23,8 +22,15 @@ void Sprite::reset() {
 
 void Sprite::reset(Graphics& graphics, const std::string& filename, const SDL_Rect& clip) {
 	reset();
+	texture_ = graphics.loadFromFile(filename, true);
 	srcPos_ = clip;
-	graphics.loadFromFile(filename);
+	if (srcPos_ == SDL_Rect()) {
+		uint32_t format;
+		int access, w, h;
+		SDL_QueryTexture(texture_, &format, &access, &w, &h);
+		srcPos_.w = w;
+		srcPos_.h = h;
+	}
 }
 
 /*

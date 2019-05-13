@@ -1,6 +1,5 @@
-#include "Animation.h"
-
 #include <iostream>
+#include "Animation.h"
 using namespace std;
 
 Animation::Animation(Graphics& graphics, const std::string& filename, 

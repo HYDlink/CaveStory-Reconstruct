@@ -19,7 +19,8 @@ public:
 	void draw(Graphics& graphics);
 private:
 	std::shared_ptr<Tile> tile_;
-	std::vector<std::vector<Uint16>> mapData_;//存储tile相关的位置
+	std::vector<std::vector<std::pair<Uint8, Uint8>>> mapData_;//存储tile相关的位置
+	//普遍情况下应该不会有tileMap的行数或者列数超过Uint8的吧，所以直接使用8位存储
 };
 
 

@@ -21,7 +21,8 @@ void Game::eventloop()
 	startTick = SDL_GetTicks();
 	player_ = make_shared<Player>(graphics, "res/MyChar.bmp");
 	caveMap_ = make_shared<Map>();
-	caveMap_->loadTile(graphics, "res/PrtCave.bmp", 16, 8);
+	caveMap_->loadTile(graphics, "res/PrtCave.bmp", 16, 5);
+	caveMap_->loadMapData("res/PrtCave.txt");
 
 	while (running) {
 		SDL_Event e;
@@ -49,6 +50,7 @@ void Game::draw(Graphics& graphics) {
 	graphics.draw();
 	SDL_Rect position{ 100, 100, 0, 0 };
 	player_->draw(graphics);
+	caveMap_->draw(graphics);
 
 	graphics.present();
 }
