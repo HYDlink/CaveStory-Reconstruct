@@ -1,8 +1,6 @@
 #include "Tile.h"
 
 
-
-
 Tile::Tile(Graphics& graphics, const std::string& path, Uint8 tileRows, Uint8 tileCols)
 	:Sprite(graphics, path), tileCols_(tileCols), tileRows_(tileRows) {
 	tileWidth_ = srcPos_.w / tileRows_;

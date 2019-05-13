@@ -57,9 +57,16 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
 *                   texture.
 *  \param dstrect   A pointer to the destination rectangle, just need position
+                    or NULL for zero position
 */
 void Graphics::render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect)
 {
+	//总感觉有点shit，但没办法了
+	bool hasDstRect = true;
+	if (!dstRect) {
+		hasDstRect = false;
+		dstRect = new SDL_Rect();
+	}
 	if (srcRect) {
 		dstRect->w = srcRect->w;
 		dstRect->h = srcRect->h;
@@ -73,6 +80,10 @@ void Graphics::render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect
 	}
 	if(SDL_RenderCopy(renderer_, texture, srcRect, dstRect) == -1)
 		cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
+	if (!hasDstRect) {
+		delete dstRect;
+		dstRect = NULL;
+	}
 }
 
 void Graphics::blitSurface(SDL_Surface* surface, SDL_Rect* srcRect, SDL_Rect* dstRect) {

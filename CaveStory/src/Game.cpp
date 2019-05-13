@@ -22,7 +22,8 @@ void Game::eventloop()
 	player_ = make_shared<Player>(graphics, "res/MyChar.bmp");
 	caveMap_ = make_shared<Map>();
 	caveMap_->loadTile(graphics, "res/PrtCave.bmp", 16, 5);
-	caveMap_->loadMapData("res/PrtCave.txt");
+	caveMap_->loadFgMapData("res/PrtCave.txt");
+	caveMap_->loadBd(graphics, "res/bkBlue.bmp");
 
 	while (running) {
 		SDL_Event e;
@@ -48,9 +49,10 @@ void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
 	graphics.draw();
+	caveMap_->drawBd(graphics);
 	SDL_Rect position{ 100, 100, 0, 0 };
 	player_->draw(graphics);
-	caveMap_->draw(graphics);
+	caveMap_->drawFg(graphics);
 
 	graphics.present();
 }

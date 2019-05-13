@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Backdrop.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h" />
+    <ClInclude Include="src\Backdrop.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\Map.h" />
