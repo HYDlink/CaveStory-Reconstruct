@@ -11,6 +11,7 @@ public:
 		const std::vector<SDL_Rect>& frames);
 	~Animation();
 
+	Uint16 getFrames() { return totalFrames_; }
 	void start_Animation(size_t bg, size_t ed, Uint16 framesPerFrame, bool loop = false);
 	void update();
 	void draw(Graphics& graphics, SDL_Rect* dstPos);

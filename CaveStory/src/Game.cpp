@@ -19,7 +19,7 @@ void Game::eventloop()
 {
 	Graphics graphics;
 	startTick = SDL_GetTicks();
-	player_ = make_shared<Player>(graphics, "res/MyChar.bmp");
+	player_ = make_shared<Player>(graphics, "res/MyChar.bmp", 240, 240);
 	caveMap_ = make_shared<Map>();
 	caveMap_->loadTile(graphics, "res/PrtCave.bmp", 16, 5);
 	caveMap_->loadFgMapData("res/PrtCave.txt");
@@ -32,6 +32,7 @@ void Game::eventloop()
 			case SDL_QUIT: running = false;
 				break;
 			}
+			player_->handleEvent(e);
 		}
 
 		draw(graphics);
