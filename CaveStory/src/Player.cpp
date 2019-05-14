@@ -41,7 +41,7 @@ void Player::handleEvent(SDL_Event& e) {
 		movingLeft();
 	else if (state[SDL_SCANCODE_D])
 		movingRight();
-	else if(onGround_)//TODO 在空中保持x速度，现在这样在空中回到地面速度还会保持不变
+	else//TODO 在空中保持x速度，现在这样在空中回到地面速度还会保持不变
 		stopMoving();
 	
 	if (state[SDL_SCANCODE_K])
@@ -61,10 +61,8 @@ void Player::updateX() {
 		velocityX_ = std::max(velocityX_, -maxVelocityX);
 	else if (accelerationX_ > 0)
 		velocityX_ = std::min(velocityX_, maxVelocityX);
-	else if (velocityX_ >= 0.5f && onGround_)
+	else if (onGround_)
 		velocityX_ *= slowdown;
-	else
-		velocityX_ = 0;
 	//cout << accelerationX_ << " " << velocityX_ << " " << xPos_ << endl;
 }
 
