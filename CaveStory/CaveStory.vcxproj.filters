@@ -74,5 +74,14 @@
     <ClInclude Include="src\Animator.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Rectangle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\units.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector2d.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

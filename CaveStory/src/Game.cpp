@@ -19,11 +19,11 @@ void Game::eventloop()
 {
 	Graphics graphics;
 	startTick = SDL_GetTicks();
-	player_ = make_shared<Player>(graphics, "res/MyChar.bmp", 240, 240);
 	caveMap_ = make_shared<Map>();
 	caveMap_->loadTile(graphics, "res/PrtCave.bmp", 16, 5);
 	caveMap_->loadFgMapData("res/PrtCave.txt");
 	caveMap_->loadBd(graphics, "res/bkBlue.bmp");
+	player_ = make_shared<Player>(graphics, caveMap_, "res/MyChar.bmp", 240, 240);
 
 	while (running) {
 		SDL_Event e;
@@ -43,7 +43,8 @@ void Game::eventloop()
 void Game::update()
 {
 	//calculateFps(1000);
-	player_->update();
+	player_->update(SDL_GetTicks() - startTick);
+	startTick = SDL_GetTicks();
 }
 
 void Game::draw(Graphics& graphics) {

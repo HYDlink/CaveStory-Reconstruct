@@ -38,8 +38,11 @@
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Rectangle.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\Tile.h" />
+    <ClInclude Include="src\units.h" />
+    <ClInclude Include="src\Vector2d.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

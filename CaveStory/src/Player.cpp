@@ -2,10 +2,31 @@
 
 using namespace std;
 
+struct CollisionInfo {
+	units::Game row, col;
+	bool collided;
+};
 
-Player::Player(Graphics& graphics, const string& filename, Uint16 xPos, Uint16 yPos)
-	: clipRects_(CharTypeSprites / 2, vector<SDL_Rect>(MotionSprites * 2)),
+CollisionInfo getCollisionInfo(const Map& map, const Rectangle& rectangle) {
+	//不是很懂,这里假想情况是碰撞rectangle不太可能跨越两个地图块以上
+	vector<CollisionTile> collisions = map.getCollidingTiles(rectangle);
+	CollisionInfo info{ 0, 0, false };
+	for (const CollisionTile& collision : collisions) {
+		if (collision.type == Map::WALL) {
+			info.collided = true;
+			info.row = collision.row;
+			info.col = collision.col;
+			break;
+		}
+	}
+	return info;
+}
+
+
+Player::Player(Graphics& graphics, std::shared_ptr<Map> map, const string& filename, Uint16 xPos, Uint16 yPos)
+	: clipRects_(CharTypeSprites / 2, vector<SDL_Rect>(MotionSprites * 2)), map_(map), 
 	xPos_(xPos), yPos_(yPos), velocityX_(0), velocityY_(0), accelerationX_(0),
+	lastXPos_(xPos), lastYPos_(yPos), 
     onGround_(false), jumping_(false){
 	setClipRect();
 	animation_ = make_shared<Animation>(graphics, filename, clipRects_[0]);
@@ -27,10 +48,23 @@ void Player::setClipRect() {
 }
 
 void Player::setAimator() {
-	animator_->setStates(getState(WALKING, FACING_LEFT), 0, 2);
-	animator_->setStates(getState(STANDING, FACING_LEFT), 0, 0);
-	animator_->setStates(getState(WALKING, FACING_RIGHT), MotionSprites, MotionSprites + 2);
-	animator_->setStates(getState(STANDING, FACING_RIGHT), MotionSprites, MotionSprites);
+	animator_->setStates(getState(CharState{ WALKING, FACING_LEFT, FORWARD }), 0, 2);
+	animator_->setStates(getState(CharState{ STANDING, FACING_LEFT, FORWARD }), 0, 0);
+	animator_->setStates(getState(CharState{ JUMPING, FACING_LEFT, FORWARD }), 2, 2);
+	animator_->setStates(getState(CharState{ FALLING, FACING_LEFT, FORWARD }), 1, 1);
+	animator_->setStates(getState(CharState{ JUMPING, FACING_LEFT, LOOKUP }), 4, 4);
+	animator_->setStates(getState(CharState{ FALLING, FACING_LEFT, LOOKUP }), 4, 4);
+	//TODO 角色在接触地面的那一刻,由一个缓冲动画,中间还有一个动画帧,也就是位置5
+	animator_->setStates(getState(CharState{ JUMPING, FACING_LEFT, LOOKDOWN }), 6, 6);
+	animator_->setStates(getState(CharState{ INTERACTING, FACING_LEFT, FORWARD }), 7, 7);
+	animator_->setStates(getState(CharState{ WALKING, FACING_RIGHT, FORWARD }), MotionSprites, MotionSprites + 2);
+	animator_->setStates(getState(CharState{ STANDING, FACING_RIGHT, FORWARD }), MotionSprites, MotionSprites);
+	animator_->setStates(getState(CharState{ JUMPING, FACING_RIGHT, FORWARD }), MotionSprites + 2, MotionSprites + 2);
+	animator_->setStates(getState(CharState{ FALLING, FACING_RIGHT, FORWARD }), MotionSprites + 1, MotionSprites + 1);
+	animator_->setStates(getState(CharState{ JUMPING, FACING_RIGHT, LOOKUP }), MotionSprites + 4, MotionSprites + 4);
+	animator_->setStates(getState(CharState{ FALLING, FACING_RIGHT, LOOKUP }), MotionSprites + 4, MotionSprites + 4);
+	animator_->setStates(getState(CharState{ JUMPING, FACING_RIGHT, LOOKDOWN }), MotionSprites + 6, MotionSprites + 6);
+	animator_->setStates(getState(CharState{ INTERACTING, FACING_RIGHT, FORWARD }), MotionSprites + 7, MotionSprites + 7);
 	//animation_->start_Animation(0, 2, 4, true);
 }
 
@@ -48,36 +82,109 @@ void Player::handleEvent(SDL_Event& e) {
 		startJump();
 	else
 		stopJump();
+
+	if (state[SDL_SCANCODE_W])
+		lookUp();
+	else if (state[SDL_SCANCODE_S])
+		interact();
+	else
+		lookForward();
 }
-void Player::update() {
-	updateX();
-	updateY();
+
+void Player::update(Uint16 deltaTime) {
+	updateX(deltaTime);
+	updateY(deltaTime);
+	updateState();
+	animator_->triggerState(getState(state_));
 }
-void Player::updateX() {
+void Player::updateX(Uint16 deltaTime) {
 	animation_->update();
-	xPos_ += round(velocityX_);
-	velocityX_ += accelerationX_;
+	units::Game deltaX = round(velocityX_ * deltaTime);
+	velocityX_ += accelerationX_ * deltaTime;
 	if (accelerationX_ < 0)
 		velocityX_ = std::max(velocityX_, -maxVelocityX);
 	else if (accelerationX_ > 0)
 		velocityX_ = std::min(velocityX_, maxVelocityX);
 	else if (onGround_)
 		velocityX_ *= slowdown;
-	//cout << accelerationX_ << " " << velocityX_ << " " << xPos_ << endl;
+	if (deltaX > 0) {
+		CollisionInfo info = getCollisionInfo(*map_, rightCollision(deltaX));
+		if (info.collided) {
+			xPos_ = info.row * units::TileSize - CollisionX.right();
+			velocityX_ = 0;
+		}
+		else {
+			xPos_ += deltaX;
+		}
+	}
+	else {
+		CollisionInfo info = getCollisionInfo(*map_, leftCollision(-deltaX));//可能需要修正
+		if (info.collided) {
+			xPos_ = (info.row + 1) * units::TileSize - CollisionX.left();
+			velocityX_ = 0;
+		}
+		else {
+			xPos_ += deltaX;
+		}
+	}
+	if (lastXPos_ != xPos_ || lastYPos_ != yPos_) {
+		lastXPos_ = xPos_, lastYPos_ = yPos_;
+		cout << xPos_ << " " << yPos_ << endl;
+	}
 }
 
-void Player::updateY() {
-	const int lowest = 288;
+void Player::updateY(Uint16 deltaTime) {
+
+	const int lowest = 288;//临时
 	if (!jumping_ && velocityY_ < 0)//跳跃中途放开跳跃键，加大向下的加速度，来控制跳跃高度
-		velocityY_ += stopJumpAccelerate;
+		velocityY_ += stopJumpAccelerate * deltaTime;
 	else
-		velocityY_ += gravity;
+		velocityY_ += gravity * deltaTime;
+	if (velocityY_ > 0)
+		jumping_ = false;
+
 	velocityY_ = std::max(velocityY_, -maxVelocityY);
-	yPos_ += velocityY_;
-	if (yPos_ > lowest) {//lowest是暂时的最低点，以后要用碰撞体检测替代
-		onGround_ = true;
-		yPos_ = lowest;
-		velocityY_ = 0;
+	units::Game deltaY = velocityY_ * deltaTime;
+
+	if (deltaY > 0) {
+		CollisionInfo info = getCollisionInfo(*map_, bottomCollision(deltaY));
+		if (info.collided) {
+			yPos_ = info.col* units::TileSize - CollisionY.bottom();
+			onGround_ = true;
+			velocityY_ = 0;
+		}
+		else {
+			yPos_ += deltaY;
+			onGround_ = false;
+		}
+	}
+	else {
+		CollisionInfo info = getCollisionInfo(*map_, topCollision(-deltaY));//可能需要修正
+		if (info.collided) {
+			yPos_ = (info.col + 1) * units::TileSize - CollisionY.top();
+			velocityY_ = 0;
+			jumping_ = false;
+		}
+		else {
+			yPos_ += deltaY;
+		}
+	}
+}
+
+void Player::updateState() {
+	if (velocityX_ > error)
+		state_.horizontalFacing = FACING_RIGHT;
+	else if(velocityX_ < -error)
+		state_.horizontalFacing = FACING_LEFT;
+	if (onGround_ && stopedmoving_)
+		state_.motionType = STANDING;
+	if (!onGround_) {
+		if (velocityY_ < error) {
+			state_.motionType = JUMPING;
+		}
+		else {
+			state_.motionType = FALLING;
+		}
 	}
 }
 
@@ -88,19 +195,25 @@ void Player::draw(Graphics& graphics) {
 
 void Player::movingLeft() {
 	accelerationX_ = -accelerate;
-	currentFacing_ = FACING_LEFT;
-	animator_->triggerState(getState(WALKING, FACING_LEFT));
+	stopedmoving_ = false;
+	state_.horizontalFacing = FACING_LEFT;
+	if (onGround_)
+		state_.motionType = WALKING;
 }
 
 void Player::movingRight() {
 	accelerationX_ = accelerate;
-	currentFacing_ = FACING_RIGHT;
-	animator_->triggerState(getState(WALKING, FACING_RIGHT));
+	stopedmoving_ = false;
+	state_.horizontalFacing = FACING_RIGHT;
+	if (onGround_)
+		state_.motionType = WALKING;
 }
 
 void Player::stopMoving() {
 	accelerationX_ = 0;
-	animator_->triggerState(getState(STANDING, currentFacing_));
+	stopedmoving_ = true;
+	if (onGround_)
+		state_.motionType = STANDING;
 }
 
 void Player::startJump() {
@@ -115,5 +228,55 @@ void Player::stopJump() {
 	jumping_ = false;
 }
 
+void Player::lookForward() {
+	state_.verticalFacing = FORWARD;
+}
+
 void Player::lookUp() {
+	state_.verticalFacing = LOOKDOWN;
+}
+
+void Player::interact() {
+	if (onGround_)
+		state_.motionType = INTERACTING;
+	else
+		state_.verticalFacing = LOOKDOWN;
+}
+
+Rectangle Player::leftCollision(units::Game delta) {
+	return Rectangle(
+		xPos_ + CollisionX.left() - delta,
+		yPos_ + CollisionX.top(),
+		CollisionX.width() / 2 - delta,
+		CollisionX.height()
+	);
+}
+
+Rectangle Player::rightCollision(units::Game delta) {
+	return Rectangle(
+		xPos_ + CollisionX.width() / 2 + CollisionX.left() + delta,
+		yPos_ + CollisionX.top(),
+		CollisionX.width() / 2 + delta,
+		CollisionX.height()
+	);
+}
+
+Rectangle Player::topCollision(units::Game delta) {
+	//delta就是向上方向的绝对值?
+	assert(delta >= 0);
+	return Rectangle(
+		xPos_ + CollisionY.left(),
+		yPos_ + CollisionY.top() - delta,
+		CollisionY.width(),
+		CollisionY.height() / 2 + delta
+	);
+}
+
+Rectangle Player::bottomCollision(units::Game delta) {
+	return Rectangle(
+		xPos_ + CollisionY.left(),
+		yPos_ + CollisionY.height()/2 + CollisionY.top() + delta,
+		CollisionY.width(),
+		CollisionY.height() / 2 + delta
+	);
 }
