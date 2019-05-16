@@ -16,11 +16,11 @@ void Map::loadTile(Graphics& graphics, const std::string& filename, units::Tile 
 void Map::loadTileData(const std::string& filename, TileData& dataToStore) {
 	dataToStore.clear();
 	ifstream mapFile(filename);
-	size_t width = tile_->getWidth(), height = tile_->getHeight();
+	units::Tile width = tile_->getWidth(), height = tile_->getHeight();
 	TileType tmpData;
-	for (size_t i = 0; i < height; ++i) {
+	for (units::Tile i = 0; i < height; ++i) {
 		vector<TileType> tmpRow;
-		for (size_t j = 0; j < width; ++j) {
+		for (units::Tile j = 0; j < width; ++j) {
 			mapFile >> tmpData;
 			tmpRow.push_back(tmpData);
 		}
@@ -59,13 +59,13 @@ void Map::loadBd(Graphics& graphics, const std::string& filename) {
 	fixedBd.reset(new FixedBackdrop(graphics, filename));
 }
 
-//
+//TODO 检测Tile类型而不是单纯返回mapData是否在特定位置什么的
 std::vector<CollisionTile> Map::getCollidingTiles(const Rectangle& r) const {
 	std::vector<CollisionTile> result;
-	units::Tile left = r.left() / units::TileSize;
-	units::Tile right = r.right() / units::TileSize;
-	units::Tile bottom = r.bottom() / units::TileSize;
-	units::Tile top = r.top() / units::TileSize;
+	units::Tile left = units::gameToTile(r.left());
+	units::Tile right = units::gameToTile(r.right());
+	units::Tile bottom = units::gameToTile(r.bottom());
+	units::Tile top = units::gameToTile(r.top());
 	for (units::Tile i = top; i <= bottom && i < mapHeight_; ++i) {
 		for (units::Tile j = left; j <= right && j < mapWidth_; ++j) {
 			result.push_back(CollisionTile{ j, i, mapData_[i][j].first/*TODO*/ ? WALL : EMPTY });
@@ -80,10 +80,10 @@ void Map::drawBd(Graphics& graphics) {
 }
 
 void Map::drawFg(Graphics& graphics) {
-	size_t cols = mapData_.size(), rows = mapData_[0].size();
+	units::Tile cols = mapData_.size(), rows = mapData_[0].size();
 	units::Tile width = tile_->getWidth(), height = tile_->getHeight();
-	for (size_t i = 0; i < cols; ++i) {
-		for (size_t j = 0; j < rows; ++j) {
+	for (units::Tile i = 0; i < cols; ++i) {
+		for (units::Tile j = 0; j < rows; ++j) {
 			SDL_Rect dstPos{ j * width, i * height, 0, 0 };
 			tile_->draw(graphics, mapData_[i][j].first, mapData_[i][j].second, &dstPos);
 		}

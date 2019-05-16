@@ -32,42 +32,43 @@ public:
 		LOOKDOWN
 	};
 	struct CharState {
-		MotionType motionType;
-		HorizontalFacing horizontalFacing;
-		VerticalFacing verticalFacing;
+		MotionType motionType = STANDING;
+		HorizontalFacing horizontalFacing = FACING_LEFT;
+		VerticalFacing verticalFacing = FORWARD;
 	};
 	//TODO 完善动画状态
 	static size_t getState(CharState state) { 
 		return state.motionType | (state.horizontalFacing << 3) | (state.verticalFacing << 4);
 	}
-	const Uint16 MotionSprites = 11;
-	const Uint16 CharTypeSprites = 12;
-	const float maxVelocityX = 0.15859375f;
-	const float maxVelocityY = 0.25f;//需要修正
-	const float fiction = 0.00049804687f;
-	const float jumpSpeed = maxVelocityY;//为了跳跃对称？？
-	const float error = 0.001f;
+	const units::FPS MotionSprites = 11;
+	const units::Frame CharTypeSprites = 12;
+	const units::Velocity maxVelocityX = 0.15859375f;
+	const units::Velocity maxVelocityY = 0.25f;//需要修正
+	const units::Accelration fiction = 0.00049804687f;
+	const units::Velocity jumpSpeed = maxVelocityY;//为了跳跃对称？？
+	const units::Velocity error = 0.001f;//判断速度是否接近0的允许误差
 
-	const float gravity = 0.0003125f;
-	const float stopJumpAccelerate = 3 * gravity;//轻按跳跃后使用这个减慢速度
-	const float accelerate = 0.00083007812f;
-	const float slowdown = 0.8f;
+	const units::Accelration gravity = 0.0003125f;
+	const units::Accelration stopJumpAccelerate = 3 * gravity;//轻按跳跃后使用这个减慢速度
+	const units::Accelration accelerate = 0.00083007812f;
+	const units::Velocity slowdown = 0.8f;
 
 	const Rectangle CollisionX{ 6, 10, 20, 12 };
 	const Rectangle CollisionY{ 10, 2, 12, 30 };
 
 
-	Player(Graphics& graphics, std::shared_ptr<Map> map, const std::string& filename, Uint16 xPos, Uint16 yPos);
+	Player(Graphics& graphics, std::shared_ptr<Map> map, const std::string& filename, units::Game xPos, units::Game yPos);
 	~Player();
 
 	void setClipRect();
 	void setAimator();
 
 	void handleEvent(SDL_Event& e);
-	void update(Uint16 deltaTime);
-	void updateX(Uint16 deltaTime);
-	void updateY(Uint16 deltaTime);
+	void update(units::MS deltaTime);
+	void updateX(units::MS deltaTime);
+	void updateY(units::MS deltaTime);
 	void updateState();
+	void updateDebug();
 	void draw(Graphics& graphics);
 
 	void movingLeft();
@@ -79,7 +80,8 @@ public:
 
 	void lookForward();
 	void lookUp();
-	void interact();
+	void interactOrLookDown();
+
 	
 	Rectangle leftCollision(units::Game delta);
 	Rectangle rightCollision(units::Game delta);
@@ -93,13 +95,13 @@ private:
 	std::vector<std::vector<SDL_Rect>> clipRects_;
 	units::Game xPos_, yPos_;
 	units::Game lastXPos_, lastYPos_;
-	CharState state_;
+	CharState state_, lastState_;
 	
 	bool onGround_;
 	bool jumping_;
 	bool stopedmoving_ = false;
-	float velocityX_, velocityY_;
-	float accelerationX_/*, accelerationY_*/;//y的加速度只有重力就行？
+	units::Velocity velocityX_, velocityY_;
+	units::Accelration accelerationX_/*, accelerationY_*/;//y的加速度只有重力就行？
 };
 
 #endif // !PLAYER_H_

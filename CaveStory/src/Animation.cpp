@@ -4,7 +4,8 @@ using namespace std;
 
 Animation::Animation(Graphics& graphics, const std::string& filename, 
 	const std::vector<SDL_Rect>& frames):Sprite(graphics, filename), frames_(frames),
-    currentFrame_(0), startFrame_(0), endFrame_(0), totalFrames_(frames.size()), currentTime_(0){
+    currentFrame_(0), startFrame_(0), endFrame_(0),
+	totalFrames_(frames.size()), currentTime_(0){
 	
 }
 
@@ -12,7 +13,8 @@ Animation::~Animation() {
 }
 
 
-void Animation::start_Animation(size_t bg, size_t ed, Uint16 framesPerFrame, bool loop) {
+void Animation::start_Animation(units::Frame bg, units::Frame ed,
+	                            units::MS framesPerFrame, bool loop) {
 	elapsTime_ = framesPerFrame;
 	loop_ = loop;
 	if (bg == startFrame_ && ed == endFrame_)
@@ -31,7 +33,10 @@ void Animation::update() {
 	currentTime_++;
 	currentFrame_ = startFrame_ + currentTime_ / elapsTime_;
 	if (currentFrame_ > endFrame_){
-		currentFrame_ = startFrame_;//循环
+		if (loop_)
+			currentFrame_ = startFrame_;//循环
+		else
+			currentFrame_ = /*defaultFrame_*/startFrame_;
 		currentTime_ = 0;
 		//这里有点检测问题，如果currentFrame_过了endFrame_的话, 那么在最后的动画还进行了一个时间帧...
 	}

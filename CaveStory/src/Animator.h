@@ -16,13 +16,13 @@ public:
 
 	void setAnimation(std::shared_ptr<Animation> animation);
 	//可能要设置elapsedTime
-	void setStates(std::size_t name, Uint16 start, Uint16 end);
+	void setStates(std::size_t name, units::Frame start, units::Frame end);
 	void triggerState(std::size_t name);
 	
 private:
 	std::shared_ptr<Animation> animation_;
-	//使用std::size_t是因为想到了hash值这个
-	std::map<std::size_t, std::pair<Uint16, Uint16>> states_;
+	//使用std::size_t是因为想到了hash值这个玩意
+	std::map<std::size_t, std::pair<units::Frame, units::Frame>> states_;
 };
 
 

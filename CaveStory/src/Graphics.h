@@ -6,9 +6,10 @@
 #include <SDL.h>
 #include <iostream>
 #include <map>
+#include "units.h"
 
-const int screenWidth = 640;
-const int screenHeight = 480;
+const units::Pixel screenWidth = 640;
+const units::Pixel screenHeight = 480;
 
 class Graphics
 {

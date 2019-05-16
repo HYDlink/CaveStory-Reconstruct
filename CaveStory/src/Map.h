@@ -39,7 +39,7 @@ public:
 		TALL_SLOPE = 0b10000,
 		SHORT_SLOPE = 0
 	};
-	//Uint8 getTileType(TileFlag);
+	//TileType getTileType(TileFlag);
 	using MapData = std::vector<std::vector<std::pair<units::Tile, units::Tile>>>;
 	//first代表行，second代表列
 	using TileData = std::vector<std::vector<TileType>>;
@@ -62,7 +62,7 @@ private:
 	std::shared_ptr<FixedBackdrop> fixedBd;
 	MapData mapData_, bgMapData_;//存储tile相关的位置
 	units::Tile mapWidth_ = 0, mapHeight_ = 0;
-	//普遍情况下应该不会有tileMap的行数或者列数超过units::Tile的吧，所以直接使用8位存储
+	//普遍情况下应该不会有tileMap的行数或者列数超过uint8的吧，所以直接使用8位存储
 };
 
 

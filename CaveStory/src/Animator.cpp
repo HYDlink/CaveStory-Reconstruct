@@ -13,7 +13,7 @@ void Animator::setAnimation(std::shared_ptr<Animation> animation) {
 	animation_ = animation;
 }
 
-void Animator::setStates(std::size_t name, Uint16 start, Uint16 end) {
+void Animator::setStates(std::size_t name, units::Frame start, units::Frame end) {
 	if (end <= start)
 		std::swap(end, start);
 	if (end > animation_->getFrames()) {

@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Map.h"
+#include "units.h"
 
 #include <iostream>
 #include <memory>
@@ -19,12 +20,12 @@ public:
 	void eventloop();//整体的循环
 	void update();//用于更新数据
 	void draw(Graphics& graphics);//用于绘制
-	void calculateFps(Uint32 elapsTime);
+	void calculateFps(units::MS elapsTime);
 private:
 	bool running = true;
-	float avgFps = 0.0;
-	Uint32 startTick = 0;
-	Uint32 frameCount = 0;
+	units::FPS avgFps = 0.0;
+	units::MS startTick = 0;
+	units::FPS frameCount = 0;
 
 	std::shared_ptr<Player> player_;
 	std::shared_ptr<Map> caveMap_;

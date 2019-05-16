@@ -1,9 +1,11 @@
 #pragma once
 #include "Sprite.h"
+#include "units.h"
 #include <vector>
 
 //TODO
 //建立Animator类控制Animation，并使用状态机
+//洞窟物语所有精灵图默认单位长宽是32，也就是说用一堆SDL_Rect构造可以去改掉, 省去很多麻烦, 到时候看看吧
 class Animation :
 	public Sprite {
 public:
@@ -11,20 +13,20 @@ public:
 		const std::vector<SDL_Rect>& frames);
 	~Animation();
 
-	Uint16 getFrames() { return totalFrames_; }
-	void start_Animation(size_t bg, size_t ed, Uint16 framesPerFrame, bool loop = false);
+	units::Frame getFrames() { return totalFrames_; }
+	void start_Animation(units::Frame bg, units::Frame ed, units::MS framesPerFrame, bool loop = false);
 	void update();
 	void draw(Graphics& graphics, SDL_Rect* dstPos);
 private:
 	std::vector<SDL_Rect> frames_;
 	bool loop_ = false;
 
-	Uint16 totalFrames_;
-	Uint16 currentFrame_;
-	Uint16 startFrame_;
-	Uint16 endFrame_;
+	units::Frame totalFrames_;
+	units::Frame currentFrame_;
+	units::Frame startFrame_;
+	units::Frame endFrame_;
 
-	Uint16 currentTime_;
-	Uint16 elapsTime_ = 4;//每一动画帧中间间隔多少时间帧
+	units::Frame currentTime_;
+	units::MS elapsTime_ = 4;//每一动画帧中间间隔多少时间帧
 };
 
