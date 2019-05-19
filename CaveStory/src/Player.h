@@ -1,15 +1,17 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "Animation.h"
-#include "Animator.h"
-#include "Rectangle.h"
-#include "Map.h"
 #include <vector>
 #include <memory>
 #include <algorithm>
 #include <cassert>
 #include <tuple>
+
+#include "Animation.h"
+#include "Animator.h"
+#include "Rectangle.h"
+#include "State.h"
+#include "Map.h"
 
 class PlayerPhysics;
 class PlayerCollision;
@@ -65,6 +67,10 @@ public:
 
 	bool onGround() const;
 	bool jumping() const;
+
+	//因为所有的State派生类都要写motionState_, 而这样会造成大量的友元声明(因为友元关系不会继承)
+	//public是暂时的解决方法
+	State* motionState_;
 private:
 	std::shared_ptr<Animation> animation_;
 	std::shared_ptr<Animator> animator_;

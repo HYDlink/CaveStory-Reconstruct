@@ -1,9 +1,13 @@
-#pragma once
+#ifndef STATE_H_
+#define STATE_H_
+
 #include "Player.h"
 
 //TODO 
 //想把动画控制放在状态转换控制之间
 //添加人物朝向状态
+
+//循环的大量错误,可能需要换一种方式写? 今天放弃了
 class State {
 public:
 	static StandState standing;
@@ -14,56 +18,72 @@ public:
 
 	virtual ~State() {};
 	virtual void handleInput(Player& player, Uint8* inputs) = 0;
-	const State* currentState() const { return state_; }
 	virtual void update(Player& player) = 0;
-protected:
-	State* state_;
+	Player::MotionType type;
 };
 
-class StandState : public State {
+struct StandState : public State {
 	void handleInput(Player& player, Uint8* inputs) {
-		if (inputs[SDL_SCANCODE_A] || inputs[SDL_SCANCODE_D])
-			state_ = &State::walking;
+			player.motionState_ = &State::walking;
 		if (inputs[SDL_SCANCODE_K])
-			state_ = &State::jumping;
+			player.motionState_ = &State::jumping;
 	}
 	void update(Player& player){
+		type = Player::STANDING;
+		if (!player.onGround()) {
+			//严谨一点的话，应当把判断更改为player.physics_->velocityY_ > 0
+			if (player.jumping())
+				player.motionState_ = &State::jumping;
+			else
+				player.motionState_ = &State::falling;
+		}
 	}
 };
 
-class WalkingState : public State {
+struct WalkingState : public State {
 	void handleInput(Player& player, Uint8* inputs) {
 		if (!inputs[SDL_SCANCODE_A] && !inputs[SDL_SCANCODE_D])
-			state_ = &State::standing;
+			player.motionState_ = &State::standing;
 		if (inputs[SDL_SCANCODE_K])
-			state_ = &State::jumping;
+			player.motionState_ = &State::jumping;
 	}
 	void update(Player& player) {
+		type = Player::WALKING;
+		standing.update(player);
 	}
 };
 
-class JumpState : public State {
+struct JumpState : public State {
 	void handleInput(Player& player, Uint8* inputs) {
 	}
 	void update(Player& player) {
+		type = Player::JUMPING;
 		if (player.onGround())
-			state_ = &State::standing;
+			player.motionState_ = &State::standing;
+		if (!player.jumping())
+			player.motionState_ = &State::falling;
 	}
 };
 
-class FallState : public State {
+struct FallState : public State {
 	void handleInput(Player& player, Uint8* inputs) {
 	}
 	void update(Player& player) {
-		if (player.onGround())
-			state_ = &State::standing;
+		type = Player::FALLING;
+		if (player.onGround())//TODO 添加触发animator落地动画
+			player.motionState_ = &State::standing;
 	}
 };
 
-class InteractState : public State {
+//交互状态时保持不变，玩家按下任意按钮返回到运动状态
+struct InteractState : public State {
 	void handleInput(Player& player, Uint8* inputs) {
+		standing.handleInput(player, inputs);
 	}
 	void update(Player& player) {
+		type = Player::INTERACTING;
+		standing.update(player);
 	}
 };
-#pragma once
+
+#endif // !STATE_H_

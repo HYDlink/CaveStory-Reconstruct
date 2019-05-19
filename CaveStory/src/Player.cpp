@@ -6,11 +6,11 @@
 using namespace std;
 
 
-//这里编译输出好像报了什么东西, 没看清
-Player::Player(Graphics& graphics, std::shared_ptr<Map> map, const string& filename, 
+Player::Player(Graphics& graphics, std::shared_ptr<Map> map, const string& filename,
 	units::Game xPos, units::Game yPos)
 	: clipRects_(CharTypeSprites / 2, vector<SDL_Rect>(MotionSprites * 2)), map_(map),
-	  physics_(new PlayerPhysics(this, xPos, yPos)), collision_(new PlayerCollision(this, physics_, map))
+	  physics_(new PlayerPhysics(this, xPos, yPos)), motionState_(new StandState()),
+	  collision_(new PlayerCollision(this, physics_, map))
     {
 	physics_->setCollision(collision_);
 	setClipRect();
@@ -76,17 +76,22 @@ void Player::handleEvent(SDL_Event& e) {
 
 void Player::update(units::MS deltaTime) {
 	physics_->update(deltaTime);
-	updateState();
+	motionState_->update(*this);
+	state_.motionType = motionState_->type;
+
+	//updateState();
 	updateDebug();
 	animator_->triggerState(getState(state_));
+	animation_->update();
 }
 
 //比较纠结这个能不能在运动的时候修
 void Player::updateState() {
-	if (physics_->onGround_) { //这里影响了在地面的interact
-		if (state_.motionType == INTERACTING);
-		else if (physics_->stopedmoving_)
-			state_.motionType = STANDING;
+	if (physics_->onGround_) {
+		if (physics_->stopedmoving_) {
+			if (state_.motionType != INTERACTING)
+				state_.motionType = STANDING;
+		}
 		else
 			state_.motionType = WALKING;
 	}
@@ -131,12 +136,9 @@ void Player::lookUp() {
 }
 
 void Player::interactOrLookDown() {
-	//TODO
-	//在观察/交互过程中禁止玩家移动
 	if (physics_->onGround_) {
-		state_.motionType = INTERACTING;
-		physics_->accelerationX_ = 0;
-		physics_->velocityX_ = 0;
+		if (physics_->velocityX_ == 0)
+			state_.motionType = INTERACTING;
 	}
 	else
 		state_.verticalFacing = LOOKDOWN;
