@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{79dc7c31-580e-4ef8-9e17-4c9e1c8ffd39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Player.cpp">
@@ -44,6 +47,12 @@
     </ClCompile>
     <ClCompile Include="src\Animator.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\PlayerPhysics.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\PlayerCollision.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +91,21 @@
     </ClInclude>
     <ClInclude Include="src\Vector2d.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\State.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PhysicsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PlayerPhysics.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\CollisionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PlayerCollision.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
