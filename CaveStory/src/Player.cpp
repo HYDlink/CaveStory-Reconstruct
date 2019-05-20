@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Components/PlayerPhysics.h"
 #include "Components/PlayerCollision.h"
+#include "State.h"
 #define DEBUG_STATE
 
 using namespace std;
@@ -77,7 +78,7 @@ void Player::handleEvent(SDL_Event& e) {
 void Player::update(units::MS deltaTime) {
 	physics_->update(deltaTime);
 	motionState_->update(*this);
-	state_.motionType = motionState_->type;
+	state_.motionType = static_cast<MotionType>(motionState_->type);
 
 	//updateState();
 	updateDebug();
@@ -147,3 +148,7 @@ void Player::interactOrLookDown() {
 inline bool Player::onGround() const { return physics_->onGround_; }
 
 inline bool Player::jumping() const { return physics_->jumping_; }
+
+void Player::changeState(State* state) {
+	motionState_ = state;
+}

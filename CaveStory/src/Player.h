@@ -10,13 +10,13 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "Rectangle.h"
-#include "State.h"
 #include "Map.h"
 
 class PlayerPhysics;
 class PlayerCollision;
+class State;
 class Player {
-	friend class PlayerPhysics;
+	friend class PlayerPhysics;	
 	friend class PlayerCollision;
 public:
 	enum MotionType : Uint8 {
@@ -67,6 +67,8 @@ public:
 
 	bool onGround() const;
 	bool jumping() const;
+
+	void changeState(State* state);
 
 	//因为所有的State派生类都要写motionState_, 而这样会造成大量的友元声明(因为友元关系不会继承)
 	//public是暂时的解决方法

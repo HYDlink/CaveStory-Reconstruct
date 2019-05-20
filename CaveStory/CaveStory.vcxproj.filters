@@ -54,6 +54,9 @@
     <ClCompile Include="src\Components\PlayerCollision.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\State.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics.h">
