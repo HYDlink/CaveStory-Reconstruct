@@ -29,19 +29,16 @@ void Animation::start_Animation(units::Frame bg, units::Frame ed,
 	currentTime_ = 0;
 }
 
-//loop为false情况下，动画结束后保持在endFrame_
 void Animation::update() {
 	currentTime_++;
 	currentFrame_ = startFrame_ + currentTime_ / elapsTime_;
-	if (currentFrame_ > endFrame_) {
-		if (loop_) {
+	if (currentFrame_ > endFrame_){
+		if (loop_)
 			currentFrame_ = startFrame_;//循环
-			currentTime_ = 0;
-		}
-		else {
-			currentFrame_ = /*defaultFrame_*/endFrame_;
-			return;
-		}
+		else
+			currentFrame_ = /*defaultFrame_*/startFrame_;
+		currentTime_ = 0;
+		//这里有点检测问题，如果currentFrame_过了endFrame_的话, 那么在最后的动画还进行了一个时间帧...
 	}
 }
 
