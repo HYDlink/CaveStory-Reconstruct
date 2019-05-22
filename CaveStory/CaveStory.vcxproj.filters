@@ -45,6 +45,18 @@
     <ClCompile Include="src\Animator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\PlayerCollision.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\PlayerPhysics.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Enemys\Bat.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Timer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics.h">
@@ -83,5 +95,68 @@
     <ClInclude Include="src\Vector2d.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Components\CollisionComponent.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PhysicsComponent.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PlayerCollision.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PlayerPhysics.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Enemy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Enemys\Bat.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\State.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\(TODO)PrtCave.tmd">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bkBlue.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\Bullet.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\Caret.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\MyChar.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\NpcCemet.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\PrtCave.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\PrtFall.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\UI.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\valueopt.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\PrtCave.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>

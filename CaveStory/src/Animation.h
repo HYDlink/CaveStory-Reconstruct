@@ -9,17 +9,24 @@
 class Animation :
 	public Sprite {
 public:
+	Animation(Graphics& graphics, const std::string& filename);
 	Animation(Graphics& graphics, const std::string& filename, 
 		const std::vector<SDL_Rect>& frames);
 	~Animation();
 
+	void setFrames(const std::vector<SDL_Rect>& frames) 
+	{ frames_ = frames; totalFrames_ = frames.size(); }
 	units::Frame getFrames() { return totalFrames_; }
-	void start_Animation(units::Frame bg, units::Frame ed, units::MS framesPerFrame, bool loop = false);
+
+	void start_Animation(units::Frame bg, units::Frame ed, 
+		units::MS framesPerFrame, bool loop = false, const SDL_RendererFlip flip = SDL_FLIP_NONE);
+	void flip(const SDL_RendererFlip flip) { flip_ = flip; }
 	void update();
 	void draw(Graphics& graphics, SDL_Rect* dstPos);
 private:
 	std::vector<SDL_Rect> frames_;
 	bool loop_ = false;
+	SDL_RendererFlip flip_ = SDL_FLIP_NONE;
 
 	units::Frame totalFrames_;
 	units::Frame currentFrame_;

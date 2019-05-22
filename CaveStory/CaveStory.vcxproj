@@ -22,28 +22,56 @@
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Animator.cpp" />
     <ClCompile Include="src\Backdrop.cpp" />
+    <ClCompile Include="src\Components\PlayerCollision.cpp" />
+    <ClCompile Include="src\Components\PlayerPhysics.cpp" />
+    <ClCompile Include="src\Enemys\Bat.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
-    <ClCompile Include="src\State.cpp" />
     <ClCompile Include="src\Tile.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\Animator.h" />
     <ClInclude Include="src\Backdrop.h" />
+    <ClInclude Include="src\Components\CollisionComponent.h" />
+    <ClInclude Include="src\Components\PhysicsComponent.h" />
+    <ClInclude Include="src\Components\PlayerCollision.h" />
+    <ClInclude Include="src\Components\PlayerPhysics.h" />
+    <ClInclude Include="src\Enemy.h" />
+    <ClInclude Include="src\Enemys\Bat.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Rectangle.h" />
     <ClInclude Include="src\Sprite.h" />
+    <ClInclude Include="src\State.h" />
     <ClInclude Include="src\Tile.h" />
+    <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\units.h" />
     <ClInclude Include="src\Vector2d.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\(TODO)PrtCave.tmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bkBlue.bmp" />
+    <Image Include="res\Bullet.bmp" />
+    <Image Include="res\Caret.bmp" />
+    <Image Include="res\MyChar.bmp" />
+    <Image Include="res\NpcCemet.bmp" />
+    <Image Include="res\PrtCave.bmp" />
+    <Image Include="res\PrtFall.bmp" />
+    <Image Include="res\UI.bmp" />
+    <Image Include="res\valueopt.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\PrtCave.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -69,14 +97,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

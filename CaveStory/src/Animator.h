@@ -11,7 +11,7 @@
 class Animator {
 public:
 	Animator();
-	Animator(std::shared_ptr<Animation> animation);
+	explicit Animator(std::shared_ptr<Animation> animation);
 	~Animator() = default;
 
 	void setAnimation(std::shared_ptr<Animation> animation);

@@ -59,7 +59,8 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 *  \param dstrect   A pointer to the destination rectangle, just need position
                     or NULL for zero position
 */
-void Graphics::render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect)
+void Graphics::render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, 
+	const SDL_RendererFlip flip)
 {
 	//总感觉有点shit，但没办法了
 	bool hasDstRect = true;
@@ -78,8 +79,14 @@ void Graphics::render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect
 		dstRect->w = w;
 		dstRect->h = h;
 	}
-	if(SDL_RenderCopy(renderer_, texture, srcRect, dstRect) == -1)
-		cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
+	if (flip == SDL_FLIP_NONE) {
+		if (SDL_RenderCopy(renderer_, texture, srcRect, dstRect) == -1)
+			cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
+	}
+	else {
+		if (SDL_RenderCopyEx(renderer_, texture, srcRect, dstRect, NULL, NULL, flip) == -1)
+			cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
+	}
 	if (!hasDstRect) {
 		delete dstRect;
 		dstRect = NULL;

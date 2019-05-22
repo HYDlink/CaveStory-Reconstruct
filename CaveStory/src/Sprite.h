@@ -21,7 +21,8 @@ public:
 	void reset();
 	void reset(Graphics& graphics, const std::string& filename, const SDL_Rect& clip);
 	SDL_Texture* getTexture() { return texture_; }
-	void draw(Graphics& graphics, SDL_Rect* srcPos, SDL_Rect* dstPos);
+	void draw(Graphics& graphics, SDL_Rect* srcPos, SDL_Rect* dstPos,
+		const SDL_RendererFlip flip = SDL_FLIP_NONE);
 protected:
 	SDL_Rect srcPos_;
 private:

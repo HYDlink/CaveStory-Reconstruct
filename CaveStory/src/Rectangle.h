@@ -3,8 +3,10 @@
 
 //#include "side_type.h"
 #include "units.h"
+#include <vector>
 
 struct Rectangle {
+	friend Rectangle operator+(const Position2D& pos, const Rectangle& rect);
 	Rectangle(const Position2D& position, const Dimensions2D& dimensions) :
 		x_(position.x),
 		y_(position.y),
@@ -47,8 +49,19 @@ struct Rectangle {
 			top() <= other.bottom() &&
 			bottom() >= other.top();
 	}
+	bool collidesWith(const std::vector<Rectangle>& others) const {
+		bool collided = false;
+		for (const auto& other : others) {
+			if (collidesWith(other))
+				return true;
+		}
+		return false;
+	}
 private:
 	const units::Game x_, y_, width_, height_;
 };
 
+inline Rectangle operator+(const Position2D& pos, const Rectangle& rect) {
+	return Rectangle{ pos.x + rect.x_, pos.y + rect.y_, rect.width_, rect.height_ };
+}
 #endif // RECTANGLE_H_

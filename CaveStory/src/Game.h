@@ -10,7 +10,7 @@
 #include <iostream>
 #include <memory>
 
-
+class Bat;
 class Game
 {
 public:
@@ -28,6 +28,7 @@ private:
 	units::FPS frameCount = 0;
 
 	std::shared_ptr<Player> player_;
+	std::shared_ptr<Bat> bat_;
 	std::shared_ptr<Map> caveMap_;
 };
 

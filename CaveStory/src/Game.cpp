@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Enemys/Bat.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -29,6 +31,8 @@ void Game::eventloop()
 	caveMap_->loadFgMapData("res/PrtCave.txt");
 	caveMap_->loadBd(graphics, "res/bkBlue.bmp");
 	player_ = make_shared<Player>(graphics, caveMap_, "res/MyChar.bmp", 240, 240);
+	bat_ = make_shared<Bat>(graphics, *player_, "res/NpcCemet.bmp", 
+		Position2D(units::tileToPixel(3), units::tileToPixel(5)));
 
 	while (running) {
 		SDL_Event e;
@@ -47,8 +51,13 @@ void Game::eventloop()
 
 void Game::update()
 {
+	units::MS deltaTime = SDL_GetTicks() - startTick;
+	deltaTime = std::min(deltaTime, maxDeltaTime);
 	calculateFps(1000);
-	player_->update(std::min((SDL_GetTicks() - startTick), maxDeltaTime));
+
+	Timer::updateAll(deltaTime);
+	player_->update(deltaTime);
+	bat_->update(deltaTime);
 	startTick = SDL_GetTicks();
 }
 
@@ -57,8 +66,11 @@ void Game::draw(Graphics& graphics) {
 
 	graphics.draw();
 	caveMap_->drawBd(graphics);
+
 	SDL_Rect position{ 100, 100, 0, 0 };
 	player_->draw(graphics);
+	bat_->draw(graphics);
+
 	caveMap_->drawFg(graphics);
 
 	graphics.present();
