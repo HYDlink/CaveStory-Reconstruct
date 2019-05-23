@@ -27,6 +27,7 @@
     <ClCompile Include="src\Enemys\Bat.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\HUD\HelthBar.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="src\Enemys\Bat.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Graphics.h" />
+    <ClInclude Include="src\HUD\HelthBar.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Rectangle.h" />

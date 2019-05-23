@@ -43,6 +43,12 @@ void Sprite::draw(Graphics& graphics, SDL_Rect* srcPos, SDL_Rect* dstPos,
 	graphics.render(texture_, srcPos? srcPos : &srcPos_, dstPos, flip);
 }
 
+void Sprite::draw(Graphics& graphics, units::Pixel desX, units::Pixel desY,
+	const SDL_RendererFlip flip) {
+	SDL_Rect dstPos{ desX, desY, 0, 0 };
+	graphics.render(texture_, &srcPos_, &dstPos, flip);
+}
+
 bool operator==(const SDL_Rect & lhs, const SDL_Rect & rhs) {
 	return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.w == rhs.w && lhs.h == rhs.h);
 }
