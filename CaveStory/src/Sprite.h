@@ -23,9 +23,9 @@ public:
 	void reset();
 	void reset(Graphics& graphics, const std::string& filename, const SDL_Rect& clip);
 	SDL_Texture* getTexture() { return texture_; }
-	void draw(Graphics& graphics, SDL_Rect* srcPos, SDL_Rect* dstPos,
+	virtual void draw(Graphics& graphics, SDL_Rect* srcPos, SDL_Rect* dstPos,
 		const SDL_RendererFlip flip = SDL_FLIP_NONE);
-	void draw(Graphics& graphics, units::Pixel desX, units::Pixel desY,
+	virtual void draw(Graphics& graphics, units::Pixel desX, units::Pixel desY,
 		const SDL_RendererFlip flip = SDL_FLIP_NONE);
 protected:
 	SDL_Rect srcPos_;
@@ -39,19 +39,28 @@ public:
 	VaryWidthSprite(Graphics& graphics, const std::string filename,
 		units::Pixel srcPosx, units::Pixel srcPosy,
 		units::Pixel maxWidth, units::Pixel initialWidth,
-		units::Pixel height) :
+		units::Pixel height, bool rightAlgined = false) :
 		Sprite(graphics, filename, SDL_Rect{ srcPosx, srcPosy, initialWidth, height }),
-		maxWidth_(maxWidth) {
+		maxWidth_(maxWidth), percentage_(1.0f), rightAligned_(rightAlgined) {
 	}
 
 	// percentage is 0-1 inclusive.
 	void set_percentage_width(float percentage) {
 		assert(percentage >= 0.0f && percentage <= 1.0f);
+		percentage_ = percentage;
 		srcPos_.w = static_cast<units::Pixel>(percentage * maxWidth_);
 	}
 
+	virtual void draw(Graphics& graphics, units::Pixel desX, units::Pixel desY,
+		const SDL_RendererFlip flip = SDL_FLIP_NONE) override {
+		if (rightAligned_)
+			desX = desX + static_cast<units::Pixel>((1 - percentage_) * maxWidth_);
+		Sprite::draw(graphics, desX, desY, flip);
+	}
 private:
 	const units::Pixel maxWidth_;
+	float percentage_;
+	bool rightAligned_;
 };
 
 #endif

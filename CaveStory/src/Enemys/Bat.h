@@ -3,6 +3,7 @@
 #include "../units.h"
 #include "../Rectangle.h"
 class Player;
+class NumberSprite;
 class Bat : public Enemy {
 public:
 	using Enemy::animation_;
@@ -13,7 +14,7 @@ public:
 	}
 	void setClipRect();
 	void update(units::MS deltaTime);
-	void draw(Graphics& graphics);
+	void draw(Graphics& graphics, const NumberSprite& numberSprite) const;
 private:
 	Player& player_;
 	Position2D pos_;

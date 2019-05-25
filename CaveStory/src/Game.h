@@ -2,6 +2,7 @@
 #define GAME_H_
 #include <SDL.h>
 #include "Graphics.h"
+#include "HUD/NumberSprite.h"
 #include "Sprite.h"
 #include "Player.h"
 #include "Map.h"
@@ -30,6 +31,7 @@ private:
 	std::shared_ptr<Player> player_;
 	std::shared_ptr<Bat> bat_;
 	std::shared_ptr<Map> caveMap_;
+	std::shared_ptr<NumberSprite> numberSprite_;
 };
 
 

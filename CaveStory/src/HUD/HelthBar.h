@@ -4,13 +4,14 @@
 #include "../Sprite.h"
 #include "../units.h"
 #include "../Timer.h"
+#include "NumberSprite.h"
 //HP
 //HPbar°×¿òµÄÎ»ÖÃÎª48px-126px
 class HelathBar {
 public:
 	HelathBar(Graphics& graphics, const std::string& path, units::HP maxHp);
 	void update(units::MS deltaTime);
-	void draw(Graphics& graphics);
+	void draw(Graphics& graphics, const NumberSprite& numberSprite);
 	void takeDamage(units::HP damage);
 private:
 	void resetFillSprites();

@@ -1,5 +1,6 @@
 #include "Bat.h"
 #include "../Player.h"
+#include "../HUD/NumberSprite.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ void Bat::update(units::MS deltaTime) {
 	animation_->update();
 }
 
-void Bat::draw(Graphics& graphics) {
+void Bat::draw(Graphics& graphics, const NumberSprite& numberSprite) const {
 	SDL_Rect pos{ pos_.x, pos_.y, 0, 0 };
 	animation_->draw(graphics, &pos);
 }

@@ -28,6 +28,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\HUD\HelthBar.cpp" />
+    <ClCompile Include="src\HUD\NumberSprite.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -48,11 +49,11 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\HUD\HelthBar.h" />
+    <ClInclude Include="src\HUD\NumberSprite.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Rectangle.h" />
     <ClInclude Include="src\Sprite.h" />
-    <ClInclude Include="src\State.h" />
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\units.h" />

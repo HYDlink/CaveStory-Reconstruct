@@ -112,14 +112,14 @@ void Player::updateDebug() {
 #endif
 }
 
-void Player::draw(Graphics& graphics) {
+void Player::draw(Graphics& graphics, const NumberSprite& numberSprite) {
 	//角色受伤闪烁，也可以设置成变透明或者变亮
 	//由于healtBar必须在这里绘制，所以invisible时healthBar也不会绘制，不必为healthBar多设置一个闪烁方法
 	if (invisible_ && (invisibleTimer_.currentTime() / InvisibleFlashTime) % 3 == 0)
 		return;
 	SDL_Rect pos{ units::gameToPixel(physics_->xPos_), units::gameToPixel(physics_->yPos_), 0, 0 };
 	animation_->draw(graphics, &pos);
-	healthBar_.draw(graphics);
+	healthBar_.draw(graphics, numberSprite);
 }
 
 Position2D Player::pos() const { return Position2D{ physics_->xPos_, physics_->yPos_ }; }

@@ -23,7 +23,7 @@ namespace {
 	const units::Game kHealthFillSourceY = 3 * units::HalfTile;
 	const units::Game kHealthFillSourceHeight = units::HalfTile;
 
-	const units::Game kHealthNumberX = units::tileToGame(3) / 2;
+	const units::Game kHealthNumberX = units::tileToGame(5) / 2 + 2;
 	const units::Game kHealthNumberY = units::tileToGame(2);
 	const int kHealthNumberNumDigits = 2;
 
@@ -40,17 +40,17 @@ HelathBar::HelathBar(Graphics& graphics, const std::string& path,
 	  units::gameToPixel(kHealthBarSourceWidth), units::gameToPixel(kHealthBarSourceHeight) }
 	), 
 	healthFillSprite_(
-		graphics, kSpritePath,
+		graphics, path,
 		units::gameToPixel(kHealthFillSourceX), units::gameToPixel(kHealthFillSourceY),
 		units::gameToPixel(kMaxFillWidth),
 		units::gameToPixel(kMaxFillWidth),
-		units::gameToPixel(kHealthFillSourceHeight) ),
+		units::gameToPixel(kHealthFillSourceHeight), true),
 	damageFillSprite_(
-		graphics, kSpritePath,
+		graphics, path,
 		units::gameToPixel(kHealthDamageSourceX), units::gameToPixel(kHealthDamageSourceY),
 		units::gameToPixel(kMaxFillWidth),
 		units::gameToPixel(0),
-		units::gameToPixel(kHealthDamageSourceHeight)), 
+		units::gameToPixel(kHealthDamageSourceHeight), true), 
 	maxHp_(maxHp), currentHp_(maxHp), decreaseTimer_(kDamageDelay) {}
 
 void HelathBar::update(units::MS deltaTime) {
@@ -61,7 +61,7 @@ void HelathBar::update(units::MS deltaTime) {
 	}
 }
 
-void HelathBar::draw(Graphics& graphics) {
+void HelathBar::draw(Graphics& graphics, const NumberSprite& numberSprite) {
 	healthBarSprite_.draw(graphics, kHealthBarX, kHealthBarY);
 	
 	if (damage_ > 0) {
@@ -70,8 +70,8 @@ void HelathBar::draw(Graphics& graphics) {
 
 	healthFillSprite_.draw(graphics, kHealthFillX, kHealthFillY);
 
-	//NumberSprite::HUDNumber(graphics, current_health_, kHealthNumberNumDigits).draw(
-	//	graphics, kHealthNumberX, kHealthNumberY);
+	numberSprite.draw(graphics, 12, kHealthNumberX, kHealthNumberY,
+		2, false, units::RIGHT_ALIGNED);
 }
 
 void HelathBar::takeDamage(units::HP damage) {

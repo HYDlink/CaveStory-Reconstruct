@@ -59,7 +59,7 @@ public:
 	void update(units::MS deltaTime);
 	void updateState();
 	void updateDebug();
-	void draw(Graphics& graphics);
+	void draw(Graphics& graphics, const NumberSprite& numberSprite);
 
 	Position2D pos() const;
 	std::vector<Rectangle> collider() const;

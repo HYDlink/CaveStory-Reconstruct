@@ -30,6 +30,11 @@ namespace units {
 	const Pixel HalfTile = 16;
 	const Pixel BgTileSize = 128;
 
+	enum ALIGN {
+		LEFT_ALIGNED,
+		MID_ALIGNED,
+		RIGHT_ALIGNED
+	};
 	inline double degreesToRadians(Degrees degrees) {
 		return degrees * M_PI / 180.0f;
 	}
@@ -67,7 +72,16 @@ namespace units {
 		return tileToPixel(tile);
 	}
 
-	
+	inline Pixel getAlinedResult(Pixel dst, Pixel width, ALIGN align) {
+		switch (align) {
+		case units::LEFT_ALIGNED: return dst;
+			break;
+		case units::MID_ALIGNED: return dst - width / 2;
+			break;
+		case units::RIGHT_ALIGNED: return dst - width;
+			break;
+		}
+	}
 }
 typedef Vector2D<units::Game> Position2D;
 typedef Vector2D<units::Game> Dimensions2D;
