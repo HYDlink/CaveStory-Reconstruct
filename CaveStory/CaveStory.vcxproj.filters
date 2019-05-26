@@ -72,6 +72,9 @@
     <ClCompile Include="src\HUD\NumberSprite.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="src\HUD\DamageText.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics.h">
@@ -135,6 +138,12 @@
       <Filter>HUD</Filter>
     </ClInclude>
     <ClInclude Include="src\HUD\NumberSprite.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HUD\DamageText.h">
       <Filter>HUD</Filter>
     </ClInclude>
   </ItemGroup>

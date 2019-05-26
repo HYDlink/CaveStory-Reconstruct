@@ -12,8 +12,14 @@ struct Vector2D {
 	Vector2D operator+(const Vector2D& o) {
 		return Vector2D{ x + o.x, y + o.y };
 	}
+	Vector2D operator+(const T& o) {
+		return Vector2D{ x + o, y + o };
+	}
 	Vector2D operator-(const Vector2D& o) {
 		return operator+(o * -1);
+	}
+	Vector2D operator-(const T& o) {
+		return operator-(o * -1);
 	}
 	Vector2D operator*(T t) {
 		return Vector2D{ x * t, y * t };

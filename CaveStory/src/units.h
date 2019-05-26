@@ -32,7 +32,7 @@ namespace units {
 
 	enum ALIGN {
 		LEFT_ALIGNED,
-		MID_ALIGNED,
+		CENTER_ALIGNED,
 		RIGHT_ALIGNED
 	};
 	inline double degreesToRadians(Degrees degrees) {
@@ -76,7 +76,7 @@ namespace units {
 		switch (align) {
 		case units::LEFT_ALIGNED: return dst;
 			break;
-		case units::MID_ALIGNED: return dst - width / 2;
+		case units::CENTER_ALIGNED: return dst - width / 2;
 			break;
 		case units::RIGHT_ALIGNED: return dst - width;
 			break;

@@ -15,7 +15,7 @@ Player::Player(Graphics& graphics, std::shared_ptr<Map> map, const string& filen
 	: clipRects_(CharTypeSprites, vector<SDL_Rect>(MotionSprites)),
 	  physics_(new PlayerPhysics(this, xPos, yPos)), collision_(new PlayerCollision(this, physics_, map)),
 	  invisibleTimer_(InvisibleTime), healthBar_(graphics, "res/TextBox.bmp", InitialHP, numberSprite),
-	  numberSprite_(numberSprite)
+	  numberSprite_(numberSprite), damageText_(numberSprite_)
     {
 	physics_->setCollision(collision_);
 	setClipRect();
@@ -89,6 +89,8 @@ void Player::update(units::MS deltaTime) {
 	animation_->flip(horizontalFacing_ ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 	animation_->update();
 	healthBar_.update(deltaTime);
+	damageText_.setPos(Position2D(pos().x + units::HalfTile, pos().y));
+	damageText_.update(deltaTime);
 }
 
 //比较纠结这个能不能在运动的时候修
@@ -127,9 +129,15 @@ void Player::draw(Graphics& graphics) const {
 	SDL_Rect pos{ units::gameToPixel(physics_->xPos_), units::gameToPixel(physics_->yPos_), 0, 0 };
 	animation_->draw(graphics, &pos);
 	healthBar_.draw(graphics);
+	damageText_.draw(graphics);
 }
 
-Position2D Player::pos() const { return Position2D{ physics_->xPos_, physics_->yPos_ }; }
+Position2D Player::pos() const 
+{ return Position2D{ physics_->xPos_, physics_->yPos_ }; }
+
+Position2D Player::centerPos() const {
+	return pos() + units::HalfTile;
+}
 
 std::vector<Rectangle> Player::collider() const {
 	return collision_->collisions();
@@ -141,6 +149,7 @@ void Player::takeDamage(units::HP damage) {
 		return;
 	hp_ -= damage;
 	healthBar_.takeDamage(damage);
+	damageText_.active(-damage);
 	physics_->velocityY_ = -physics_->jumpSpeed;
 	invisible_ = true;
 	invisibleTimer_.reset();

@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Timer.h"
 #include "HUD/HelthBar.h"
+#include "HUD/DamageText.h"
 
 #include <vector>
 #include <memory>
@@ -65,6 +66,7 @@ public:
 	void draw(Graphics& graphics) const override;
 
 	Position2D pos() const;
+	Position2D centerPos() const;
 	std::vector<Rectangle> collider() const;
 	void takeDamage(units::HP damage);
 
@@ -86,6 +88,7 @@ private:
 	CharState state_, lastState_;
 	HorizontalFacing horizontalFacing_; 
 	NumberSprite& numberSprite_;
+	DamageText damageText_;
 
 	PlayerPhysics* physics_;
 	PlayerCollision* collision_;

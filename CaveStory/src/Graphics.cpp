@@ -62,7 +62,7 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 void Graphics::render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_Rect* dstRect,
 	const SDL_RendererFlip flip) const
 {
-	//总感觉有点shit，但没办法了
+	
 	bool hasDstRect = true;
 	SDL_Rect dstTmp = SDL_Rect();
 	if (!dstRect) {
@@ -81,7 +81,7 @@ void Graphics::render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_R
 		dstTmp.h = h;
 	}
 	if (flip == SDL_FLIP_NONE) {
-		SDL_assert (SDL_RenderCopy(renderer_, texture, srcRect, &dstTmp) == -1);
+		SDL_assert (SDL_RenderCopy(renderer_, texture, srcRect, &dstTmp) != -1);
 			//cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
 	}
 	else {
