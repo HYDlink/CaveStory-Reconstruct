@@ -59,37 +59,34 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 *  \param dstrect   A pointer to the destination rectangle, just need position
                     or NULL for zero position
 */
-void Graphics::render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, 
-	const SDL_RendererFlip flip)
+void Graphics::render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_Rect* dstRect,
+	const SDL_RendererFlip flip) const
 {
 	//总感觉有点shit，但没办法了
 	bool hasDstRect = true;
+	SDL_Rect dstTmp = SDL_Rect();
 	if (!dstRect) {
 		hasDstRect = false;
-		dstRect = new SDL_Rect();
 	}
+	else dstTmp = *dstRect;
 	if (srcRect) {
-		dstRect->w = srcRect->w;
-		dstRect->h = srcRect->h;
+		dstTmp.w = srcRect->w;
+		dstTmp.h = srcRect->h;
 	}
 	else {
 		uint32_t format;
 		int access, w, h;
 		SDL_QueryTexture(texture, &format, &access, &w, &h);
-		dstRect->w = w;
-		dstRect->h = h;
+		dstTmp.w = w;
+		dstTmp.h = h;
 	}
 	if (flip == SDL_FLIP_NONE) {
-		SDL_assert (SDL_RenderCopy(renderer_, texture, srcRect, dstRect) == -1);
+		SDL_assert (SDL_RenderCopy(renderer_, texture, srcRect, &dstTmp) == -1);
 			//cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
 	}
 	else {
-		if (SDL_RenderCopyEx(renderer_, texture, srcRect, dstRect, NULL, NULL, flip) == -1)
+		if (SDL_RenderCopyEx(renderer_, texture, srcRect, &dstTmp, NULL, NULL, flip) == -1)
 			cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
-	}
-	if (!hasDstRect) {
-		delete dstRect;
-		dstRect = NULL;
 	}
 }
 

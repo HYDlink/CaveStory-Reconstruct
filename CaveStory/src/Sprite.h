@@ -23,10 +23,10 @@ public:
 	void reset();
 	void reset(Graphics& graphics, const std::string& filename, const SDL_Rect& clip);
 	SDL_Texture* getTexture() { return texture_; }
-	virtual void draw(Graphics& graphics, SDL_Rect* srcPos, SDL_Rect* dstPos,
-		const SDL_RendererFlip flip = SDL_FLIP_NONE);
+	virtual void draw(Graphics& graphics, const SDL_Rect* srcPos, const SDL_Rect* dstPos,
+		const SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 	virtual void draw(Graphics& graphics, units::Pixel desX, units::Pixel desY,
-		const SDL_RendererFlip flip = SDL_FLIP_NONE);
+		const SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 protected:
 	SDL_Rect srcPos_;
 private:
@@ -52,7 +52,7 @@ public:
 	}
 
 	virtual void draw(Graphics& graphics, units::Pixel desX, units::Pixel desY,
-		const SDL_RendererFlip flip = SDL_FLIP_NONE) override {
+		const SDL_RendererFlip flip = SDL_FLIP_NONE) const override {
 		if (rightAligned_)
 			desX = desX + static_cast<units::Pixel>((1 - percentage_) * maxWidth_);
 		Sprite::draw(graphics, desX, desY, flip);

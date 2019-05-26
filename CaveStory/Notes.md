@@ -30,3 +30,24 @@ private:
 };
 ```
 
+## 场景/UI处理
+
+把游戏模块区分为不同的scene，在主循环中调用scene的函数，像unity那样，scene使用树状结点结构，scene是根节点。
+
+使用场景栈，需要的时候加入或者弹出场景
+
+```c++
+class Scene{
+    public:
+    Scene(Graphics& graphics, std::vector<GameObject&> gameObjects);
+    void update(){
+        for(auto& obj: gameObjects)
+            obj.update();
+    }
+    void draw(){
+        for(auto& obj: gameObjects)
+            obj.draw();
+    }
+}
+```
+

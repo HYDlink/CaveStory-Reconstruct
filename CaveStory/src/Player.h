@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "Animator.h"
+#include "GameObject.h"
 #include "Rectangle.h"
 #include "Map.h"
 #include "Timer.h"
@@ -16,7 +17,7 @@
 
 class PlayerPhysics;
 class PlayerCollision;
-class Player {
+class Player : public GameObject {
 	friend class PlayerPhysics;
 	friend class PlayerCollision;
 public:
@@ -48,18 +49,20 @@ public:
 
 	//graphics获取渲染目标, map获取当前地图的碰撞体, filename获取精灵图资源文件位置
 	Player(Graphics& graphics, std::shared_ptr<Map> map,
-		const std::string& filename, units::Game xPos, units::Game yPos);
+		const std::string& filename, units::Game xPos, units::Game yPos,
+		NumberSprite& numberSprite);
 	~Player();
 
 	//设置精灵图剪切位置
 	void setClipRect();
 	void setAimator();
+	void setNumberSprite(NumberSprite& numberSprite);
 
 	void handleEvent(SDL_Event& e);
-	void update(units::MS deltaTime);
+	void update(units::MS deltaTime) override;
 	void updateState();
 	void updateDebug();
-	void draw(Graphics& graphics, const NumberSprite& numberSprite);
+	void draw(Graphics& graphics) const override;
 
 	Position2D pos() const;
 	std::vector<Rectangle> collider() const;
@@ -81,7 +84,8 @@ private:
 
 	std::vector<std::vector<SDL_Rect>> clipRects_;
 	CharState state_, lastState_;
-	HorizontalFacing horizontalFacing_;
+	HorizontalFacing horizontalFacing_; 
+	NumberSprite& numberSprite_;
 
 	PlayerPhysics* physics_;
 	PlayerCollision* collision_;

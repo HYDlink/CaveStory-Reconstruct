@@ -18,8 +18,8 @@ public:
 	~Graphics();
 	SDL_Renderer* getRenderer() const { return renderer_; }
 	SDL_Texture* loadFromFile(const std::string& path, bool black_is_transparent = false);
-	void render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, 
-		const SDL_RendererFlip flip = SDL_FLIP_NONE);
+	void render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_Rect* dstRect,
+		const SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 	void blitSurface(SDL_Surface* surface, SDL_Rect* srcRect, SDL_Rect* dstRect);
 	void clear();
 	void update();

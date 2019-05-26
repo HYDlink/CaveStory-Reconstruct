@@ -34,7 +34,7 @@ namespace {
 }
 
 HelathBar::HelathBar(Graphics& graphics, const std::string& path,
-	units::HP maxHp) :
+	units::HP maxHp, NumberSprite& numberSprite) :
 	healthBarSprite_(graphics, path, 
 		SDL_Rect{ units::gameToPixel(kHealthBarSourceX), units::gameToPixel(kHealthBarSourceY),
 	  units::gameToPixel(kHealthBarSourceWidth), units::gameToPixel(kHealthBarSourceHeight) }
@@ -51,7 +51,12 @@ HelathBar::HelathBar(Graphics& graphics, const std::string& path,
 		units::gameToPixel(kMaxFillWidth),
 		units::gameToPixel(0),
 		units::gameToPixel(kHealthDamageSourceHeight), true), 
-	maxHp_(maxHp), currentHp_(maxHp), decreaseTimer_(kDamageDelay) {}
+	maxHp_(maxHp), currentHp_(maxHp), damage_(0), 
+	decreaseTimer_(kDamageDelay), numberSprite_(numberSprite) {}
+
+void HelathBar::setNumberSprite(NumberSprite& numberSprite) {
+	numberSprite_ = numberSprite;
+}
 
 void HelathBar::update(units::MS deltaTime) {
 	//受伤时，红色hp条减少，以白色框替代，和角色同步闪光
@@ -61,7 +66,7 @@ void HelathBar::update(units::MS deltaTime) {
 	}
 }
 
-void HelathBar::draw(Graphics& graphics, const NumberSprite& numberSprite) {
+void HelathBar::draw(Graphics& graphics) const {
 	healthBarSprite_.draw(graphics, kHealthBarX, kHealthBarY);
 	
 	if (damage_ > 0) {
@@ -70,7 +75,7 @@ void HelathBar::draw(Graphics& graphics, const NumberSprite& numberSprite) {
 
 	healthFillSprite_.draw(graphics, kHealthFillX, kHealthFillY);
 
-	numberSprite.draw(graphics, 12, kHealthNumberX, kHealthNumberY,
+	numberSprite_.draw(graphics, currentHp_, kHealthNumberX, kHealthNumberY,
 		2, false, units::RIGHT_ALIGNED);
 }
 

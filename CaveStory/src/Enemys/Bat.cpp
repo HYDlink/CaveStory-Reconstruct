@@ -43,7 +43,7 @@ void Bat::update(units::MS deltaTime) {
 	animation_->update();
 }
 
-void Bat::draw(Graphics& graphics, const NumberSprite& numberSprite) const {
+void Bat::draw(Graphics& graphics) const {
 	SDL_Rect pos{ pos_.x, pos_.y, 0, 0 };
 	animation_->draw(graphics, &pos);
 }

@@ -7,13 +7,15 @@ using namespace std;
 namespace {
 	const units::MS InvisibleTime = 1500;
 	const units::MS InvisibleFlashTime = 50;
+	const units::HP InitialHP = 20;
 }
 
 Player::Player(Graphics& graphics, std::shared_ptr<Map> map, const string& filename, 
-	units::Game xPos, units::Game yPos)
+	units::Game xPos, units::Game yPos,	NumberSprite& numberSprite)
 	: clipRects_(CharTypeSprites, vector<SDL_Rect>(MotionSprites)),
 	  physics_(new PlayerPhysics(this, xPos, yPos)), collision_(new PlayerCollision(this, physics_, map)),
-	  invisibleTimer_(InvisibleTime), healthBar_(graphics, "res/TextBox.bmp", 3)
+	  invisibleTimer_(InvisibleTime), healthBar_(graphics, "res/TextBox.bmp", InitialHP, numberSprite),
+	  numberSprite_(numberSprite)
     {
 	physics_->setCollision(collision_);
 	setClipRect();
@@ -49,6 +51,11 @@ void Player::setAimator() {
 	animator_->setStates(getState(CharState{ FALLING, LOOKDOWN }), 6, 6);
 	animator_->setStates(getState(CharState{ INTERACTING, FORWARD }), 7, 7);
 	//animation_->start_Animation(0, 2, 4, true);
+}
+
+void Player::setNumberSprite(NumberSprite& numberSprite) {
+	numberSprite_ = numberSprite;
+	healthBar_.setNumberSprite(numberSprite);
 }
 
 //https://wiki.libsdl.org/SDL_GetKeyboardState
@@ -112,14 +119,14 @@ void Player::updateDebug() {
 #endif
 }
 
-void Player::draw(Graphics& graphics, const NumberSprite& numberSprite) {
+void Player::draw(Graphics& graphics) const {
 	//角色受伤闪烁，也可以设置成变透明或者变亮
 	//由于healtBar必须在这里绘制，所以invisible时healthBar也不会绘制，不必为healthBar多设置一个闪烁方法
 	if (invisible_ && (invisibleTimer_.currentTime() / InvisibleFlashTime) % 3 == 0)
 		return;
 	SDL_Rect pos{ units::gameToPixel(physics_->xPos_), units::gameToPixel(physics_->yPos_), 0, 0 };
 	animation_->draw(graphics, &pos);
-	healthBar_.draw(graphics, numberSprite);
+	healthBar_.draw(graphics);
 }
 
 Position2D Player::pos() const { return Position2D{ physics_->xPos_, physics_->yPos_ }; }

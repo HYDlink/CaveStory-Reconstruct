@@ -5,13 +5,16 @@
 #include "../units.h"
 #include "../Timer.h"
 #include "NumberSprite.h"
+#include "..//GameObject.h"
 //HP
 //HPbar°×¿òµÄÎ»ÖÃÎª48px-126px
-class HelathBar {
+class HelathBar : GameObject{
 public:
-	HelathBar(Graphics& graphics, const std::string& path, units::HP maxHp);
-	void update(units::MS deltaTime);
-	void draw(Graphics& graphics, const NumberSprite& numberSprite);
+	HelathBar(Graphics& graphics, const std::string& path, units::HP maxHp
+		, NumberSprite& numberSprite);
+	void setNumberSprite(NumberSprite& numberSprite);
+	void update(units::MS deltaTime) override;
+	void draw(Graphics& graphics) const override;
 	void takeDamage(units::HP damage);
 private:
 	void resetFillSprites();
@@ -19,6 +22,7 @@ private:
 	units::HP maxHp_, currentHp_, damage_;
 	Sprite healthBarSprite_;
 	VaryWidthSprite healthFillSprite_, damageFillSprite_;
+	NumberSprite& numberSprite_;
 };
 
 #endif // !HEALTH_BAR_

@@ -39,9 +39,8 @@ void NumberSprite::draw(Graphics& graphics, int num, units::Pixel desX, units::P
 		currentDesX += DigitSize;
 	}
 	auto &color = (num < 0) ? redDigits_ : whiteDigits_;
-	while (digitNum > 0) {
-		color[num % 10]->draw(graphics, currentDesX, desY);
-		currentDesX += DigitSize;
+	while (digitNum > 0) {//从最低位数字（右侧）开始画
+		color[num % 10]->draw(graphics, currentDesX + (digitNum - 1) * DigitSize, desY);
 		num /= 10;
 		--digitNum;
 	}

@@ -13,7 +13,7 @@
 //使用文件加载tileMap
 //使用背景
 //背景包含不动背景，和平行变换背景
-//TODO 加载TileType数据
+//TODO 加载TileType数据, 前景和后景分离，各使用一个map类
 using TileType = Uint8;
 struct CollisionTile {
 	units::Tile row, col;

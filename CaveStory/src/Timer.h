@@ -13,9 +13,9 @@ public:
 	~Timer() { timers_.erase(this); }
 
 	void reset() { currentTime_ = 0; }
-	bool isActive() { return currentTime_ < expirationTime_; }
-	bool isExpired() { return !isActive(); }
-	units::MS currentTime() { return currentTime_; }
+	bool isActive() const { return currentTime_ < expirationTime_; }
+	bool isExpired() const { return !isActive(); }
+	units::MS currentTime() const { return currentTime_; }
 	static void updateAll(units::MS deltaTime);
 private:
 	//设置成private以保证只有timers_才能更新它

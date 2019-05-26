@@ -31,7 +31,7 @@ void Game::eventloop()
 	caveMap_->loadFgMapData("res/PrtCave.txt");
 	caveMap_->loadBd(graphics, "res/bkBlue.bmp");
 	numberSprite_ = make_shared<NumberSprite>(graphics, "res/TextBox.bmp");
-	player_ = make_shared<Player>(graphics, caveMap_, "res/MyChar.bmp", 240, 240);
+	player_ = make_shared<Player>(graphics, caveMap_, "res/MyChar.bmp", 240, 240, *numberSprite_);
 	bat_ = make_shared<Bat>(graphics, *player_, "res/NpcCemet.bmp", 
 		Position2D(units::tileToPixel(3), units::tileToPixel(5)));
 
@@ -69,8 +69,8 @@ void Game::draw(Graphics& graphics) {
 	caveMap_->drawBd(graphics);
 
 	SDL_Rect position{ 100, 100, 0, 0 };
-	player_->draw(graphics, *numberSprite_);
-	bat_->draw(graphics, *numberSprite_);
+	player_->draw(graphics);
+	bat_->draw(graphics);
 
 	caveMap_->drawFg(graphics);
 
