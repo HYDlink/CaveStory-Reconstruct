@@ -25,6 +25,7 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Components\PlayerCollision.cpp" />
     <ClCompile Include="src\Components\PlayerPhysics.cpp" />
+    <ClCompile Include="src\CSCamera.cpp" />
     <ClCompile Include="src\Enemys\Bat.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="src\Components\PhysicsComponent.h" />
     <ClInclude Include="src\Components\PlayerCollision.h" />
     <ClInclude Include="src\Components\PlayerPhysics.h" />
+    <ClInclude Include="src\CSCamera.h" />
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\Enemys\Bat.h" />
     <ClInclude Include="src\Game.h" />
@@ -77,6 +79,7 @@
     <Image Include="res\NpcCemet.bmp" />
     <Image Include="res\PrtCave.bmp" />
     <Image Include="res\PrtFall.bmp" />
+    <Image Include="res\TextBox.bmp" />
     <Image Include="res\UI.bmp" />
     <Image Include="res\valueopt.bmp" />
   </ItemGroup>

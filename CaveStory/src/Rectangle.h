@@ -25,7 +25,16 @@ struct Rectangle {
 	}
 	Rectangle(const Rectangle& r) = default;
 	Rectangle& operator=(const Rectangle& rect);
+	// 向SDL_Rect的隐式转换
+	operator SDL_Rect() {
+		return SDL_Rect{ units::gameToPixel(x_), units::gameToPixel(y_),
+			units::gameToPixel(width_), units::gameToPixel(height_), };
+	}
 
+	static void setRectByCenter(Rectangle& rect, const Position2D& center) {
+		rect.setLeft(center.x - rect.width() / 2);
+		rect.setTop(center.y - rect.height() / 2);
+	}
 	Position2D pos() const { return Position2D(x_, y_); }
 	units::Game center_x() const { return x_ + width_ / 2; }
 	units::Game center_y() const { return y_ + height_ / 2; }
@@ -40,11 +49,6 @@ struct Rectangle {
 			return top();
 		return bottom();
 	}
-	operator SDL_Rect() {
-		return SDL_Rect{ units::gameToPixel(x_), units::gameToPixel(y_),
-			units::gameToPixel(width_), units::gameToPixel(height_), };
-	}
-
 	void setLeft(units::Game x) { x_ = x; }
 	void setTop(units::Game y) { y_ = y; }
 	void setRight(units::Game x) { x_ = x - width_; }

@@ -67,6 +67,8 @@ public:
 
 	Position2D pos() const;
 	Position2D centerPos() const;
+	units::Velocity velX() const;
+	units::Velocity velY() const;
 	std::vector<Rectangle> collider() const;
 	void takeDamage(units::HP damage);
 

@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Enemys/Bat.h"
 #include "Timer.h"
+#include "CSCamera.h"
 
 using namespace std;
 
@@ -30,14 +31,17 @@ void Game::eventloop()
 	caveMap_->loadTile(graphics, "res/PrtCave.bmp", 16, 5);
 	caveMap_->loadFgMapData("res/PrtCave.txt");
 	caveMap_->loadBd(graphics, "res/bkBlue.bmp");
-	camera_ = make_shared<Camera>(graphics.screenRect());
-	camera_->restrict(caveMap_->levelRect());
-	graphics.setCamera(camera_);
 	numberSprite_ = make_shared<NumberSprite>(graphics, "res/TextBox.bmp");
 	player_ = make_shared<Player>(graphics, caveMap_, "res/MyChar.bmp", 240, 240, *numberSprite_);
 	bat_ = make_shared<Bat>(graphics, *player_, "res/NpcCemet.bmp", 
 		Position2D(units::tileToPixel(3), units::tileToPixel(5)));
-	camera_->follow(player_->centerPos());
+#ifdef CSCAMERA
+	camera_ = make_shared<CSCamera>(player_);
+#else
+	camera_ = make_shared<Camera>(graphics.screenRect());
+#endif
+	camera_->setRestrict(caveMap_->levelRect());
+	graphics.setCamera(camera_);
 
 	while (running) {
 		SDL_Event e;
@@ -62,7 +66,9 @@ void Game::update()
 
 	Timer::updateAll(deltaTime);
 	player_->update(deltaTime);
+#ifndef CSCAMERA
 	camera_->follow(player_->centerPos());
+#endif
 	camera_->update(deltaTime);
 	bat_->update(deltaTime);
 	startTick = SDL_GetTicks();

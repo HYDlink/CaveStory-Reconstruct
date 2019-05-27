@@ -81,6 +81,9 @@
     <ClCompile Include="src\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\CSCamera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics.h">
@@ -161,6 +164,9 @@
     <ClInclude Include="src\Utils\sideType.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\CSCamera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\(TODO)PrtCave.tmd">
@@ -193,6 +199,9 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="res\valueopt.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\TextBox.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

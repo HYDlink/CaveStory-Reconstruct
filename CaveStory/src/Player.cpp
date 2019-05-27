@@ -139,6 +139,14 @@ Position2D Player::centerPos() const {
 	return pos() + units::HalfTile;
 }
 
+units::Velocity Player::velX() const {
+	return physics_->velocityX_;
+}
+
+units::Velocity Player::velY() const {
+	return physics_->velocityY_;
+}
+
 std::vector<Rectangle> Player::collider() const {
 	return collision_->collisions();
 }

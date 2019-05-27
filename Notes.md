@@ -57,6 +57,16 @@ class Scene{
 
 (视频22.40)洞窟物语原作使用 双向集中, 根据角色朝向和速度移动镜头, 根据角色位置锁定, [平滑移动](https://www.reddit.com/r/gamedev/comments/4zbrgp/how_does_unitys_smoothdamp_work/)
 
+详细：
+
+- 相机追随框架位置
+  - Quote(主角)面朝右侧的时候, 相机左边占6个Tile格子(不包括Quote)
+  - 走路的时候, 相机缓慢追上Quote并保持相机左侧8格
+- 相机移动速度根据Quote移动速度改变, 
+  - 走路的过程中, 相机停下来需要两秒不到
+  - 只是转向的话, 相机需要2.5秒停下来
+- 平滑移动 [参考](https://graemepottsfolio.wordpress.com/2016/01/11/game-programming-math-libraries/)
+
 ![CSCameraControl](CaveStory/pic/CSCameraControl.PNG)
 
 ![physics-smoothing](CaveStory/pic/physics-smoothing.PNG)
