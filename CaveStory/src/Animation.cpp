@@ -53,5 +53,5 @@ void Animation::update() {
 }
 
 void Animation::draw(Graphics& graphics, SDL_Rect* dstPos) {
-	Sprite::draw(graphics, &frames_[currentFrame_], dstPos, flip_);
+	Sprite::draw(graphics, &frames_[currentFrame_], dstPos, false, flip_);
 }

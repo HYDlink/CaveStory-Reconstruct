@@ -39,14 +39,14 @@ void Sprite::reset(Graphics& graphics, const std::string& filename, const SDL_Re
 * \param dstPos  Sprite绘制到屏幕上的位置，只需要位置不需要长宽
 */
 void Sprite::draw(Graphics& graphics, const SDL_Rect* srcPos, const SDL_Rect* dstPos,
-	const SDL_RendererFlip flip) const {
-	graphics.render(texture_, srcPos? srcPos : &srcPos_, dstPos, flip);
+	bool camIndep, const SDL_RendererFlip flip) const {
+	graphics.render(texture_, srcPos? srcPos : &srcPos_, dstPos, camIndep, flip);
 }
 
 void Sprite::draw(Graphics& graphics, units::Pixel desX, units::Pixel desY,
-	const SDL_RendererFlip flip) const {
+	bool camIndep, const SDL_RendererFlip flip) const {
 	SDL_Rect dstPos{ desX, desY, 0, 0 };
-	graphics.render(texture_, &srcPos_, &dstPos, flip);
+	graphics.render(texture_, &srcPos_, &dstPos, camIndep, flip);
 }
 
 bool operator==(const SDL_Rect & lhs, const SDL_Rect & rhs) {

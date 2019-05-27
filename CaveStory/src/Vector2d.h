@@ -32,4 +32,11 @@ struct Vector2D {
 template <typename T>
 inline Vector2D<T> operator*(T t, const Vector2D<T>& v) { return v * t; }
 
+
+template <typename T>
+inline T smoothDamp(const T& current, const T& target, T& currentVelocity,
+	float percentage, const T& maxSpeed) {
+
+}
+
 #endif // !VECTOR2D_H_

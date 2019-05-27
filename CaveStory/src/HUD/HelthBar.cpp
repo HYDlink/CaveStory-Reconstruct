@@ -67,16 +67,16 @@ void HelathBar::update(units::MS deltaTime) {
 }
 
 void HelathBar::draw(Graphics& graphics) const {
-	healthBarSprite_.draw(graphics, kHealthBarX, kHealthBarY);
+	healthBarSprite_.draw(graphics, kHealthBarX, kHealthBarY, true);
 	
 	if (damage_ > 0) {
-		damageFillSprite_.draw(graphics, kHealthFillX, kHealthFillY);
+		damageFillSprite_.draw(graphics, kHealthFillX, kHealthFillY, true);
 	}
 
-	healthFillSprite_.draw(graphics, kHealthFillX, kHealthFillY);
+	healthFillSprite_.draw(graphics, kHealthFillX, kHealthFillY, true);
 
 	numberSprite_.draw(graphics, currentHp_, kHealthNumberX, kHealthNumberY,
-		2, false, units::RIGHT_ALIGNED);
+		2, false, true, units::RIGHT_ALIGNED);
 }
 
 void HelathBar::takeDamage(units::HP damage) {

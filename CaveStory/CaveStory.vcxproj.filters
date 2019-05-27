@@ -22,6 +22,9 @@
     <Filter Include="HUD">
       <UniqueIdentifier>{d9561f7a-287a-47ae-9374-423c26a7d16e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{eda3ad32-b046-499f-b5d2-e3e0383ef5bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Player.cpp">
@@ -75,6 +78,9 @@
     <ClCompile Include="src\HUD\DamageText.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics.h">
@@ -102,12 +108,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Animator.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rectangle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\units.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Vector2d.h">
@@ -145,6 +145,21 @@
     </ClInclude>
     <ClInclude Include="src\HUD\DamageText.h">
       <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rectangle.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\units.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\sideType.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

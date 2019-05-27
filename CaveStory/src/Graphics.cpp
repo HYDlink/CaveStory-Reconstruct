@@ -2,7 +2,9 @@
 
 using namespace std;
 
-Graphics::Graphics()
+Graphics::Graphics(): Graphics(nullptr) {}
+
+Graphics::Graphics(shared_ptr<Camera> cam): camera_(cam)
 {
 	window_ = SDL_CreateWindow("CaveStory Reconstruct",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -52,17 +54,21 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 	return sprite_sheets_[file_path];
 }
 
+void Graphics::setCamera(shared_ptr<Camera> cam) {
+	camera_ = cam;
+}
+
 /*
 *  \param texture   A pointer to the texture to load
 *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
 *                   texture.
 *  \param dstrect   A pointer to the destination rectangle, just need position
-                    or NULL for zero position
+*                   or NULL for zero position
+#  \param camIndep  相机无关，若想要所渲染的物体不因相机位置而改变，则置为true
 */
 void Graphics::render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_Rect* dstRect,
-	const SDL_RendererFlip flip) const
+	bool camIndep, const SDL_RendererFlip flip) const
 {
-	
 	bool hasDstRect = true;
 	SDL_Rect dstTmp = SDL_Rect();
 	if (!dstRect) {
@@ -80,13 +86,16 @@ void Graphics::render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_R
 		dstTmp.w = w;
 		dstTmp.h = h;
 	}
+	if (!camIndep && camera_ != nullptr) {
+		dstTmp.x -= camera_->currentPos().x;
+		dstTmp.y -= camera_->currentPos().y;
+	}
 	if (flip == SDL_FLIP_NONE) {
 		SDL_assert (SDL_RenderCopy(renderer_, texture, srcRect, &dstTmp) != -1);
 			//cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
 	}
 	else {
-		if (SDL_RenderCopyEx(renderer_, texture, srcRect, &dstTmp, NULL, NULL, flip) == -1)
-			cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
+		SDL_assert(SDL_RenderCopyEx(renderer_, texture, srcRect, &dstTmp, NULL, NULL, flip) != -1);
 	}
 }
 
@@ -116,4 +125,8 @@ void Graphics::draw() {
 void Graphics::present() {
 	//SDL_UpdateWindowSurface(window_);
 	SDL_RenderPresent(renderer_);
+}
+
+Rectangle Graphics::screenRect() const {
+	return Rectangle(0, 0, screenWidth, screenHeight);
 }

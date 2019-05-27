@@ -27,5 +27,5 @@ void DamageText::update(units::MS deltaTime) {
 void DamageText::draw(Graphics& graphics) const {
 	if(floatTimer_.isActive())
 		numberSprite_.draw(graphics, numToDisplay_, posX_, posY_, 1,
-			true, units::CENTER_ALIGNED);
+			false, units::CENTER_ALIGNED);
 }

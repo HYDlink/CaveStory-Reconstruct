@@ -51,3 +51,41 @@ class Scene{
 }
 ```
 
+## 相机处理
+
+参考: [How Cameras in Side-Scrollers Work](https://www.youtube.com/watch?v=pdvCO97jOQk) 非常详细地描述概括了绝大部分2d卷轴ACT游戏的镜头处理
+
+(视频22.40)洞窟物语原作使用 双向集中, 根据角色朝向和速度移动镜头, 根据角色位置锁定, [平滑移动](https://www.reddit.com/r/gamedev/comments/4zbrgp/how_does_unitys_smoothdamp_work/)
+
+![CSCameraControl](CaveStory/pic/CSCameraControl.PNG)
+
+![physics-smoothing](CaveStory/pic/physics-smoothing.PNG)
+
+## 碰撞处理
+
+[参考](http://higherorderfun.com/blog/2012/05/20/the-guide-to-implementing-2d-platformers/) 主要讲了2D平台游戏的碰撞实现, 比如楼梯, 单向可穿过平台, 斜坡. 后面讲解了一些基本运动.
+
+**加速实现**: 
+
+1. 使用目标速度再用lerp进行逼近
+
+   ```c
+   vector2f curSpeed = a * targetSpeed + (1-a) * curSpeed;
+   if (fabs(curSpeed.x) < threshold) curSpeed.x = 0;
+   if (fabs(curSpeed.y) < threshold) curSpeed.y = 0;
+   ```
+
+2. 通常物理实现, 速度每时间加上加速度
+
+   ```c
+   vector2f direction = vector2f(sign(targetSpeed.x - curSpeed.x),
+                                 sign(targetSpeed.y - curSpeed.y));
+   curSpeed += acceleration * direction;
+   if (sign(targetSpeed.x - curSpeed.x) != direction.x)
+       curSpeed.x = targetSpeed.x;
+   if (sign(targetSpeed.y - curSpeed.y) != direction.y)
+       curSpeed.y = targetSpeed.y;
+   ```
+
+**跳跃实现**:
+

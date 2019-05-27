@@ -31,6 +31,7 @@ private:
 	std::shared_ptr<Player> player_;
 	std::shared_ptr<Bat> bat_;
 	std::shared_ptr<Map> caveMap_;
+	std::shared_ptr<Camera> camera_;
 	std::shared_ptr<NumberSprite> numberSprite_;
 };
 

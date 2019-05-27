@@ -56,7 +56,15 @@ void Map::loadBgMapData(const std::string& filename) {
 }
 
 void Map::loadBd(Graphics& graphics, const std::string& filename) {
-	fixedBd.reset(new FixedBackdrop(graphics, filename));
+	fixedBd.reset(new FixedBackdrop(graphics, filename, mapWidth_, mapHeight_));
+}
+
+units::Tile Map::mapWidth() const { return mapWidth_; }
+
+units::Tile Map::mapHeight() const { return mapHeight_; }
+
+Rectangle Map::levelRect() const {
+	return Rectangle(0, 0, units::tileToGame(mapWidth_), units::tileToGame(mapHeight_));
 }
 
 //TODO 检测Tile类型而不是单纯返回mapData是否在特定位置什么的

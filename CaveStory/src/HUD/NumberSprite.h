@@ -16,7 +16,7 @@ class NumberSprite {
 public:
 	NumberSprite(Graphics& graphics, const std::string& filename);
 	void draw(Graphics& graphics, int num, units::Pixel desX, units::Pixel desY,
-		units::Pixel padding = 0, bool showSymbol = false, 
+		units::Pixel padding = 0, bool showSymbol = false, bool camIndep = false,
 		units::ALIGN align = units::LEFT_ALIGNED) const;
 private:
 	std::vector<std::shared_ptr<Sprite>> whiteDigits_;

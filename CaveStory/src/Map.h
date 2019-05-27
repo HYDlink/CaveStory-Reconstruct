@@ -53,6 +53,9 @@ public:
 	void loadBgMapData(const std::string& filename);
 	void loadBd(Graphics& graphics, const std::string& filename);
 
+	units::Tile mapWidth() const;
+	units::Tile mapHeight() const;
+	Rectangle levelRect() const;
 	std::vector<CollisionTile> getCollidingTiles(const Rectangle& r) const;
 
 	void drawBd(Graphics& graphics);

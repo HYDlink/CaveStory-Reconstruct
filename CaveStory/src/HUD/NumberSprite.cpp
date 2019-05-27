@@ -27,7 +27,7 @@ NumberSprite::NumberSprite(Graphics& graphics, const std::string& filename) {
 
 //desX为目标对齐位置
 void NumberSprite::draw(Graphics& graphics, int num, units::Pixel desX, units::Pixel desY,
-	units::Pixel padding, bool showSymbol, units::ALIGN align) const {
+	units::Pixel padding, bool showSymbol, bool camIndep, units::ALIGN align) const {
 	int digitNum = 0;
 	for (int tmp = abs(num); tmp > Radix; tmp /= Radix)
 		++digitNum;
@@ -44,7 +44,7 @@ void NumberSprite::draw(Graphics& graphics, int num, units::Pixel desX, units::P
 	auto &color = (num < 0) ? redDigits_ : whiteDigits_;
 	num = abs(num);//置于绝对值，只获得正数来访问color下标
 	while (digitNum >= 0) {//从最低位数字（右侧）开始画
-		color[num % Radix]->draw(graphics, currentDesX + digitNum * modSize, desY);
+		color[num % Radix]->draw(graphics, currentDesX + digitNum * modSize, desY, camIndep);
 		num /= Radix;
 		--digitNum;
 	}
