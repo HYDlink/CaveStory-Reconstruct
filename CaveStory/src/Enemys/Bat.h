@@ -4,7 +4,7 @@
 #include "../Rectangle.h"
 class Player;
 class NumberSprite;
-class Bat : public Enemy {
+class Bat : public Enemy, public GameObject {
 public:
 	using Enemy::animation_;
 	const Rectangle damageRect{ 5, 3, 22, 26 };

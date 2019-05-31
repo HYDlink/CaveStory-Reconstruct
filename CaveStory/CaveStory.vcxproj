@@ -35,6 +35,8 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Scenes\Cave0.cpp" />
+    <ClCompile Include="src\Scenes\Scene.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\Timer.cpp" />
@@ -61,10 +63,13 @@
     <ClInclude Include="src\Math.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Rectangle.h" />
+    <ClInclude Include="src\Scenes\Cave0.h" />
+    <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\units.h" />
+    <ClInclude Include="src\Utils\Locator.h" />
     <ClInclude Include="src\Utils\sideType.h" />
     <ClInclude Include="src\Vector2d.h" />
   </ItemGroup>
@@ -172,6 +177,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -204,6 +210,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -49,7 +49,7 @@ public:
 	const units::Frame CharTypeSprites = 6;
 
 	//graphics获取渲染目标, map获取当前地图的碰撞体, filename获取精灵图资源文件位置
-	Player(Graphics& graphics, std::shared_ptr<Map> map,
+	Player(Graphics& graphics, std::shared_ptr<ForeGround> map,
 		const std::string& filename, units::Game xPos, units::Game yPos,
 		NumberSprite& numberSprite);
 	~Player();

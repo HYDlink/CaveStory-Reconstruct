@@ -10,9 +10,9 @@ namespace {
 	const units::HP InitialHP = 20;
 }
 
-Player::Player(Graphics& graphics, std::shared_ptr<Map> map, const string& filename, 
+Player::Player(Graphics& graphics, std::shared_ptr<ForeGround> map, const string& filename, 
 	units::Game xPos, units::Game yPos,	NumberSprite& numberSprite)
-	: clipRects_(CharTypeSprites, vector<SDL_Rect>(MotionSprites)),
+	: GameObject(LAYER::PLAYER), clipRects_(CharTypeSprites, vector<SDL_Rect>(MotionSprites)),
 	  physics_(new PlayerPhysics(this, xPos, yPos)), collision_(new PlayerCollision(this, physics_, map)),
 	  invisibleTimer_(InvisibleTime), healthBar_(graphics, "res/TextBox.bmp", InitialHP, numberSprite),
 	  numberSprite_(numberSprite), damageText_(numberSprite_)
@@ -22,6 +22,7 @@ Player::Player(Graphics& graphics, std::shared_ptr<Map> map, const string& filen
 	animation_ = make_shared<Animation>(graphics, filename, clipRects_[0]);
 	animator_ = make_shared<Animator>(animation_);
 	setAimator();
+	children_.push_back(make_shared<HelathBar>(healthBar_));
 }
 
 
@@ -128,7 +129,7 @@ void Player::draw(Graphics& graphics) const {
 		return;
 	SDL_Rect pos{ units::gameToPixel(physics_->xPos_), units::gameToPixel(physics_->yPos_), 0, 0 };
 	animation_->draw(graphics, &pos);
-	healthBar_.draw(graphics);
+	//healthBar_.draw(graphics);
 	damageText_.draw(graphics);
 }
 

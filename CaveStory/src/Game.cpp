@@ -1,7 +1,10 @@
 #include "Game.h"
 #include "Enemys/Bat.h"
 #include "Timer.h"
+#include "Scenes/Cave0.h"
 #include "CSCamera.h"
+
+#define CSCAMERA
 
 using namespace std;
 
@@ -23,26 +26,10 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void Game::eventloop()
-{
+void Game::eventloop() {
 	Graphics graphics;
-	startTick = SDL_GetTicks();
-	caveMap_ = make_shared<Map>();
-	caveMap_->loadTile(graphics, "res/PrtCave.bmp", 16, 5);
-	caveMap_->loadFgMapData("res/PrtCave.txt");
-	caveMap_->loadBd(graphics, "res/bkBlue.bmp");
-	numberSprite_ = make_shared<NumberSprite>(graphics, "res/TextBox.bmp");
-	player_ = make_shared<Player>(graphics, caveMap_, "res/MyChar.bmp", 240, 240, *numberSprite_);
-	bat_ = make_shared<Bat>(graphics, *player_, "res/NpcCemet.bmp", 
-		Position2D(units::tileToPixel(3), units::tileToPixel(5)));
-#ifdef CSCAMERA
-	camera_ = make_shared<CSCamera>(player_);
-#else
-	camera_ = make_shared<Camera>(graphics.screenRect());
-#endif
-	camera_->setRestrict(caveMap_->levelRect());
-	graphics.setCamera(camera_);
-
+	scene_ = make_shared<Cave0>();
+	//scene_.reset(new Cave0);
 	while (running) {
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
@@ -50,11 +37,12 @@ void Game::eventloop()
 			case SDL_QUIT: running = false;
 				break;
 			}
-			player_->handleEvent(e);
+			scene_->getPlayer()->handleEvent(e);
 		}
-
-		draw(graphics);
 		update();
+		graphics.clear();
+		scene_->draw(graphics);
+		graphics.present();
 	}
 }
 
@@ -63,29 +51,13 @@ void Game::update()
 	units::MS deltaTime = SDL_GetTicks() - startTick;
 	deltaTime = std::min(deltaTime, maxDeltaTime);
 	calculateFps(1000);
-
 	Timer::updateAll(deltaTime);
-	player_->update(deltaTime);
-#ifndef CSCAMERA
-	camera_->follow(player_->centerPos());
-#endif
-	camera_->update(deltaTime);
-	bat_->update(deltaTime);
+	scene_->update(deltaTime);
 	startTick = SDL_GetTicks();
 }
 
 void Game::draw(Graphics& graphics) {
 	graphics.clear();
-
-	graphics.draw();
-	caveMap_->drawBd(graphics);
-
-	SDL_Rect position{ 100, 100, 0, 0 };
-	player_->draw(graphics);
-	bat_->draw(graphics);
-
-	caveMap_->drawFg(graphics);
-
 	graphics.present();
 }
 

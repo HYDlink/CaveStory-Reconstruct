@@ -34,7 +34,7 @@ namespace {
 }
 
 HelathBar::HelathBar(Graphics& graphics, const std::string& path,
-	units::HP maxHp, NumberSprite& numberSprite) :
+	units::HP maxHp, NumberSprite& numberSprite) : GameObject(LAYER::HUD),
 	healthBarSprite_(graphics, path, 
 		SDL_Rect{ units::gameToPixel(kHealthBarSourceX), units::gameToPixel(kHealthBarSourceY),
 	  units::gameToPixel(kHealthBarSourceWidth), units::gameToPixel(kHealthBarSourceHeight) }

@@ -12,7 +12,7 @@ struct CollisionInfo {
 
 class CollisionComponent {
 public:
-	static CollisionInfo getCollisionInfo(const Map& map, const Rectangle& rectangle) {
+	static CollisionInfo getCollisionInfo(const ForeGround& map, const Rectangle& rectangle) {
 		//不是很懂,这里假想情况是碰撞rectangle不太可能跨越两个地图块以上
 		std::vector<CollisionTile> collisions = map.getCollidingTiles(rectangle);
 		CollisionInfo info{ 0, 0, false };

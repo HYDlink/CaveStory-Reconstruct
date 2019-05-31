@@ -5,6 +5,7 @@
 #include "Rectangle.h"
 #include "Tile.h"
 #include "units.h"
+#include "GameObject.h"
 
 #include <fstream>
 #include <vector>
@@ -20,6 +21,8 @@ struct CollisionTile {
 	TileType type;
 };
 
+//TODO 分离前景Map和后景Map, 还有背景，洞窟的地图使用了三个文件存储一个地图
+//TODO 分离贴图数据和Map存储位置数据
 class Map {
 public:
 	Map();
@@ -45,28 +48,35 @@ public:
 	using TileData = std::vector<std::vector<TileType>>;
 
 	void loadTile(Graphics& graphics, const std::string& filename, units::Tile rows, units::Tile cols);
-	//TODO 保存tiledata的类型
+	//TODO 加载地图精灵对应的地形类型TileFlag
 	void loadTileData(const std::string& filename, TileData& dataToStore);
-	void loadMapData(const std::string& filename, MapData& dataToStore);
-	void loadFgMapData(const std::string& filename);
-	void loadBgTile(Graphics& graphics, const std::string& filename, units::Tile rows, units::Tile cols);
-	void loadBgMapData(const std::string& filename);
-	void loadBd(Graphics& graphics, const std::string& filename);
-
+	void loadMapData(const std::string& filename);
 	units::Tile mapWidth() const;
 	units::Tile mapHeight() const;
 	Rectangle levelRect() const;
-	std::vector<CollisionTile> getCollidingTiles(const Rectangle& r) const;
-
-	void drawBd(Graphics& graphics);
-	void drawFg(Graphics& graphics);
-private:
+	void draw(Graphics& graphics) const;
+protected:
 	std::shared_ptr<Tile> tile_, bgTile_;
-	std::shared_ptr<FixedBackdrop> fixedBd;
-	MapData mapData_, bgMapData_;//存储tile相关的位置
+	MapData mapData_;//存储tile相关的位置
 	units::Tile mapWidth_ = 0, mapHeight_ = 0;
 	//普遍情况下应该不会有tileMap的行数或者列数超过uint8的吧，所以直接使用8位存储
 };
 
+class ForeGround : public Map, public GameObject {
+public:
+	ForeGround();
+	std::vector<CollisionTile> getCollidingTiles(const Rectangle& r) const;
+	void update(units::MS t) override {}
+	void draw(Graphics& graphics) const override { Map::draw(graphics); }
+};
+
+//TODO
+class CompleteMap: public GameObject {
+public:
+
+private:
+	std::shared_ptr<FixedBackdrop> fixedBd;
+	//foreGround, BackGround位于Children
+};
 
 #endif // !MAP_H_

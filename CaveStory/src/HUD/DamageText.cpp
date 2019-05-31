@@ -4,7 +4,7 @@ namespace {
 	constexpr const units::MS FloatTime = 500;
 }
 
-DamageText::DamageText(NumberSprite& numberSprite):
+DamageText::DamageText(NumberSprite& numberSprite): GameObject(LAYER::HUD),
 	numberSprite_(numberSprite), floatTimer_(FloatTime), 
 	numToDisplay_(0), initPosX_(0), initPosY_(0), posX_(0), posY_(0) {}
 
@@ -27,5 +27,5 @@ void DamageText::update(units::MS deltaTime) {
 void DamageText::draw(Graphics& graphics) const {
 	if(floatTimer_.isActive())
 		numberSprite_.draw(graphics, numToDisplay_, posX_, posY_, 1,
-			false, units::CENTER_ALIGNED);
+			true, false, units::CENTER_ALIGNED);
 }

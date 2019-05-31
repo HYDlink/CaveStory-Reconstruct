@@ -15,7 +15,7 @@ namespace {
 }
 
 Bat::Bat(Graphics& graphics, Player& player, const std::string& filename, Position2D pos):
-    Enemy(graphics, filename), player_(player), flightAngle_(0), pos_(pos), centerY_(pos.y){
+    GameObject(LAYER::ENEMY), Enemy(graphics, filename), player_(player), flightAngle_(0), pos_(pos), centerY_(pos.y){
 	setClipRect();
 	animation_->setFrames(clipRects_);
 	animation_->start_Animation(0, 2, 6, true);

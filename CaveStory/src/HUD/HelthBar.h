@@ -8,7 +8,7 @@
 #include "..//GameObject.h"
 //HP
 //HPbar°×¿òµÄÎ»ÖÃÎª48px-126px
-class HelathBar : GameObject{
+class HelathBar : public GameObject{
 public:
 	HelathBar(Graphics& graphics, const std::string& path, units::HP maxHp
 		, NumberSprite& numberSprite);

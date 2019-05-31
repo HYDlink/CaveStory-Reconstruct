@@ -25,6 +25,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{eda3ad32-b046-499f-b5d2-e3e0383ef5bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{117e4df4-a09d-4d55-a68e-68b3354eafe5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Player.cpp">
@@ -83,6 +86,12 @@
     </ClCompile>
     <ClCompile Include="src\CSCamera.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scenes\Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scenes\Cave0.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +175,15 @@
     </ClInclude>
     <ClInclude Include="src\CSCamera.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\Cave0.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Locator.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

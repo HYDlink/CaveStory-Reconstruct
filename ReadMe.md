@@ -13,6 +13,7 @@ https://github.com/drbawb/rust-story : 入门rust后打算参考
 详细的内容在[Notes.md](Notes.md)中
 
 - [ ] 镜头处理
+- [ ] 攻击消灭敌人
 - [ ] 理解ECS
 - [ ] 场景管理
 - [ ] Animator类状态机实现

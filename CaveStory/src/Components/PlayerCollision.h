@@ -12,7 +12,8 @@ public:
 	const Rectangle CollisionX{ 6, 10, 20, 12 };
 	const Rectangle CollisionY{ 10, 2, 12, 30 };
 
-	PlayerCollision(Player* const player, PlayerPhysics* physics, std::shared_ptr<Map> map = std::shared_ptr<Map>()) :
+	PlayerCollision(Player* const player, PlayerPhysics* physics,
+		std::shared_ptr<ForeGround> map = std::shared_ptr<ForeGround>()) :
 		player_(player), physics_(physics), map_(map) {};
 	
 	bool xCollide(units::Game deltaX);
@@ -28,6 +29,6 @@ public:
 private:
 	Player* const player_;
 	PlayerPhysics *physics_;
-	std::shared_ptr<Map> map_;
+	std::shared_ptr<ForeGround> map_;
 };
 #endif // !PLAYERCOLLISION_H_

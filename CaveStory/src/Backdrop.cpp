@@ -5,7 +5,8 @@ FixedBackdrop::FixedBackdrop(Graphics& graphics, const std::string& path):
     FixedBackdrop(graphics, path, 0, 0){}
 
 FixedBackdrop::FixedBackdrop(Graphics& graphics, const std::string& path,
-	units::Tile width, units::Tile height): width_(width), height_(height) {
+	units::Tile width, units::Tile height): width_(width), height_(height),
+    GameObject(LAYER::BACKDROP) {
 	texture_ = graphics.loadFromFile(path);
 }
 

@@ -28,7 +28,6 @@ public:
 	void blitSurface(SDL_Surface* surface, SDL_Rect* srcRect, SDL_Rect* dstRect);
 	void clear();
 	void update();
-	void draw();
 	void present();
 
 	Rectangle screenRect() const;

@@ -1,4 +1,5 @@
 #include "Graphics.h"
+#include "Utils/Locator.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ Graphics::Graphics(shared_ptr<Camera> cam): camera_(cam)
 	if (renderer_ == NULL)
 		cerr << "SDL_CreateRenderer Failed: " << SDL_GetError() << endl;
 	SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
+	Locator<Graphics>::provide(this);
 }
 
 
@@ -109,21 +111,14 @@ void Graphics::blitSurface(SDL_Surface* surface, SDL_Rect* srcRect, SDL_Rect* ds
 }
 
 void Graphics::clear() {
-	//SDL_SetRenderDrawColor(renderer_, 0, 255, 0, 0);
+	//SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
 	SDL_RenderClear(renderer_);
 }
 
 void Graphics::update() {
 }
 
-void Graphics::draw() {
-	SDL_Rect srcRect{ 0, 0, 32, 32 };
-	SDL_Rect dstRect{ 100, 100, 32, 32 };
-	//blitSurface(sprite_surfaces_["res/MyChar.bmp"], &srcRect, &dstRect);
-}
-
 void Graphics::present() {
-	//SDL_UpdateWindowSurface(window_);
 	SDL_RenderPresent(renderer_);
 }
 
