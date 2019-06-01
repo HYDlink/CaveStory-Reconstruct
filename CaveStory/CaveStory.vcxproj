@@ -36,6 +36,7 @@
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scenes\Cave0.cpp" />
+    <ClCompile Include="src\Scenes\ParticleTest.cpp" />
     <ClCompile Include="src\Scenes\Scene.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\Tile.cpp" />
@@ -56,6 +57,8 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\Graphics.h" />
+    <ClInclude Include="src\Graphics\Particle.h" />
+    <ClInclude Include="src\Graphics\ParticleGroup.h" />
     <ClInclude Include="src\HUD\DamageText.h" />
     <ClInclude Include="src\HUD\HelthBar.h" />
     <ClInclude Include="src\HUD\NumberSprite.h" />
@@ -64,14 +67,17 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Rectangle.h" />
     <ClInclude Include="src\Scenes\Cave0.h" />
+    <ClInclude Include="src\Scenes\ParticleTest.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Timer.h" />
-    <ClInclude Include="src\units.h" />
+    <ClInclude Include="src\Utility.h" />
     <ClInclude Include="src\Utils\Locator.h" />
+    <ClInclude Include="src\Utils\PolarVector.h" />
     <ClInclude Include="src\Utils\sideType.h" />
-    <ClInclude Include="src\Vector2d.h" />
+    <ClInclude Include="src\Utils\units.h" />
+    <ClInclude Include="src\Utils\Vector2d.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\(TODO)PrtCave.tmd" />

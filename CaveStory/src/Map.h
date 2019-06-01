@@ -4,7 +4,7 @@
 #include "Backdrop.h"
 #include "Rectangle.h"
 #include "Tile.h"
-#include "units.h"
+#include "Utils/units.h"
 #include "GameObject.h"
 
 #include <fstream>
@@ -22,7 +22,7 @@ struct CollisionTile {
 };
 
 //TODO 分离前景Map和后景Map, 还有背景，洞窟的地图使用了三个文件存储一个地图
-//TODO 分离贴图数据和Map存储位置数据
+//TODO 分离Tile贴图数据和Map存储位置数据
 class Map {
 public:
 	Map();

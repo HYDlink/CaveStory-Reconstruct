@@ -6,7 +6,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Graphics.h"
-#include "units.h"
+#include "Utils/units.h"
 
 class Sprite
 {

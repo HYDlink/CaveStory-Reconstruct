@@ -111,7 +111,7 @@ void Graphics::blitSurface(SDL_Surface* surface, SDL_Rect* srcRect, SDL_Rect* ds
 }
 
 void Graphics::clear() {
-	//SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
 	SDL_RenderClear(renderer_);
 }
 

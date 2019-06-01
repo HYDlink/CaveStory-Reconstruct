@@ -2,7 +2,7 @@
 #define NUMBER_SPRITE_H_
 
 #include "..//Sprite.h"
-#include "..//units.h"
+#include "../Utils/units.h"
 
 #include <vector>
 #include <memory>

@@ -8,9 +8,6 @@ using namespace std;
 void Scene::update(units::MS deltaTime) {
 	for (auto& object : objects_)
 		object->update(deltaTime);
-#ifndef CSCAMERA
-	camera_->follow(player_->centerPos());
-#endif
 	camera_->update(deltaTime);
 }
 

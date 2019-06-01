@@ -83,7 +83,7 @@ namespace units {
 		}
 	}
 }
-typedef Vector2D<units::Game> Position2D;
-typedef Vector2D<units::Game> Dimensions2D;
+using Position2D = Vector2D<units::Game>;
+using Dimensions2D = Vector2D<units::Game>;
 
 #endif // !UNITS_H_

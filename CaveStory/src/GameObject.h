@@ -1,5 +1,5 @@
 #pragma once
-#include "units.h"
+#include "Utils/units.h"
 #include <vector>
 #include <memory>
 
@@ -37,7 +37,7 @@ public:
 		}
 		return children;
 	}
-	const LAYER layer;
+	LAYER layer;
 protected:
 	std::vector<ObjPtr> children_;
 };

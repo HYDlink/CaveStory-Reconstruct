@@ -28,6 +28,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{117e4df4-a09d-4d55-a68e-68b3354eafe5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{81978386-5b7a-4091-98d8-2ab44474a154}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Player.cpp">
@@ -93,6 +96,9 @@
     <ClCompile Include="src\Scenes\Cave0.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scenes\ParticleTest.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics.h">
@@ -120,9 +126,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Animator.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector2d.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Timer.h">
@@ -164,9 +167,6 @@
     <ClInclude Include="src\Rectangle.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\units.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\Math.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -184,6 +184,27 @@
     </ClInclude>
     <ClInclude Include="src\Utils\Locator.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\PolarVector.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\units.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Vector2d.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Particle.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\ParticleTest.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\ParticleGroup.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

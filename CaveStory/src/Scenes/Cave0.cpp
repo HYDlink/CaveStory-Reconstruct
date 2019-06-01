@@ -30,3 +30,14 @@ void Cave0::init() {
 	graphics->setCamera(camera_);
 	objects_.assign({ caveBd_, caveFore_, player_, bat_ });
 }
+
+void Cave0::update(units::MS deltaTime) {
+#ifndef CSCAMERA
+	camera_->follow(player_->centerPos());
+#endif
+	Scene::update(deltaTime);
+}
+
+void Cave0::handleEvent(SDL_Event* e) {
+	player_->handleEvent(*e);
+}
