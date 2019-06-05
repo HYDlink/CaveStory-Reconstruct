@@ -1,7 +1,7 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "Animation.h"
+#include "Graphics/Animation.h"
 #include "Animator.h"
 #include "GameObject.h"
 #include "Rectangle.h"

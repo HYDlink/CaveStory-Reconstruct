@@ -1,9 +1,9 @@
 #ifndef GAME_H_
 #define GAME_H_
 #include <SDL.h>
-#include "Graphics.h"
+#include "Graphics/Graphics.h"
 #include "HUD/NumberSprite.h"
-#include "Sprite.h"
+#include "Graphics/Sprite.h"
 #include "Player.h"
 #include "Map.h"
 #include "Utils/units.h"

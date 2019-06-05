@@ -1,5 +1,5 @@
 #pragma once
-#include "Sprite.h"
+#include "Graphics/Sprite.h"
 #include "Utils/units.h"
 
 class Tile :

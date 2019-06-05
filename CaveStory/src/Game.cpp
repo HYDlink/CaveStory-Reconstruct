@@ -1,8 +1,7 @@
 #include "Game.h"
 #include "Enemys/Bat.h"
 #include "Timer.h"
-#include "Scenes/Cave0.h"
-#include "Scenes/ParticleTest.h"
+#include "Scenes.h"
 #include "CSCamera.h"
 
 #define CSCAMERA
@@ -29,8 +28,8 @@ Game::~Game()
 
 void Game::eventloop() {
 	Graphics graphics;
-	scene_ = make_shared<ParticleTest>();
-	//scene_.reset(new Cave0);
+	scene_ = make_shared<MainMenu/*在此修改场景*/>();
+	//scene_ = make_shared<Cave0>();
 	while (running) {
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {

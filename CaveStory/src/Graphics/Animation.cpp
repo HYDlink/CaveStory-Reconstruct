@@ -10,9 +10,12 @@ Animation::Animation(Graphics& graphics, const std::string& filename) :
 Animation::Animation(Graphics& graphics, const std::string& filename,
 	const std::vector<SDL_Rect>& frames):Sprite(graphics, filename), frames_(frames),
     currentFrame_(0), startFrame_(0), endFrame_(0),
-	totalFrames_(frames.size()), currentTime_(0){
-	
-}
+	totalFrames_(frames.size()), currentTime_(0){}
+
+Animation::Animation(Graphics& graphics, const std::string& filename, 
+	std::vector<SDL_Rect>&& frames): Sprite(graphics, filename), frames_(frames),
+	currentFrame_(0), startFrame_(0), endFrame_(0),
+	totalFrames_(frames.size()), currentTime_(0) {}
 
 Animation::~Animation() {
 }
@@ -27,9 +30,10 @@ void Animation::start_Animation(units::Frame bg, units::Frame ed,
 	if (bg == startFrame_ && ed == endFrame_)
 		//就是重复调用了, 这里elapsTime, 可能以后会用到慢速的功能, 所以需要保持现在的帧位置不变
 		return;
-	if (bg > totalFrames_ || ed > totalFrames_) {
-		cerr << "Out of Range" << endl;
-		return;
+	// bg和ed都设置为0或者非法值开始默认所有的动画
+	if (bg >= ed || bg > totalFrames_ || ed > totalFrames_) {
+		bg = 0;
+		ed = totalFrames_;
 	}
 	startFrame_ = bg;
 	endFrame_ = ed;
@@ -52,6 +56,6 @@ void Animation::update() {
 	}
 }
 
-void Animation::draw(Graphics& graphics, SDL_Rect* dstPos) {
+void Animation::draw(Graphics& graphics, SDL_Rect* dstPos) const {
 	Sprite::draw(graphics, &frames_[currentFrame_], dstPos, false, flip_);
 }

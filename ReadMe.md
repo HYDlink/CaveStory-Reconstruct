@@ -1,12 +1,16 @@
 # Cave Story Reconstruct
 
+CaveStory洞窟物语的一个复刻工程
+
 ### 参考内容
+
+www.cavestory.org：原游戏主要非官方网站
+
+https://store.steampowered.com/app/200900/Cave_Story/：原游戏
 
 https://github.com/chebert/cavestory-screencast : 作为教程使用, 因为作为教程所以讲的内容不全, 只是还原一个场景和一个蝙蝠和一些基本系统
 
-https://github.com/cuckydev/Cave-Story-Engine-2 : 纯c, 非常还原游戏
-
-https://github.com/drbawb/rust-story : 入门rust后打算参考
+https://github.com/cuckydev/Cave-Story-Engine-2 : 纯c, 反汇编得到，非常还原游戏
 
 ### TODO
 

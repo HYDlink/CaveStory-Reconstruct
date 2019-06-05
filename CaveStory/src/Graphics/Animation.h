@@ -1,6 +1,6 @@
 #pragma once
 #include "Sprite.h"
-#include "Utils/units.h"
+#include "../Utils/units.h"
 #include <vector>
 
 //TODO
@@ -12,17 +12,21 @@ public:
 	Animation(Graphics& graphics, const std::string& filename);
 	Animation(Graphics& graphics, const std::string& filename, 
 		const std::vector<SDL_Rect>& frames);
+	Animation(Graphics& graphics, const std::string& filename,
+		std::vector<SDL_Rect>&& frames);
 	~Animation();
 
 	void setFrames(const std::vector<SDL_Rect>& frames) 
 	{ frames_ = frames; totalFrames_ = frames.size(); }
-	units::Frame getFrames() { return totalFrames_; }
+	units::Frame getFrames() const { return totalFrames_; }
+	units::Frame getCurFrame() const { return currentFrame_; }
 
+	// bg和ed都设置为0或者非法值开始默认所有的动画
 	void start_Animation(units::Frame bg, units::Frame ed, 
 		units::MS framesPerFrame, bool loop = false, const SDL_RendererFlip flip = SDL_FLIP_NONE);
 	void flip(const SDL_RendererFlip flip) { flip_ = flip; }
 	void update();
-	void draw(Graphics& graphics, SDL_Rect* dstPos);
+	void draw(Graphics& graphics, SDL_Rect* dstPos) const;
 private:
 	std::vector<SDL_Rect> frames_;
 	bool loop_ = false;

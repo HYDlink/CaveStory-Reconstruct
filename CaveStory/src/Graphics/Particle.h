@@ -3,8 +3,8 @@
 #include "../Utils/units.h"
 #include "..//Utils/PolarVector.h"
 #include "..//GameObject.h"
-#include "../Graphics.h"
-#include "..//Sprite.h"
+#include "../Graphics/Graphics.h"
+#include "../Graphics/Sprite.h"
 
 class Particle : public GameObject {
 public:

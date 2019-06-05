@@ -1,8 +1,8 @@
 #ifndef ENEMY_H_
 #define ENEMY_H_
 
-#include "Graphics.h"
-#include "Animation.h"
+#include "Graphics/Graphics.h"
+#include "Graphics/Animation.h"
 #include "Animator.h"
 #include "GameObject.h"
 

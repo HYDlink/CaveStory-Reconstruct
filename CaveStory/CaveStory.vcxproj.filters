@@ -36,19 +36,10 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sprite.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Tile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
@@ -99,24 +90,30 @@
     <ClCompile Include="src\Scenes\ParticleTest.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scenes\MainMenu.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\SwitchSceneAnimation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Sprite.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Animation.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Graphics.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Graphics.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Map.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Player.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Sprite.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\Tile.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Animation.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">
@@ -205,6 +202,24 @@
     </ClInclude>
     <ClInclude Include="src\Graphics\ParticleGroup.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\MainMenu.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\SwitchSceneAnimation.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Sprite.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Animation.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Graphics.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

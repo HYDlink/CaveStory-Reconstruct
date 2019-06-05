@@ -1,7 +1,7 @@
 #ifndef HEALTH_BAR_
 #define HEALTH_BAR_
 
-#include "../Sprite.h"
+#include "../Graphics/Sprite.h"
 #include "../Utils/units.h"
 #include "../Timer.h"
 #include "NumberSprite.h"

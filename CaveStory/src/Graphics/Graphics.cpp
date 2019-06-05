@@ -1,11 +1,11 @@
 #include "Graphics.h"
-#include "Utils/Locator.h"
+#include "../Utils/Locator.h"
 
 using namespace std;
 
 Graphics::Graphics(): Graphics(nullptr) {}
 
-Graphics::Graphics(shared_ptr<Camera> cam): camera_(cam)
+Graphics::Graphics(shared_ptr<Camera> cam): camera_(cam), clearColor_{0, 0, 0, 0}
 {
 	window_ = SDL_CreateWindow("CaveStory Reconstruct",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -60,6 +60,14 @@ void Graphics::setCamera(shared_ptr<Camera> cam) {
 	camera_ = cam;
 }
 
+void Graphics::setClearColor(SDL_Color& color) {
+	clearColor_ = color;
+}
+
+void Graphics::setClearColor(SDL_Color&& color) {
+	clearColor_ = color;
+}
+
 /*
 *  \param texture   A pointer to the texture to load
 *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
@@ -111,7 +119,7 @@ void Graphics::blitSurface(SDL_Surface* surface, SDL_Rect* srcRect, SDL_Rect* ds
 }
 
 void Graphics::clear() {
-	SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(renderer_, clearColor_.r, clearColor_.g, clearColor_.b, clearColor_.a);
 	SDL_RenderClear(renderer_);
 }
 

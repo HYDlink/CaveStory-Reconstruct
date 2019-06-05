@@ -1,7 +1,7 @@
 #ifndef ANIMATOR_H_
 #define ANIMATOR_H_
 
-#include "Animation.h"
+#include "Graphics/Animation.h"
 
 #include <memory>
 

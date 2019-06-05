@@ -15,7 +15,7 @@ public:
 		units::MS curTime = SDL_GetTicks();
 		static Position2D acc{ 0, 0.05f };
 		if (particles_.size() < size_ && curTime - lastTime_ > newTime_) {
-			//抛射范围为90度角，以90度角为中心点，也就是以45度角为起始点， 可是，这不正太分布
+			//抛射范围为90度角，以270度角为中心点，也就是以225度角为起始点， 可是，这不正太分布
 			Position2D vel = PolarVector<units::Game>(1, 225 + 90 * rand() / RAND_MAX);
 			particles_.push_back(Particle(spawnPos_, vel, acc, lifeTime_));
 		}

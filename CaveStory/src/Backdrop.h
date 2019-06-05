@@ -1,7 +1,7 @@
 #ifndef BACKDROP_H_
 #define BACKDROP_H_
 
-#include "Graphics.h"
+#include "Graphics/Graphics.h"
 
 #if 0
 struct Backdrop {

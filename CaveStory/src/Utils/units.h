@@ -26,9 +26,14 @@ namespace units {
 	typedef float Accelration;//这样的一个优点是方便确认变量是速度还是加速度
 	typedef float AngularVelocity; // Degrees / MS
 
-	const Pixel TileSize = 32;
-	const Pixel HalfTile = 16;
-	const Pixel BgTileSize = 128;
+	constexpr const Pixel TileSize = 32;
+	constexpr const Pixel HalfTile = 16;
+	constexpr const Pixel BgTileSize = 128;
+	constexpr const Pixel ScreenWidth = 640;
+	constexpr const Pixel ScreenHeight = 480;
+	constexpr const Tile ScreenTileWidth = ScreenWidth / units::TileSize;
+	constexpr const Tile ScreenTileHeight = ScreenHeight / units::TileSize;
+	constexpr const MS animationDelta = 4;
 
 	enum ALIGN {
 		LEFT_ALIGNED,

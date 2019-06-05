@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Animator.cpp" />
     <ClCompile Include="src\Backdrop.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -28,7 +27,10 @@
     <ClCompile Include="src\CSCamera.cpp" />
     <ClCompile Include="src\Enemys\Bat.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\Graphics\Animation.cpp" />
+    <ClCompile Include="src\Graphics\Graphics.cpp" />
+    <ClCompile Include="src\Graphics\Sprite.cpp" />
+    <ClCompile Include="src\Graphics\SwitchSceneAnimation.cpp" />
     <ClCompile Include="src\HUD\DamageText.cpp" />
     <ClCompile Include="src\HUD\HelthBar.cpp" />
     <ClCompile Include="src\HUD\NumberSprite.cpp" />
@@ -36,14 +38,13 @@
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scenes\Cave0.cpp" />
+    <ClCompile Include="src\Scenes\MainMenu.cpp" />
     <ClCompile Include="src\Scenes\ParticleTest.cpp" />
     <ClCompile Include="src\Scenes\Scene.cpp" />
-    <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\Animator.h" />
     <ClInclude Include="src\Backdrop.h" />
     <ClInclude Include="src\Camera.h" />
@@ -56,9 +57,12 @@
     <ClInclude Include="src\Enemys\Bat.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObject.h" />
-    <ClInclude Include="src\Graphics.h" />
+    <ClInclude Include="src\Graphics\Animation.h" />
+    <ClInclude Include="src\Graphics\Graphics.h" />
     <ClInclude Include="src\Graphics\Particle.h" />
     <ClInclude Include="src\Graphics\ParticleGroup.h" />
+    <ClInclude Include="src\Graphics\Sprite.h" />
+    <ClInclude Include="src\Graphics\SwitchSceneAnimation.h" />
     <ClInclude Include="src\HUD\DamageText.h" />
     <ClInclude Include="src\HUD\HelthBar.h" />
     <ClInclude Include="src\HUD\NumberSprite.h" />
@@ -66,10 +70,11 @@
     <ClInclude Include="src\Math.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Rectangle.h" />
+    <ClInclude Include="src\Scenes.h" />
     <ClInclude Include="src\Scenes\Cave0.h" />
+    <ClInclude Include="src\Scenes\MainMenu.h" />
     <ClInclude Include="src\Scenes\ParticleTest.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
-    <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Utility.h" />
@@ -120,15 +125,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

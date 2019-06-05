@@ -1,7 +1,7 @@
 #ifndef NUMBER_SPRITE_H_
 #define NUMBER_SPRITE_H_
 
-#include "..//Sprite.h"
+#include "../Graphics/Sprite.h"
 #include "../Utils/units.h"
 
 #include <vector>

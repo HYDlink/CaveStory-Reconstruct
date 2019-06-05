@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scene.h"
-#include "../Graphics.h"
+#include "../Graphics/Graphics.h"
 
 class Cave0 final : public Scene {
 public:
