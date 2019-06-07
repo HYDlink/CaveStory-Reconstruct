@@ -50,7 +50,6 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 			std::cerr << "Unable to creat texture from "
 			<< file_path << ". SDL_Error: "
 			<< SDL_GetError() << std::endl;
-		sprite_surfaces_[file_path] = loadSurface;
 		//SDL_FreeSurface(loadSurface);
 	}
 	return sprite_sheets_[file_path];

@@ -5,7 +5,7 @@
 
 #include <SDL.h>
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include "../Camera.h"
 #include "../Utils/units.h"
@@ -40,10 +40,9 @@ private:
 	SDL_Color clearColor_;
 	SDL_Surface* screenSurface_;
 	std::shared_ptr<Camera> camera_;
-	std::map<std::string, SDL_Texture*> sprite_sheets_;
+	std::unordered_map<std::string, SDL_Texture*> sprite_sheets_;
 	//存储精灵图的位置，这样Sprite重复建立的时候首先读取这个，确认是否已经加载了
 	//如果加载了，那Sprite存的是这个的指针，和需要渲染的位置
-	std::map<std::string, SDL_Surface*> sprite_surfaces_;//存储精灵图Surface的位置
 };
 
 

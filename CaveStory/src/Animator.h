@@ -3,6 +3,7 @@
 
 #include "Graphics/Animation.h"
 
+#include <map>
 #include <memory>
 
 //建立不同的状态，并以特定方式命名

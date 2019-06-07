@@ -1,11 +1,11 @@
 #include "Sprite.h"
 
 
-Sprite::Sprite(Graphics& graphics, const std::string& path)
-	: Sprite(graphics, path, SDL_Rect()) {}
+Sprite::Sprite(Graphics& graphics, const std::string& path, bool black_is_transparent)
+	: Sprite(graphics, path, SDL_Rect(), black_is_transparent) {}
 
-Sprite::Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip) {
-	reset(graphics, filename, clip);
+Sprite::Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip, bool black_is_transparent) {
+	reset(graphics, filename, black_is_transparent, clip);
 }
 
 Sprite::~Sprite() {
@@ -14,15 +14,16 @@ Sprite::~Sprite() {
 
 void Sprite::reset() {
 	if (texture_ != NULL) {
-		SDL_DestroyTexture(texture_);
+		//不destroyTexture，因为Texture是从Graphic中共享得到的
 		texture_ = NULL;
 		srcPos_ = SDL_Rect();
 	}
 }
 
-void Sprite::reset(Graphics& graphics, const std::string& filename, const SDL_Rect& clip) {
+void Sprite::reset(Graphics& graphics, const std::string& filename, bool black_is_transparent, const SDL_Rect& clip) {
 	reset();
-	texture_ = graphics.loadFromFile(filename, true);
+	black_is_transparent_ = black_is_transparent;
+	texture_ = graphics.loadFromFile(filename, black_is_transparent_);
 	srcPos_ = clip;
 	if (srcPos_ == SDL_Rect()) {
 		uint32_t format;

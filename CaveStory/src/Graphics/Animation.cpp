@@ -2,13 +2,14 @@
 #include "Animation.h"
 using namespace std;
 
-Animation::Animation(Graphics& graphics, const std::string& filename) :
-	Sprite(graphics, filename), currentFrame_(0), startFrame_(0), endFrame_(0),
+Animation::Animation(Graphics& graphics, const std::string& filename, bool black_is_transparent) :
+	Sprite(graphics, filename, black_is_transparent), currentFrame_(0), startFrame_(0), endFrame_(0),
 	totalFrames_(0), currentTime_(0) {
 }
 
 Animation::Animation(Graphics& graphics, const std::string& filename,
-	const std::vector<SDL_Rect>& frames):Sprite(graphics, filename), frames_(frames),
+	const std::vector<SDL_Rect>& frames, bool black_is_transparent):
+	Sprite(graphics, filename, black_is_transparent), frames_(frames),
     currentFrame_(0), startFrame_(0), endFrame_(0),
 	totalFrames_(frames.size()), currentTime_(0){}
 
@@ -33,7 +34,7 @@ void Animation::start_Animation(units::Frame bg, units::Frame ed,
 	// bg和ed都设置为0或者非法值开始默认所有的动画
 	if (bg >= ed || bg > totalFrames_ || ed > totalFrames_) {
 		bg = 0;
-		ed = totalFrames_;
+		ed = totalFrames_ - 1;
 	}
 	startFrame_ = bg;
 	endFrame_ = ed;

@@ -10,6 +10,8 @@ using namespace std;
 
 MainMenu::MainMenu() { init(); sortObjectsByLayer(); }
 
+MainMenu::~MainMenu() {}
+
 void MainMenu::init() {
 	//32, ¿í512
 	const units::Tile xTileNum = 512 / units::TileSize;
@@ -19,7 +21,7 @@ void MainMenu::init() {
 	}
 	Graphics *graphics = Locator<Graphics>::get();
 	graphics->setClearColor(SDL_Color{ 255, 255, 255, 255 });
-	Animation ani(*graphics, "res/Fadewhite.bmp", std::move(clips));
+	Animation ani(*graphics, "res/Fadewhite.bmp", std::move(clips), false);
 	shared_ptr<SwitchSceneAnimation> ssa{ make_shared<SwitchSceneAnimation>(ani) };
 	camera_ = make_shared<Camera>(Locator<Graphics>::get()->screenRect());
 	objects_.emplace_back(ssa);

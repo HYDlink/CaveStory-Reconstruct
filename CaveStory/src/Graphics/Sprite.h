@@ -11,8 +11,9 @@
 class Sprite
 {
 public:
-	Sprite(Graphics& graphics, const std::string& filename);
-	Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip);
+	Sprite(Graphics& graphics, const std::string& filename, bool black_is_transparent = true);
+	Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip,
+		bool black_is_transparent = false);
 
 	Sprite(const Sprite&) = default;
 	Sprite(Sprite&&) = default;
@@ -21,7 +22,7 @@ public:
 	virtual ~Sprite();
 
 	void reset();
-	void reset(Graphics& graphics, const std::string& filename, const SDL_Rect& clip);
+	void reset(Graphics& graphics, const std::string& filename, bool black_is_transparent, const SDL_Rect& clip);
 	SDL_Texture* getTexture() { return texture_; }
 	virtual void draw(Graphics& graphics, const SDL_Rect* srcPos, const SDL_Rect* dstPos,
 		bool camIndep = false, const SDL_RendererFlip flip = SDL_FLIP_NONE) const;
@@ -29,6 +30,7 @@ public:
 		bool camIndep = false, const SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 protected:
 	SDL_Rect srcPos_;
+	bool black_is_transparent_;
 private:
 	SDL_Texture* texture_ = NULL;
 };

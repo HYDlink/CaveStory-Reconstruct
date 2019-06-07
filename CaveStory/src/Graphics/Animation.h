@@ -9,9 +9,9 @@
 class Animation :
 	public Sprite {
 public:
-	Animation(Graphics& graphics, const std::string& filename);
+	Animation(Graphics& graphics, const std::string& filename, bool black_is_transparent = true);
 	Animation(Graphics& graphics, const std::string& filename, 
-		const std::vector<SDL_Rect>& frames);
+		const std::vector<SDL_Rect>& frames, bool black_is_transparent = true);
 	Animation(Graphics& graphics, const std::string& filename,
 		std::vector<SDL_Rect>&& frames);
 	~Animation();
