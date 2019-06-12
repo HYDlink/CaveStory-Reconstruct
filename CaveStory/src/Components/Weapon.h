@@ -6,14 +6,16 @@
 constexpr const uint8_t states = 6;
 enum class WeaponType:uint8_t {
 	NONE,
-	BUBBLE,
+	SNAKE,
 	POLARSTAR,
 	FIREBALL,
 	MACHINEGUN,
-	MISSLE,
+	MISSLE, //朝上的时候需要调整x轴位置
+	BUBBLE = MISSLE + 2,//贴图中间莫名奇妙的几个空位
 	KNIFE,
-	SUPER_MISSLE,
-	SPUR
+	SUPER_MISSLE = BUBBLE + 3,
+	NEMESIS,
+	SPUR //这个的贴图位于最下方需要调整
 };
 class Sprite;
 class Player;
