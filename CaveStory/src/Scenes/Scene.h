@@ -12,6 +12,7 @@ union SDL_Event;
 
 class Scene {
 public:
+	using ObjPtr = std::shared_ptr<GameObject>;
 	Scene() {}
 	virtual ~Scene() = default;
 	virtual void init() = 0;
@@ -22,8 +23,8 @@ public:
 	
 	std::shared_ptr<Camera> getCamera() { return camera_; }
 protected:
-	std::vector<std::shared_ptr<GameObject>> objects_;
-	std::vector<std::shared_ptr<GameObject>> sortedObjs_;
+	std::vector<ObjPtr> objects_;
+	std::vector<ObjPtr> sortedObjs_;
 	std::shared_ptr<Camera> camera_;
 	std::shared_ptr<NumberSprite> numberSprite_;
 };

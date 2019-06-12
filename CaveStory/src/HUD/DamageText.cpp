@@ -1,4 +1,5 @@
 #include "DamageText.h"
+#include "NumberSprite.h"
 
 namespace {
 	constexpr const units::MS FloatTime = 500;

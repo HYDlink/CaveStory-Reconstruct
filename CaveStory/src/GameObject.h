@@ -20,12 +20,13 @@ class Graphics;
 class GameObject {
 	using ObjPtr = std::shared_ptr<GameObject>;
 public:
-	GameObject(LAYER l = LAYER::MAX):layer(l) {}
+	GameObject(LAYER l = LAYER::MAX): layer(l), isDead_(false) {}
 	~GameObject() = default;
 	virtual void update(units::MS deltaTime) = 0;
 	virtual void draw(Graphics& graphics) const = 0;
+	bool isDead() const { return isDead_; }
 	bool hasChildren() const { return !children_.empty(); }
-	//TODO 返回类型改为vector内含const指针
+
 	std::vector<std::shared_ptr<GameObject>> getChildren(){
 		if (!hasChildren()) return std::vector<std::shared_ptr<GameObject>>();
 		std::vector<std::shared_ptr<GameObject>> children;
@@ -40,6 +41,7 @@ public:
 	LAYER layer;
 protected:
 	std::vector<ObjPtr> children_;
+	bool isDead_;
 };
 
 // 根据图层对比的函数 operator< / less

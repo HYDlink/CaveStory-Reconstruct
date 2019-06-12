@@ -1,4 +1,5 @@
 #include "PlayerCollision.h"
+#include "../Player.h"
 
 bool PlayerCollision::xCollide(units::Game deltaX) {
 	CollisionInfo info;

@@ -1,12 +1,11 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "Graphics/Animation.h"
-#include "Animator.h"
 #include "GameObject.h"
 #include "Rectangle.h"
 #include "Map.h"
 #include "Timer.h"
+#include "HUD/NumberSprite.h"
 #include "HUD/HelthBar.h"
 #include "HUD/DamageText.h"
 
@@ -16,6 +15,8 @@
 #include <cassert>
 #include <tuple>
 
+class Animation;
+class Animator;
 class PlayerPhysics;
 class PlayerCollision;
 class Player : public GameObject {

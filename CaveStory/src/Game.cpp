@@ -1,4 +1,10 @@
 #include "Game.h"
+#include "Graphics/Graphics.h"
+#include "HUD/NumberSprite.h"
+#include "Graphics/Sprite.h"
+#include "Player.h"
+#include "Map.h"
+#include "Utils/units.h"
 #include "Enemys/Bat.h"
 #include "Timer.h"
 #include "Scenes.h"
@@ -28,7 +34,7 @@ Game::~Game()
 
 void Game::eventloop() {
 	Graphics graphics;
-	scene_ = make_shared<MainMenu/*在此修改场景*/>();
+	scene_ = make_shared<Cave0/*在此修改场景*/>();
 	//scene_ = make_shared<Cave0>();
 	while (running) {
 		SDL_Event e;

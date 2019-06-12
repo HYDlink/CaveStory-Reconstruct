@@ -6,9 +6,10 @@
 #include "Animator.h"
 #include "GameObject.h"
 
-class Enemy : GameObject {
+class Enemy : public GameObject {
 public:
 	Enemy(Graphics& graphics, const std::string& filename/*, units::Game xPos, units::Game yPos*/):
+		GameObject(LAYER::ENEMY),
 		animation_(std::make_shared<Animation>(graphics, filename)) {}
 	virtual ~Enemy() = default;
 	//TODO 尝试注释掉以下两行

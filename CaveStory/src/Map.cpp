@@ -1,4 +1,6 @@
 #include "Map.h"
+#include "Backdrop.h"
+#include "Tile.h"
 #include "GameObject.h"
 #include <sstream>
 

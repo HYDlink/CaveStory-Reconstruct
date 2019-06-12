@@ -27,7 +27,7 @@ Graphics::~Graphics()
 	SDL_DestroyRenderer(renderer_);
 }
 
-SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_transparent) {
+SDL_Texture* Graphics::loadFromFile(const std::string& file_path, TransparentColor color) {
 	if (sprite_sheets_.count(file_path) == 0) {
 		SDL_Surface* loadSurface = SDL_LoadBMP(file_path.c_str());
 		if (loadSurface == NULL) {
@@ -40,11 +40,8 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 		//设置加载图片的区域
 	//	if (srcPos_ == SDL_Rect() || SDL_SetClipRect(loadSurface, &srcPos_) == SDL_FALSE)
 	//		srcPos_ = loadSurface->clip_rect;
+		SetColorKey(color, loadSurface);
 
-		if (black_is_transparent) {
-			const Uint32 black_color = SDL_MapRGB(loadSurface->format, 0, 0, 0);
-			SDL_SetColorKey(loadSurface, SDL_TRUE, black_color);
-		}
 		sprite_sheets_[file_path] = SDL_CreateTextureFromSurface(renderer_, loadSurface);
 		if (sprite_sheets_[file_path] == NULL)
 			std::cerr << "Unable to creat texture from "
@@ -53,6 +50,21 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, bool black_is_
 		//SDL_FreeSurface(loadSurface);
 	}
 	return sprite_sheets_[file_path];
+}
+
+void Graphics::SetColorKey(const TransparentColor& color, SDL_Surface* loadSurface) {
+	Uint32 transparentColor = 0;
+	switch (color) {
+	case TransparentColor::NONE:
+		return;
+	case TransparentColor::BLACK:
+		transparentColor = SDL_MapRGB(loadSurface->format, 0, 0, 0);
+		break;
+	case TransparentColor::WHITE:
+		transparentColor = SDL_MapRGB(loadSurface->format, 255, 255, 255);
+		break;
+	}
+	SDL_SetColorKey(loadSurface, SDL_TRUE, transparentColor);
 }
 
 void Graphics::setCamera(shared_ptr<Camera> cam) {

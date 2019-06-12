@@ -1,14 +1,14 @@
 #ifndef ANIMATOR_H_
 #define ANIMATOR_H_
 
-#include "Graphics/Animation.h"
-
 #include <map>
 #include <memory>
+#include "Utils/units.h"
 
 //建立不同的状态，并以特定方式命名
 //触发
 //支持多个Animation
+class Animation;
 class Animator {
 public:
 	Animator();

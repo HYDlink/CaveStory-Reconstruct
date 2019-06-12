@@ -9,13 +9,16 @@
 class Animation :
 	public Sprite {
 public:
-	Animation(Graphics& graphics, const std::string& filename, bool black_is_transparent = true);
 	Animation(Graphics& graphics, const std::string& filename, 
-		const std::vector<SDL_Rect>& frames, bool black_is_transparent = true);
+		TransparentColor color = TransparentColor::BLACK);
+	Animation(Graphics& graphics, const std::string& filename, 
+		const std::vector<SDL_Rect>& frames, TransparentColor color = TransparentColor::BLACK);
 	Animation(Graphics& graphics, const std::string& filename,
 		std::vector<SDL_Rect>&& frames);
 	~Animation();
 
+	//start_Animation设置的动画帧结束
+	bool isStopped() const { return stoped_; }
 	void setFrames(const std::vector<SDL_Rect>& frames) 
 	{ frames_ = frames; totalFrames_ = frames.size(); }
 	units::Frame getFrames() const { return totalFrames_; }
@@ -30,6 +33,7 @@ public:
 private:
 	std::vector<SDL_Rect> frames_;
 	bool loop_ = false;
+	bool stoped_ = false;
 	SDL_RendererFlip flip_ = SDL_FLIP_NONE;
 
 	units::Frame totalFrames_;

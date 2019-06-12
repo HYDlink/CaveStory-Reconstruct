@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "Components/PlayerPhysics.h"
 #include "Components/PlayerCollision.h"
+#include "Graphics/Animation.h"
+#include "Animator.h"
 
 using namespace std;
 

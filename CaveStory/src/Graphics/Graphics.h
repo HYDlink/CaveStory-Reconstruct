@@ -12,6 +12,11 @@
 
 const units::Pixel screenWidth = 640;
 const units::Pixel screenHeight = 480;
+enum class TransparentColor {
+	NONE,
+	BLACK,
+	WHITE
+};
 
 class Camera;
 class Graphics
@@ -21,7 +26,10 @@ public:
 	Graphics(std::shared_ptr<Camera> cam);
 	~Graphics();
 	SDL_Renderer* getRenderer() const { return renderer_; }
-	SDL_Texture* loadFromFile(const std::string& path, bool black_is_transparent = false);
+	SDL_Texture* loadFromFile(const std::string& path, TransparentColor color = TransparentColor::BLACK);
+
+	static void SetColorKey(const TransparentColor& color, SDL_Surface* loadSurface);
+
 	void setCamera(std::shared_ptr<Camera>);
 	void setClearColor(SDL_Color& color);
 	void setClearColor(SDL_Color&& color);

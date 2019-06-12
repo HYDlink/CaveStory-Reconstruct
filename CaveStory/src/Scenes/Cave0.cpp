@@ -1,5 +1,7 @@
 #include "Cave0.h"
+#include "../Graphics/Graphics.h"
 #include "..//Map.h"
+#include "../Backdrop.h"
 #include "..//Player.h"
 #include "../Enemy.h"
 #include "..//Enemys/Bat.h"

@@ -93,9 +93,6 @@
     <ClCompile Include="src\Scenes\MainMenu.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\SwitchSceneAnimation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Sprite.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -103,6 +100,9 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Graphics.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\SwitchSceneAnimation.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -220,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="src\Scenes.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Weapon.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

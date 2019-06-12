@@ -1,15 +1,15 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include "Backdrop.h"
 #include "Rectangle.h"
-#include "Tile.h"
 #include "Utils/units.h"
 #include "GameObject.h"
 
 #include <fstream>
 #include <vector>
 
+class Tile;
+class FixedBackdrop;
 //使用Tile类加载TileMap
 //使用文件加载tileMap
 //使用背景

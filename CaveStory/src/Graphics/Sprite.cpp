@@ -1,11 +1,11 @@
 #include "Sprite.h"
 
 
-Sprite::Sprite(Graphics& graphics, const std::string& path, bool black_is_transparent)
-	: Sprite(graphics, path, SDL_Rect(), black_is_transparent) {}
+Sprite::Sprite(Graphics& graphics, const std::string& path, TransparentColor color)
+	: Sprite(graphics, path, SDL_Rect(), color) {}
 
-Sprite::Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip, bool black_is_transparent) {
-	reset(graphics, filename, black_is_transparent, clip);
+Sprite::Sprite(Graphics& graphics, const std::string& filename, const SDL_Rect& clip, TransparentColor color) {
+	reset(graphics, filename, color, clip);
 }
 
 Sprite::~Sprite() {
@@ -20,10 +20,11 @@ void Sprite::reset() {
 	}
 }
 
-void Sprite::reset(Graphics& graphics, const std::string& filename, bool black_is_transparent, const SDL_Rect& clip) {
+void Sprite::reset(Graphics& graphics, const std::string& filename, 
+	TransparentColor color, const SDL_Rect& clip) {
 	reset();
-	black_is_transparent_ = black_is_transparent;
-	texture_ = graphics.loadFromFile(filename, black_is_transparent_);
+	transparentColor_ = color;
+	texture_ = graphics.loadFromFile(filename, transparentColor_);
 	srcPos_ = clip;
 	if (srcPos_ == SDL_Rect()) {
 		uint32_t format;

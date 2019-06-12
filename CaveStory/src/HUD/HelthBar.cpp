@@ -1,4 +1,5 @@
 #include "HelthBar.h"
+#include "NumberSprite.h"
 namespace {
 
 	// HUD Constants

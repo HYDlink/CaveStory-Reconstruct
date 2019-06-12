@@ -4,10 +4,10 @@
 #include "../Graphics/Sprite.h"
 #include "../Utils/units.h"
 #include "../Timer.h"
-#include "NumberSprite.h"
 #include "..//GameObject.h"
 //HP
 //HPbar°×¿òµÄÎ»ÖÃÎª48px-126px
+class NumberSprite;
 class HelathBar : public GameObject{
 public:
 	HelathBar(Graphics& graphics, const std::string& path, units::HP maxHp
