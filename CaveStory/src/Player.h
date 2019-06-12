@@ -8,6 +8,8 @@
 #include "HUD/NumberSprite.h"
 #include "HUD/HelthBar.h"
 #include "HUD/DamageText.h"
+#include "Utils/FacingType.h"
+#include "Components/Weapon.h"
 
 #include <vector>
 #include <memory>
@@ -23,29 +25,6 @@ class Player : public GameObject {
 	friend class PlayerPhysics;
 	friend class PlayerCollision;
 public:
-	//TODO 更改为scoped enum, 即enum class MotionType, etc.
-	enum MotionType : Uint8 {
-		FIRST_MOTION_TYPE,
-		STANDING = FIRST_MOTION_TYPE,
-		INTERACTING,
-		WALKING,
-		JUMPING,
-		FALLING,
-		LAST_MOTION_TYPE
-	};
-	enum VerticalFacing : Uint8 {
-		FORWARD,
-		LOOKUP,
-		LOOKDOWN
-	};
-	struct CharState {
-		MotionType motionType = STANDING;
-		VerticalFacing verticalFacing = FORWARD;
-	};
-	//TODO 完善动画状态
-	static size_t getState(CharState state) { 
-		return state.motionType | (state.verticalFacing << 3);
-	}
 	const units::FPS MotionSprites = 11;
 	const units::Frame CharTypeSprites = 6;
 
@@ -70,6 +49,7 @@ public:
 	Position2D centerPos() const;
 	units::Velocity velX() const;
 	units::Velocity velY() const;
+	CharState state() const;
 	std::vector<Rectangle> collider() const;
 	void takeDamage(units::HP damage);
 
@@ -89,14 +69,15 @@ private:
 
 	std::vector<std::vector<SDL_Rect>> clipRects_;
 	CharState state_, lastState_;
-	HorizontalFacing horizontalFacing_; 
+
+	Weapon weapon;
 	NumberSprite& numberSprite_;
 	DamageText damageText_;
+	HelathBar healthBar_;
 
 	PlayerPhysics* physics_;
 	PlayerCollision* collision_;
 
-	HelathBar healthBar_;
 };
 
 #endif // !PLAYER_H_

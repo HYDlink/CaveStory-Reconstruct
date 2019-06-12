@@ -36,7 +36,6 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, TransparentCol
 				<< SDL_GetError() << std::endl;
 			return NULL;
 		}
-		//SDL_SetColorKey(loadSurface, 1, SDL_MapRGB(loadSurface->format, 0, 255, 255));
 		//设置加载图片的区域
 	//	if (srcPos_ == SDL_Rect() || SDL_SetClipRect(loadSurface, &srcPos_) == SDL_FALSE)
 	//		srcPos_ = loadSurface->clip_rect;
@@ -47,7 +46,7 @@ SDL_Texture* Graphics::loadFromFile(const std::string& file_path, TransparentCol
 			std::cerr << "Unable to creat texture from "
 			<< file_path << ". SDL_Error: "
 			<< SDL_GetError() << std::endl;
-		//SDL_FreeSurface(loadSurface);
+		SDL_FreeSurface(loadSurface);
 	}
 	return sprite_sheets_[file_path];
 }
@@ -79,6 +78,7 @@ void Graphics::setClearColor(SDL_Color&& color) {
 	clearColor_ = color;
 }
 
+//TODO 设置旋转等等
 /*
 *  \param texture   A pointer to the texture to load
 *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
@@ -90,12 +90,9 @@ void Graphics::setClearColor(SDL_Color&& color) {
 void Graphics::render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_Rect* dstRect,
 	bool camIndep, const SDL_RendererFlip flip) const
 {
-	bool hasDstRect = true;
+	//设置渲染目标位置
 	SDL_Rect dstTmp = SDL_Rect();
-	if (!dstRect) {
-		hasDstRect = false;
-	}
-	else dstTmp = *dstRect;
+	if(dstRect) dstTmp = *dstRect;
 	if (srcRect) {
 		dstTmp.w = srcRect->w;
 		dstTmp.h = srcRect->h;
@@ -107,13 +104,15 @@ void Graphics::render(SDL_Texture* texture, const SDL_Rect* srcRect, const SDL_R
 		dstTmp.w = w;
 		dstTmp.h = h;
 	}
+
+	//设置相机渲染空间
 	if (!camIndep && camera_ != nullptr) {
 		dstTmp.x -= camera_->currentPos().x;
 		dstTmp.y -= camera_->currentPos().y;
 	}
+
 	if (flip == SDL_FLIP_NONE) {
 		SDL_assert (SDL_RenderCopy(renderer_, texture, srcRect, &dstTmp) != -1);
-			//cerr << "SDL_RenderCopy failed: " << SDL_GetError() << endl;
 	}
 	else {
 		SDL_assert(SDL_RenderCopyEx(renderer_, texture, srcRect, &dstTmp, NULL, NULL, flip) != -1);

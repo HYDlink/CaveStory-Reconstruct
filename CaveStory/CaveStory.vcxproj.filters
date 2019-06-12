@@ -105,6 +105,9 @@
     <ClCompile Include="src\Graphics\SwitchSceneAnimation.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\Weapon.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Map.h">
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="src\Components\Weapon.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\FacingType.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

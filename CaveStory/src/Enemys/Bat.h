@@ -1,6 +1,7 @@
 #pragma once
 #include "../Enemy.h"
 #include "../Utils/units.h"
+#include "../Utils/FacingType.h"
 #include "../Rectangle.h"
 class Player;
 class NumberSprite;

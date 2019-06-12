@@ -17,14 +17,16 @@ Player::Player(Graphics& graphics, std::shared_ptr<ForeGround> map, const string
 	: GameObject(LAYER::PLAYER), clipRects_(CharTypeSprites, vector<SDL_Rect>(MotionSprites)),
 	  physics_(new PlayerPhysics(this, xPos, yPos)), collision_(new PlayerCollision(this, physics_, map)),
 	  invisibleTimer_(InvisibleTime), healthBar_(graphics, "res/TextBox.bmp", InitialHP, numberSprite),
-	  numberSprite_(numberSprite), damageText_(numberSprite_)
+	  numberSprite_(numberSprite), damageText_(numberSprite_),
+	  weapon(graphics, WeaponType::POLARSTAR, *this)
     {
 	physics_->setCollision(collision_);
 	setClipRect();
 	animation_ = make_shared<Animation>(graphics, filename, clipRects_[0]);
 	animator_ = make_shared<Animator>(animation_);
 	setAimator();
-	children_.push_back(make_shared<HelathBar>(healthBar_));
+	children_.emplace_back(make_shared<HelathBar>(healthBar_));
+	children_.emplace_back(make_shared<Weapon>(weapon));
 }
 
 
@@ -73,9 +75,9 @@ void Player::handleEvent(SDL_Event& e) {
 		lookForward();
 
 	if (inputs[SDL_SCANCODE_A])
-		horizontalFacing_ = FACING_LEFT;
+		state_.horizontalFacing = FACING_LEFT;
 	else if (inputs[SDL_SCANCODE_D])
-		horizontalFacing_ = FACING_RIGHT;
+		state_.horizontalFacing = FACING_RIGHT;
 
 	physics_->handleInput(inputs);
 }
@@ -89,7 +91,7 @@ void Player::update(units::MS deltaTime) {
 	updateState();
 	updateDebug();
 	animator_->triggerState(getState(state_));
-	animation_->flip(horizontalFacing_ ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
+	animation_->flip(state_.horizontalFacing ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 	animation_->update();
 	healthBar_.update(deltaTime);
 	damageText_.setPos(Position2D(pos().x + units::HalfTile, pos().y));
@@ -148,6 +150,10 @@ units::Velocity Player::velX() const {
 
 units::Velocity Player::velY() const {
 	return physics_->velocityY_;
+}
+
+CharState Player::state() const {
+	return state_;
 }
 
 std::vector<Rectangle> Player::collider() const {

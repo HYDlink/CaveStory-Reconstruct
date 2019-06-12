@@ -2,7 +2,8 @@
 #include "Animation.h"
 using namespace std;
 
-Animation::Animation(Graphics& graphics, const std::string& filename, TransparentColor color) :
+Animation::Animation(Graphics& graphics, const std::string& filename, 
+	TransparentColor color) :
 	Sprite(graphics, filename, color), currentFrame_(0), startFrame_(0), endFrame_(0),
 	totalFrames_(0), currentTime_(0) {
 }

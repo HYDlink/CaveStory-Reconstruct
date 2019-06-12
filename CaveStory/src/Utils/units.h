@@ -7,10 +7,6 @@
 #include "Vector2d.h"
 
 //有一个想法是实现画面拉伸保持比例增大分辨率, 貌似有点麻烦
-enum HorizontalFacing : bool {
-	FACING_LEFT,
-	FACING_RIGHT
-};
 namespace units {
 	typedef float Game;//可能使用float获取更精确的计算
 	typedef Uint16 Pixel;
@@ -55,11 +51,9 @@ namespace units {
 	inline Pixel gameToPixel(Game v) {
 		return Pixel(round(v));
 	}
-#if 0 //Uint到float直接隐式转换
 	inline Game pixelToGame(Pixel v) {
-		return Game(v);
+		return static_cast<Game>(v);
 	}
-#endif
 
 	inline Tile gameToTile(Game game) {
 		return Tile(game / TileSize);

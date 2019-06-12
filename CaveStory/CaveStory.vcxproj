@@ -24,6 +24,7 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Components\PlayerCollision.cpp" />
     <ClCompile Include="src\Components\PlayerPhysics.cpp" />
+    <ClCompile Include="src\Components\Weapon.cpp" />
     <ClCompile Include="src\CSCamera.cpp" />
     <ClCompile Include="src\Enemys\Bat.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Utility.h" />
+    <ClInclude Include="src\Utils\FacingType.h" />
     <ClInclude Include="src\Utils\Locator.h" />
     <ClInclude Include="src\Utils\PolarVector.h" />
     <ClInclude Include="src\Utils\sideType.h" />
