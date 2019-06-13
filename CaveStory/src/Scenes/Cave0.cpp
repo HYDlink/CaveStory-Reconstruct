@@ -12,15 +12,13 @@ Cave0::Cave0() { init(); sortObjectsByLayer(); }
 
 void Cave0::init() {
 	Graphics* graphics = Locator<Graphics>::get();
-	shared_ptr<ForeGround> caveFore_ = make_shared<ForeGround>();
-	shared_ptr<FixedBackdrop> caveBd_ = make_shared<FixedBackdrop>(*graphics, "res/bkBlue.bmp");
 	shared_ptr<Bat> bat_;
-	caveFore_->loadTile(*graphics, "res/PrtCave.bmp", 16, 5);
-	caveFore_->loadMapData("res/PrtCave.txt");
-	caveFore_->loadCache("res/PrtCave.bmp");
-	caveBd_->setSize(*graphics, caveFore_->mapWidth(), caveFore_->mapHeight());
+	//…Ë÷√µÿÕº
+	shared_ptr<CompleteMap> PrtCave = make_shared<CompleteMap>(*graphics, "PrtCave", "Blue");
+	PrtCave->getFgMap()->loadTile(*graphics, "res/PrtCave.bmp", 16, 5);
+
 	numberSprite_ = make_shared<NumberSprite>(*graphics, "res/TextBox.bmp");
-	player_ = make_shared<Player>(*graphics, caveFore_, "res/MyChar.bmp", 240, 240, *numberSprite_);
+	player_ = make_shared<Player>(*graphics, PrtCave->getFgMap(), "res/MyChar.bmp", 240, 240, *numberSprite_);
 	bat_ = make_shared<Bat>(*graphics, *player_, "res/NpcCemet.bmp",
 		Position2D(units::tileToPixel(3), units::tileToPixel(5)));
 
@@ -29,9 +27,9 @@ void Cave0::init() {
 #else
 	camera_ = make_shared<Camera>(graphics->screenRect());
 #endif
-	camera_->setRestrict(caveFore_->levelRect());
+	camera_->setRestrict(PrtCave->getFgMap()->levelRect());
 	graphics->setCamera(camera_);
-	objects_.assign({ caveBd_, caveFore_, player_, bat_ });
+	objects_.assign({ PrtCave, player_, bat_ });
 }
 
 void Cave0::update(units::MS deltaTime) {

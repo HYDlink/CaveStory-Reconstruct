@@ -22,7 +22,6 @@ struct CollisionTile {
 	TileType type;
 };
 
-//TODO 分离前景Map和后景Map, 还有背景，洞窟的地图使用了三个文件存储一个地图
 //TODO 分离Tile贴图数据和Map存储位置数据
 class Map {
 public:
@@ -75,14 +74,20 @@ public:
 	void draw(Graphics& graphics) const override { Map::draw(graphics); }
 };
 
-//TODO
+//TODO 前景Map和后景Map, 还有背景，洞窟的地图使用了三个文件存储一个地图
 class CompleteMap: public GameObject {
 public:
 	CompleteMap(Graphics& graphics, std::string stageName, std::string backName);
+	void update(units::MS t) override {}
+	void draw(Graphics& graphics) const override {}
+	std::shared_ptr<ForeGround> getFgMap() { return fgMap_; }
+	std::shared_ptr<Map> getBgMap() { return bgMap_; }
+	std::shared_ptr<FixedBackdrop> getBackdrop() { return fixedBd_; }
 private:
 	std::string stageName_;
 	std::string backName_;
-	std::shared_ptr<ForeGround> fg_;
+	std::shared_ptr<ForeGround> fgMap_;
+	std::shared_ptr<Map> bgMap_;
 	std::shared_ptr<FixedBackdrop> fixedBd_;
 	//foreGround, BackGround位于Children
 };

@@ -108,11 +108,12 @@ std::vector<CollisionTile> ForeGround::getCollidingTiles(const Rectangle& r) con
 }
 
 CompleteMap::CompleteMap(Graphics& graphics, std::string stageName, std::string backName):
-	stageName_(stageName), backName_(backName), fg_{ new ForeGround() },
+	stageName_(stageName), backName_(backName), fgMap_{ new ForeGround() },
 	fixedBd_{ new FixedBackdrop(graphics, "res/bk" + backName + ".bmp") } {
-	fg_->loadTile(graphics, "res/" + stageName_ + ".bmp", 15, 6);
-	fg_->loadMapData("res/" + stageName_ + ".txt");
-	fg_->loadCache("res/" + stageName_ + ".bmp");
-	children_.emplace_back(fg_);
+	fgMap_->loadTile(graphics, "res/" + stageName_ + ".bmp", 15, 6);
+	fgMap_->loadMapData("res/" + stageName_ + ".txt");
+	fgMap_->loadCache("res/" + stageName_ + ".bmp");
+	fixedBd_->setSize(graphics, fgMap_->mapWidth(), fgMap_->mapHeight());
+	children_.emplace_back(fgMap_);
 	children_.emplace_back(fixedBd_);
 }

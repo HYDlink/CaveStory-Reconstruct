@@ -8,7 +8,8 @@ FixedBackdrop::FixedBackdrop(Graphics& graphics, const std::string& path,
 	units::Tile width, units::Tile height): width_(width), height_(height), filename_(path), 
     GameObject(LAYER::BACKDROP) {
 	if (width_ > 0 && height_ > 0)
-		texture_ = graphics.loadBgTexture(path, width_, height_);
+		texture_ = graphics.loadMapTexture(path, width_, height_, units::BgTileSize, 
+			[](units::Tile i, units::Tile j, SDL_Rect& srcPos) {});
 }
 
 /** \brief 设置背景大小，同时更改贴图缓存，因此需要Graphics
