@@ -17,6 +17,7 @@ void Cave0::init() {
 	shared_ptr<Bat> bat_;
 	caveFore_->loadTile(*graphics, "res/PrtCave.bmp", 16, 5);
 	caveFore_->loadMapData("res/PrtCave.txt");
+	caveFore_->loadCache("res/PrtCave.bmp");
 	caveBd_->setSize(caveFore_->mapWidth(), caveFore_->mapHeight());
 	numberSprite_ = make_shared<NumberSprite>(*graphics, "res/TextBox.bmp");
 	player_ = make_shared<Player>(*graphics, caveFore_, "res/MyChar.bmp", 240, 240, *numberSprite_);

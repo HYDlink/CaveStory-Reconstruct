@@ -16,6 +16,7 @@ https://github.com/cuckydev/Cave-Story-Engine-2 : 纯c, 反汇编得到，非常
 
 详细的内容在[Notes.md](Notes.md)中
 
+- [ ] 封装SDL，错误处理，比如根据文件名加载，各种各种
 - [ ] 镜头处理
 - [ ] 攻击消灭敌人
 - [ ] 理解ECS

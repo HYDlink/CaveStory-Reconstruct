@@ -2,6 +2,7 @@
 #include "Graphics/Sprite.h"
 #include "Utils/units.h"
 
+//TODO 只存储地图贴图各个瓦块的位置
 class Tile :
 	public Sprite {
 public:

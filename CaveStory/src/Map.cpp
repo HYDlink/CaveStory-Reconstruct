@@ -1,16 +1,21 @@
 #include "Map.h"
 #include "Backdrop.h"
+#include "Utils/Locator.h"
 #include "Tile.h"
 #include "GameObject.h"
 #include <sstream>
 
 using namespace std;
+#define MAP_CACHE
 
 Map::Map() {
 }
 
 
 Map::~Map() {
+}
+
+void Map::load(const std::string& mapName) {
 }
 
 void Map::loadTile(Graphics& graphics, const std::string& filename, units::Tile rows, units::Tile cols) {
@@ -49,6 +54,11 @@ void Map::loadMapData(const std::string& filename) {
 	mapWidth_ = mapData_[0].size();
 }
 
+void Map::loadCache(const std::string& filename) {
+	Graphics* graphPtr = Locator<Graphics>::get();
+	mapCacheTexture_ = graphPtr->loadMapTexture(filename, mapData_);
+}
+
 units::Tile Map::mapWidth() const { return mapWidth_; }
 
 units::Tile Map::mapHeight() const { return mapHeight_; }
@@ -58,6 +68,11 @@ Rectangle Map::levelRect() const {
 }
 
 void Map::draw(Graphics& graphics) const {
+#ifdef MAP_CACHE
+	SDL_Rect src{ 0, 0,  units::tileToPixel(mapData_[0].size()), units::tileToPixel(mapData_.size()) };
+	SDL_Rect dst{};
+	graphics.render(mapCacheTexture_, &src, &dst);
+#else
 	units::Tile cols = mapData_.size(), rows = mapData_[0].size();
 	units::Tile width = tile_->getWidth(), height = tile_->getHeight();
 	for (units::Tile i = 0; i < cols; ++i) {
@@ -66,6 +81,7 @@ void Map::draw(Graphics& graphics) const {
 			tile_->draw(graphics, mapData_[i][j].first, mapData_[i][j].second, &dstPos);
 		}
 	}
+#endif
 }
 
 ForeGround::ForeGround() : GameObject(LAYER::FOREGROUND) {}

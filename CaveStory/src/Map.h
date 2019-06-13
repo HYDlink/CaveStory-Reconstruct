@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <vector>
+#include <SDL_render.h>
 
 class Tile;
 class FixedBackdrop;
@@ -47,10 +48,12 @@ public:
 	//first代表行，second代表列
 	using TileData = std::vector<std::vector<TileType>>;
 
+	void load(const std::string& mapName);
 	void loadTile(Graphics& graphics, const std::string& filename, units::Tile rows, units::Tile cols);
 	//TODO 加载地图精灵对应的地形类型TileFlag
 	void loadTileData(const std::string& filename, TileData& dataToStore);
 	void loadMapData(const std::string& filename);
+	void loadCache(const std::string& filename);
 	units::Tile mapWidth() const;
 	units::Tile mapHeight() const;
 	Rectangle levelRect() const;
@@ -58,6 +61,7 @@ public:
 protected:
 	std::shared_ptr<Tile> tile_, bgTile_;
 	MapData mapData_;//存储tile相关的位置
+	SDL_Texture* mapCacheTexture_;
 	units::Tile mapWidth_ = 0, mapHeight_ = 0;
 	//普遍情况下应该不会有tileMap的行数或者列数超过uint8的吧，所以直接使用8位存储
 };

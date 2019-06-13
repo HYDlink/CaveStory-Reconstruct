@@ -9,6 +9,7 @@
 #include <memory>
 #include "../Camera.h"
 #include "../Utils/units.h"
+#include "../Map.h"
 
 const units::Pixel screenWidth = 640;
 const units::Pixel screenHeight = 480;
@@ -27,7 +28,7 @@ public:
 	~Graphics();
 	SDL_Renderer* getRenderer() const { return renderer_; }
 	SDL_Texture* loadFromFile(const std::string& path, TransparentColor color = TransparentColor::BLACK);
-
+	SDL_Texture* loadMapTexture(const std::string& filename, const Map::MapData& mapdata);
 	static void SetColorKey(const TransparentColor& color, SDL_Surface* loadSurface);
 
 	void setCamera(std::shared_ptr<Camera>);
@@ -48,6 +49,7 @@ private:
 	SDL_Color clearColor_;
 	SDL_Surface* screenSurface_;
 	std::shared_ptr<Camera> camera_;
+	std::pair<std::string, SDL_Texture*> mapCache_;
 	std::unordered_map<std::string, SDL_Texture*> sprite_sheets_;
 	//存储精灵图的位置，这样Sprite重复建立的时候首先读取这个，确认是否已经加载了
 	//如果加载了，那Sprite存的是这个的指针，和需要渲染的位置
