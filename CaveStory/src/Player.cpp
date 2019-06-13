@@ -183,8 +183,8 @@ void Player::lookUp() {
 }
 
 void Player::interactOrLookDown() {
-	//TODO
-	//在观察/交互过程中禁止玩家移动
+	//TODO 开始交互的动画的那一段时间角色不能移动，并且头上浮出问号或者开始交互事件，
+	//然后任何按钮都可以中断这个动作
 	if (physics_->onGround_) {
 		state_.motionType = INTERACTING;
 		physics_->accelerationX_ = 0;

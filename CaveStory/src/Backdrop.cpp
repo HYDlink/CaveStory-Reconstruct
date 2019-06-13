@@ -17,7 +17,8 @@ FixedBackdrop::FixedBackdrop(Graphics& graphics, const std::string& path,
 void FixedBackdrop::setSize(Graphics& graphics, units::Tile width, units::Tile height) {
 	width_ = width;
 	height_ = height;
-	texture_ = graphics.loadBgTexture(filename_, width_, height_);
+	texture_ = graphics.loadMapTexture(filename_, width_, height_, units::BgTileSize, 
+		[](units::Tile i, units::Tile j, SDL_Rect& srcPos) {});
 }
 
 void FixedBackdrop::draw(Graphics& graphics) const {

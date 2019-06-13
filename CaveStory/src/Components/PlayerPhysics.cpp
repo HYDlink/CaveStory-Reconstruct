@@ -11,7 +11,7 @@ void PlayerPhysics::handleInput(const Uint8* inputs) {
 		movingLeft();
 	else if (inputs[SDL_SCANCODE_D])
 		movingRight();
-	else//TODO 在空中保持x速度，现在这样在空中回到地面速度还会保持不变
+	else
 		stopMoving();
 
 	if (inputs[SDL_SCANCODE_K])

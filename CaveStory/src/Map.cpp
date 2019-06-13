@@ -37,7 +37,7 @@ void Map::loadTileData(const std::string& filename, TileData& dataToStore) {
 	}
 }
 
-//TODO 可能使用二进制读取文件，想做一个地图编辑器
+//TODO 可能使用二进制读取文件，想做一个地图编辑器/还是用Tiled编辑然后解析吧。。
 void Map::loadMapData(const std::string& filename) {
 	mapData_.clear();
 	ifstream mapFile(filename);
@@ -56,7 +56,12 @@ void Map::loadMapData(const std::string& filename) {
 
 void Map::loadCache(const std::string& filename) {
 	Graphics* graphPtr = Locator<Graphics>::get();
-	mapCacheTexture_ = graphPtr->loadMapTexture(filename, mapData_);
+	MapData mapData{};
+	mapCacheTexture_ = graphPtr->loadMapTexture(filename, mapData_[0].size(), mapData_.size(),
+		units::TileSize,
+		[&](units::Tile i, units::Tile j, SDL_Rect& srcPos){
+		srcPos.x = units::tileToPixel(mapData_[i][j].first);
+		srcPos.y = units::tileToPixel(mapData_[i][j].second); });
 }
 
 units::Tile Map::mapWidth() const { return mapWidth_; }
@@ -95,6 +100,7 @@ std::vector<CollisionTile> ForeGround::getCollidingTiles(const Rectangle& r) con
 	units::Tile top = units::gameToTile(r.top());
 	for (units::Tile i = top; i <= bottom && i < mapHeight_; ++i) {
 		for (units::Tile j = left; j <= right && j < mapWidth_; ++j) {
+			//TODO 新的性能瓶颈，有待优化
 			result.push_back(CollisionTile{ j, i, mapData_[i][j].first/*TODO*/ ? WALL : EMPTY });
 		}
 	}

@@ -4,6 +4,7 @@
 //存储所有图像操作，其他sprite，animation类只存放数据
 
 #include <SDL.h>
+#include <functional>
 #include <iostream>
 #include <unordered_map>
 #include <memory>
@@ -28,9 +29,9 @@ public:
 	~Graphics();
 	SDL_Renderer* getRenderer() const { return renderer_; }
 	SDL_Texture* loadFromFile(const std::string& path, TransparentColor color = TransparentColor::BLACK);
-	SDL_Texture* loadMapTexture(const std::string& filename, 
-		const Map::MapData& mapdata = Map::MapData());
-	SDL_Texture* loadBgTexture(const std::string& filename, units::Tile w, units::Tile h);
+	SDL_Texture* loadMapTexture(const std::string& filename, units::Tile w, 
+		units::Tile h, units::Pixel size, 
+		std::function<void(units::Tile i, units::Tile j, SDL_Rect& srcPos)> func);
 	static void SetColorKey(const TransparentColor& color, SDL_Surface* loadSurface);
 
 	void setCamera(std::shared_ptr<Camera>);

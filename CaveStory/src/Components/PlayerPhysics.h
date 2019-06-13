@@ -14,9 +14,9 @@ class PlayerPhysics :public PhysicsComponent {
 	friend class PlayerCollision;
 public:
 	const units::Velocity maxVelocityX = 0.15859375f;
-	const units::Velocity maxVelocityY = 0.25f;
+	const units::Velocity maxVelocityY = 0.30f;
 	const units::Accelration friction = 0.00049804687f;
-	const units::Velocity jumpSpeed = maxVelocityY;//为了跳跃对称？？
+	const units::Velocity jumpSpeed = maxVelocityY * 0.8;//为了跳跃对称？？
 	const units::Velocity error = 0.001f;//判断速度是否接近0的允许误差
 
 	const units::Accelration gravity = 0.0003125f;

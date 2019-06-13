@@ -23,8 +23,6 @@ void Scene::draw(Graphics& graphics) const {
 		object->draw(graphics);
 }
 
-// TODO Player类内部包含一些HUD，它们要在此顺序绘制，
-// 也就是说，得采用与更新不同的另一个数据结构用来进行绘制
 void Scene::sortObjectsByLayer() {
 	sortedObjs_.clear();
 	for (auto obj : objects_) {

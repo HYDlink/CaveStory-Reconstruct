@@ -70,8 +70,7 @@ void Game::draw(Graphics& graphics) {
 //elapsTime代表重新计算FPS的间隔时间
 void Game::calculateFps(units::MS elapsTime)
 {
-	//TODO
-	//计算fps
+	//TODO 计算fps
 	++frameCount;//莫名奇妙，这个framecount加的次数很多
 	units::MS nowTick = SDL_GetTicks();
 	if (nowTick - startTick > elapsTime) {

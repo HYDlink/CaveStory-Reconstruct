@@ -3,8 +3,7 @@
 #include "../Rectangle.h"
 #include "../Map.h"
 
-//TODO
-//添加碰撞面积，添加EnterCollision的事件方法
+//TODO 添加碰撞面积，添加EnterCollision的事件方法
 struct CollisionInfo {
 	units::Game row, col;
 	bool collided;
