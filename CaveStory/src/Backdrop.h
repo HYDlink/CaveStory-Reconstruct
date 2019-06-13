@@ -13,11 +13,12 @@ struct FixedBackdrop: public GameObject {
 	FixedBackdrop(Graphics& graphics, const std::string& path);
 	FixedBackdrop(Graphics& graphics, const std::string& path, 
 		units::Tile width, units::Tile height);
-	void setSize(units::Tile width, units::Tile height);
+	void setSize(Graphics& graphics, units::Tile width, units::Tile height);
 	void update(units::MS deltaTime) override {}
 	void draw(Graphics& graphics) const override;
 private:
-	SDL_Texture* texture_;
+	SDL_Texture* texture_ = NULL;
+	std::string filename_;
 	units::Tile width_ = 0, height_ = 0;
 };
 

@@ -54,6 +54,7 @@ public:
 	void loadTileData(const std::string& filename, TileData& dataToStore);
 	void loadMapData(const std::string& filename);
 	void loadCache(const std::string& filename);
+
 	units::Tile mapWidth() const;
 	units::Tile mapHeight() const;
 	Rectangle levelRect() const;
@@ -77,9 +78,12 @@ public:
 //TODO
 class CompleteMap: public GameObject {
 public:
-
+	CompleteMap(Graphics& graphics, std::string stageName, std::string backName);
 private:
-	std::shared_ptr<FixedBackdrop> fixedBd;
+	std::string stageName_;
+	std::string backName_;
+	std::shared_ptr<ForeGround> fg_;
+	std::shared_ptr<FixedBackdrop> fixedBd_;
 	//foreGround, BackGroundÎ»ÓÚChildren
 };
 

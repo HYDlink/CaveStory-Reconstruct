@@ -108,6 +108,9 @@
     <ClCompile Include="src\Components\Weapon.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\ErrorHandle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Map.h">
@@ -228,6 +231,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\FacingType.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\ErrorHandle.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

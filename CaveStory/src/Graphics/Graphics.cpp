@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include "../Utils/Locator.h"
+#include "../Utils/ErrorHandle.h"
 
 using namespace std;
 
@@ -28,81 +29,58 @@ Graphics::~Graphics()
 }
 
 //加载一整个贴图，不在这个阶段进行切割等等
-SDL_Texture* Graphics::loadFromFile(const std::string& file_path, TransparentColor color) {
-	if (sprite_sheets_.count(file_path) == 0) {
-		SDL_Surface* loadSurface = SDL_LoadBMP(file_path.c_str());
-		if (loadSurface == NULL) {
-			std::cerr << "Unable to load image "
-				<< file_path << ". SDL_Error: "
-				<< SDL_GetError() << std::endl;
-			return NULL;
-		}
+SDL_Texture* Graphics::loadFromFile(const std::string& filename, TransparentColor color) {
+	if (sprite_sheets_.count(filename) == 0) {
+		SDL_Surface* loadSurface = loadImg(filename);
 
 		SetColorKey(color, loadSurface);
 
-		sprite_sheets_[file_path] = SDL_CreateTextureFromSurface(renderer_, loadSurface);
-		if (sprite_sheets_[file_path] == NULL)
-			std::cerr << "Unable to creat texture from "
-			<< file_path << ". SDL_Error: "
-			<< SDL_GetError() << std::endl;
+		sprite_sheets_[filename] = SDL_CreateTextureFromSurface(renderer_, loadSurface);
+		if (sprite_sheets_[filename] == NULL)
+			printSDLError(cerr, "Unable to creat texture from " + filename);
 		SDL_FreeSurface(loadSurface);
 	}
-	return sprite_sheets_[file_path];
+	return sprite_sheets_[filename];
 }
 
+//要加载两个地图缓存，名字需要更改
 SDL_Texture* Graphics::loadMapTexture(const std::string& filename, const Map::MapData& mapdata) {
 	if (mapCache_.first != filename) {
 		const units::Tile mapWidth = mapdata[0].size();
 		const units::Tile mapHeight = mapdata.size();
 
-		SDL_Surface* loadSurface = SDL_LoadBMP(filename.c_str());
-		if (loadSurface == NULL) {
-			std::cerr << "Unable to load image "
-				<< filename << ". SDL_Error: "
-				<< SDL_GetError() << std::endl;
-			return NULL;
-		}
-
+		SDL_Surface* loadSurface = loadImg(filename);
 		SDL_Surface* mapSurface =
 			SDL_CreateRGBSurface(0,
 				units::tileToPixel(mapWidth), units::tileToPixel(mapHeight),
 				32, 0, 0, 0, 0);
 		if (mapSurface == NULL) {
-			std::cerr << "Unable to load image "
-				<< filename << ". SDL_Error: "
-				<< SDL_GetError() << std::endl;
+			printSDLError(cerr, "Unable to load image " + filename);
 			return NULL;
 		}
 		SetColorKey(TransparentColor::BLACK, loadSurface);
 		SetColorKey(TransparentColor::BLACK, mapSurface);
 
 		//加载地图
+		SDL_Rect srcRect{ 0, 0, units::TileSize, units::TileSize };
+		SDL_Rect dstRect{};
 		for (size_t i = 0; i < mapHeight; i++) {
-			for (size_t j = 0; j < mapHeight; j++) {
-				SDL_Rect srcRect{ 
-					units::tileToPixel(mapdata[i][j].first),  
-					units::tileToPixel(mapdata[i][j].second), 
-					units::TileSize, 
-					units::TileSize };
-				SDL_Rect dstRect{
-					units::tileToPixel(j),
-					units::tileToPixel(i),
-					units::TileSize,
-					units::TileSize };
+			for (size_t j = 0; j < mapWidth; j++) {
+				srcRect.x = units::tileToPixel(mapdata[i][j].first);
+				srcRect.y = units::tileToPixel(mapdata[i][j].second);
+				dstRect.x = units::tileToPixel(j);
+				dstRect.y = units::tileToPixel(i);
 				if (SDL_BlitSurface(loadSurface, &srcRect, mapSurface, &dstRect) < 0) {
-					std::cerr << "Unable to Blit Tile To Map "
-						<< filename << ". SDL_Error: "
-						<< SDL_GetError() << std::endl;
+					printSDLError(cerr, "Unable to Blit Tile To Map " + filename);
 					return NULL;
 				}
 			}
 		}
+
 		SDL_Texture* mapTexture = 
 			SDL_CreateTextureFromSurface(renderer_, mapSurface);
 		if (mapTexture == NULL) {
-			std::cerr << "Unable to creat texture from "
-				<< filename << ". SDL_Error: "
-				<< SDL_GetError() << std::endl;
+			printSDLError(cerr, "Unable to creat texture from " + filename);
 			return NULL;
 		}
 		SDL_FreeSurface(loadSurface);
@@ -111,6 +89,45 @@ SDL_Texture* Graphics::loadMapTexture(const std::string& filename, const Map::Ma
 		mapCache_.first = filename;
 		mapCache_.second = mapTexture;
 	}
+	return mapCache_.second;
+}
+
+SDL_Texture* Graphics::loadBgTexture(const std::string& filename, units::Tile w, units::Tile h) {
+	SDL_Surface* loadSurface = loadImg(filename);
+	SDL_Surface* mapSurface =
+		SDL_CreateRGBSurface(0,
+			units::tileToPixel(w), units::tileToPixel(h),
+			32, 0, 0, 0, 0);
+	if (mapSurface == NULL) {
+		printSDLError(cerr, "Unable to load image " + filename);
+		return NULL;
+	}
+	SetColorKey(TransparentColor::BLACK, loadSurface);
+	SetColorKey(TransparentColor::BLACK, mapSurface);
+
+	//使用函数闭包
+	SDL_Rect srcRect{ 0, 0, units::BgTileSize, units::BgTileSize}, 
+		dstRect{};
+	for (units::Tile i = 0; i < h; i++)
+		for (units::Tile j = 0; j < w; j++) {
+			dstRect.x = j * units::BgTileSize;
+			dstRect.y = i * units::BgTileSize;
+			if (SDL_BlitSurface(loadSurface, &srcRect, mapSurface, &dstRect) < 0) {
+				printSDLError(cerr, "Unable to Blit Tile To Map " + filename);
+				return NULL;
+			}
+		}
+	SDL_Texture* mapTexture =
+		SDL_CreateTextureFromSurface(renderer_, mapSurface);
+	if (mapTexture == NULL) {
+		printSDLError(cerr, "Unable to creat texture from " + filename);
+		return NULL;
+	}
+	SDL_FreeSurface(loadSurface);
+	SDL_FreeSurface(mapSurface);
+
+	mapCache_.first = filename;
+	mapCache_.second = mapTexture;
 	return mapCache_.second;
 }
 

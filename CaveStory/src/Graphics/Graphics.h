@@ -28,7 +28,9 @@ public:
 	~Graphics();
 	SDL_Renderer* getRenderer() const { return renderer_; }
 	SDL_Texture* loadFromFile(const std::string& path, TransparentColor color = TransparentColor::BLACK);
-	SDL_Texture* loadMapTexture(const std::string& filename, const Map::MapData& mapdata);
+	SDL_Texture* loadMapTexture(const std::string& filename, 
+		const Map::MapData& mapdata = Map::MapData());
+	SDL_Texture* loadBgTexture(const std::string& filename, units::Tile w, units::Tile h);
 	static void SetColorKey(const TransparentColor& color, SDL_Surface* loadSurface);
 
 	void setCamera(std::shared_ptr<Camera>);

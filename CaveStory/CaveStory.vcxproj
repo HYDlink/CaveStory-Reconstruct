@@ -44,6 +44,7 @@
     <ClCompile Include="src\Scenes\Scene.cpp" />
     <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\Utils\ErrorHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animator.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Utility.h" />
+    <ClInclude Include="src\Utils\ErrorHandle.h" />
     <ClInclude Include="src\Utils\FacingType.h" />
     <ClInclude Include="src\Utils\Locator.h" />
     <ClInclude Include="src\Utils\PolarVector.h" />
