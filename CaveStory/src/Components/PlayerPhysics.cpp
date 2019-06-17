@@ -4,14 +4,6 @@ using namespace std;
 namespace {
 	const units::Velocity maxVelocityX = 0.15859375f;
 	const units::Velocity maxVelocityY = 0.30f;
-	const units::Acceleration friction = 0.00049804687f;
-	const units::Velocity jumpSpeed = maxVelocityY * 0.8;//为了跳跃对称？？
-	const units::Velocity error = 0.001f;//判断速度是否接近0的允许误差
-
-	const units::Acceleration gravity = 0.0003125f;
-	const units::Acceleration stopJumpAccelerate = 3 * gravity;//轻按跳跃后使用这个减慢速度
-	const units::Acceleration accelerate = 0.00083007812f;
-	const units::Velocity slowdown = 0.8f;
 }
 
 
