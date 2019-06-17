@@ -20,10 +20,10 @@
 class Animation;
 class Animator;
 class PlayerPhysics;
-class PlayerCollision;
+class CollisionComponent;
 class Player : public GameObject {
 	friend class PlayerPhysics;
-	friend class PlayerCollision;
+	friend class CollisionComponent;
 public:
 	const units::FPS MotionSprites = 11;
 	const units::Frame CharTypeSprites = 6;
@@ -76,7 +76,7 @@ private:
 	HelathBar healthBar_;
 
 	PlayerPhysics* physics_;
-	PlayerCollision* collision_;
+	CollisionComponent* collision_;
 
 };
 

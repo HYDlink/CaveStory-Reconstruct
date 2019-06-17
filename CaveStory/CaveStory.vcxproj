@@ -22,7 +22,7 @@
     <ClCompile Include="src\Animator.cpp" />
     <ClCompile Include="src\Backdrop.cpp" />
     <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Components\PlayerCollision.cpp" />
+    <ClCompile Include="src\Components\CollisionComponent.cpp" />
     <ClCompile Include="src\Components\PlayerPhysics.cpp" />
     <ClCompile Include="src\Components\Weapon.cpp" />
     <ClCompile Include="src\CSCamera.cpp" />
@@ -52,7 +52,6 @@
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Components\CollisionComponent.h" />
     <ClInclude Include="src\Components\PhysicsComponent.h" />
-    <ClInclude Include="src\Components\PlayerCollision.h" />
     <ClInclude Include="src\Components\PlayerPhysics.h" />
     <ClInclude Include="src\Components\Weapon.h" />
     <ClInclude Include="src\CSCamera.h" />

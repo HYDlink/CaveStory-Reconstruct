@@ -9,8 +9,10 @@ struct CollisionInfo {
 	bool collided;
 };
 
+class PhysicsComponent;
 class CollisionComponent {
 public:
+
 	static CollisionInfo getCollisionInfo(const ForeGround& map, const Rectangle& rectangle) {
 		//不是很懂,这里假想情况是碰撞rectangle不太可能跨越两个地图块以上
 		std::vector<CollisionTile> collisions = map.getCollidingTiles(rectangle);
@@ -25,7 +27,34 @@ public:
 		}
 		return info;
 	}
+
+	CollisionComponent(PhysicsComponent* physics,
+		const Rectangle& rectX, const Rectangle& rectY,
+		std::shared_ptr<ForeGround> map = std::shared_ptr<ForeGround>()) :
+		physics_(physics), CollisionX_(rectX), CollisionY_(rectY), map_(map) {
+	}
+	//X轴和Y轴碰撞方块相等，只传入一个碰撞方块
+	CollisionComponent(PhysicsComponent* physics,
+		const Rectangle& rectX,
+		std::shared_ptr<ForeGround> map = std::shared_ptr<ForeGround>()) :
+		CollisionComponent(physics, rectX, rectX, map) {}
+
+	bool xCollide(units::Game deltaX);
+	bool yCollide(units::Game deltaY);
+
+	Rectangle xCollision() const;
+	Rectangle yCollision() const;
+	std::vector<Rectangle> collisions() const;
+	Rectangle leftCollision(units::Game delta);
+	Rectangle rightCollision(units::Game delta);
+	Rectangle topCollision(units::Game delta);
+	Rectangle bottomCollision(units::Game delta);
 	virtual ~CollisionComponent() = default;
-	virtual bool xCollide(units::Game deltaX) = 0;
-	virtual bool yCollide(units::Game deltaY) = 0;
+
+
+	const Rectangle CollisionX_;
+	const Rectangle CollisionY_;
+private:
+	PhysicsComponent* physics_;
+	std::shared_ptr<ForeGround> map_;
 };

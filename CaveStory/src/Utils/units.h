@@ -19,7 +19,7 @@ namespace units {
 	typedef int8_t HP;//原游戏数值, 最大伤害-128
 
 	typedef float Velocity;
-	typedef float Accelration;//这样的一个优点是方便确认变量是速度还是加速度
+	typedef float Acceleration;//这样的一个优点是方便确认变量是速度还是加速度
 	typedef float AngularVelocity; // Degrees / MS
 
 	constexpr const Pixel TileSize = 32;

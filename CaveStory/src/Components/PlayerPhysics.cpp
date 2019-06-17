@@ -1,9 +1,25 @@
 #include "PlayerPhysics.h"
 
 using namespace std;
+namespace {
+	const units::Velocity maxVelocityX = 0.15859375f;
+	const units::Velocity maxVelocityY = 0.30f;
+	const units::Acceleration friction = 0.00049804687f;
+	const units::Velocity jumpSpeed = maxVelocityY * 0.8;//为了跳跃对称？？
+	const units::Velocity error = 0.001f;//判断速度是否接近0的允许误差
 
-Position2D PlayerPhysics::pos() const {
-	return Position2D(xPos_, yPos_);
+	const units::Acceleration gravity = 0.0003125f;
+	const units::Acceleration stopJumpAccelerate = 3 * gravity;//轻按跳跃后使用这个减慢速度
+	const units::Acceleration accelerate = 0.00083007812f;
+	const units::Velocity slowdown = 0.8f;
+}
+
+
+PlayerPhysics::PlayerPhysics(Player* player, units::Game xPos, units::Game yPos, 
+	CollisionComponent* collision) :
+	player_(player), PhysicsComponent(xPos, yPos, maxVelocityX, maxVelocityY),
+	onGround_(false), jumping_(false),
+	collision_(collision) {
 }
 
 void PlayerPhysics::handleInput(const Uint8* inputs) {
@@ -36,9 +52,9 @@ void PlayerPhysics::updateX(units::MS deltaTime) {
 	units::Game deltaX = round(velocityX_ * deltaTime);
 	velocityX_ += accelerationX_ * deltaTime;
 	if (accelerationX_ < 0)
-		velocityX_ = std::max(velocityX_, -maxVelocityX);
+		velocityX_ = std::max(velocityX_, -maxVelocityX_);
 	else if (accelerationX_ > 0)
-		velocityX_ = std::min(velocityX_, maxVelocityX);
+		velocityX_ = std::min(velocityX_, maxVelocityX_);
 	else if (onGround_)
 		velocityX_ *= slowdown;
 	collision_->xCollide(deltaX);
@@ -47,15 +63,25 @@ void PlayerPhysics::updateX(units::MS deltaTime) {
 void PlayerPhysics::updateY(units::MS deltaTime) {
 	const units::Pixel lowest = 288;
 	if (!jumping_ && velocityY_ < 0)//跳跃中途放开跳跃键，加大向下的加速度，来控制跳跃高度
-		velocityY_ += stopJumpAccelerate * deltaTime;
+		accelerationY_ = stopJumpAccelerate;
 	else
-		velocityY_ += gravity * deltaTime;
+		accelerationY_ = gravity;
+	velocityY_ += accelerationY_ * deltaTime;
+
+	if (accelerationY_ < 0)
+		velocityY_ = std::max(velocityY_, -maxVelocityY_);
+	else if (accelerationY_ > 0)
+		velocityY_ = std::min(velocityY_, maxVelocityY_);
+
 	if (velocityY_ > 0)
 		jumping_ = false;
-
-	velocityY_ = std::max(velocityY_, -maxVelocityY);
 	units::Game deltaY = velocityY_ * deltaTime;
-	collision_->yCollide(deltaY);
+	//C++17写法，yCollide毕竟有副作用，不知道这样写好不好
+	const auto collided = collision_->yCollide(deltaY);
+	if (deltaY > 0)
+		onGround_ = collided;
+	else if (collided)
+		jumping_ = false;
 }
 
 void PlayerPhysics::movingLeft() {

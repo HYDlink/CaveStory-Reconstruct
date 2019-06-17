@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Components/PlayerPhysics.h"
-#include "Components/PlayerCollision.h"
+#include "Components/CollisionComponent.h"
 #include "Graphics/Animation.h"
 #include "Animator.h"
 
@@ -10,12 +10,15 @@ namespace {
 	const units::MS InvisibleTime = 1500;
 	const units::MS InvisibleFlashTime = 50;
 	const units::HP InitialHP = 20;
+	const Rectangle CollisionX{ 6, 10, 20, 12 };
+	const Rectangle CollisionY{ 10, 2, 12, 30 };
 }
 
 Player::Player(Graphics& graphics, std::shared_ptr<ForeGround> map, const string& filename, 
 	units::Game xPos, units::Game yPos,	NumberSprite& numberSprite)
 	: GameObject(LAYER::PLAYER), clipRects_(CharTypeSprites, vector<SDL_Rect>(MotionSprites)),
-	  physics_(new PlayerPhysics(this, xPos, yPos)), collision_(new PlayerCollision(this, physics_, map)),
+	  physics_(new PlayerPhysics(this, xPos, yPos)), 
+	collision_(new CollisionComponent(physics_, CollisionX, CollisionY, map)),
 	  invisibleTimer_(InvisibleTime), healthBar_(graphics, "res/TextBox.bmp", InitialHP, numberSprite),
 	  numberSprite_(numberSprite), damageText_(numberSprite_),
 	  weapon(graphics, WeaponType::POLARSTAR, *this)
