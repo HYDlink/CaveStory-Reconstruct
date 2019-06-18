@@ -13,12 +13,13 @@ union SDL_Event;
 class Scene {
 public:
 	using ObjPtr = std::shared_ptr<GameObject>;
-	Scene() {}
+	Scene();
 	virtual ~Scene() = default;
 	virtual void init() = 0;
 	virtual void update(units::MS deltaTime);//用于更新数据
 	virtual void handleEvent(SDL_Event* e) = 0;
 	virtual void draw(Graphics& graphics) const;
+	void getAllObjects(std::vector<ObjPtr> objs);
 	void sortObjectsByLayer();
 	
 	std::shared_ptr<Camera> getCamera() { return camera_; }

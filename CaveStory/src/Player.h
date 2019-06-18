@@ -45,6 +45,7 @@ public:
 	void updateDebug();
 	void draw(Graphics& graphics) const override;
 
+	const std::shared_ptr<Animation> getAnimation() const;
 	Position2D pos() const;
 	Position2D centerPos() const;
 	units::Velocity velX() const;

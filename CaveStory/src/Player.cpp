@@ -83,6 +83,9 @@ void Player::handleEvent(SDL_Event& e) {
 		state_.horizontalFacing = FACING_RIGHT;
 
 	physics_->handleInput(inputs);
+
+	if (inputs[SDL_SCANCODE_J])
+		weapon.launch();
 }
 
 void Player::update(units::MS deltaTime) {
@@ -140,7 +143,10 @@ void Player::draw(Graphics& graphics) const {
 	damageText_.draw(graphics);
 }
 
-Position2D Player::pos() const 
+const std::shared_ptr<Animation> Player::getAnimation() const 
+{ return animation_; }
+
+Position2D Player::pos() const
 { return Position2D{ physics_->xPos_, physics_->yPos_ }; }
 
 Position2D Player::centerPos() const {

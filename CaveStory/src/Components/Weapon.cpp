@@ -1,5 +1,5 @@
 #include "Weapon.h"
-#include "../Graphics/Sprite.h"
+#include "../Graphics/Animation.h"
 #include "../Graphics/Graphics.h"
 #include "../Player.h"
 
@@ -31,41 +31,66 @@ namespace {
 	const units::Game kNozzleDownLeftX = 29;
 	const units::Game kNozzleDownRightX = 19;
 
-#if 0
 	// Projectile Sprite
-	const units::Tile kProjectileSourceYs[units::kMaxGunLevel] = { 2, 2, 3 };
-	const units::Tile kHorizontalProjectileSourceXs[units::kMaxGunLevel] = { 8, 10, 8 };
+	const units::Tile kProjectileSourceYs[units::MaxGunLevel] = { 2, 2, 3 };
+	const units::Tile kHorizontalProjectileSourceXs[units::MaxGunLevel] = { 8, 10, 8 };
 	// Projectile Velocity
 	const units::Velocity kProjectileSpeed = 0.6f;
 
-	const units::Game kProjectileMaxOffsets[units::kMaxGunLevel] =
+	const units::Game kProjectileMaxOffsets[units::MaxGunLevel] =
 	{ 7 * units::HalfTile, units::tileToGame(5), units::tileToGame(7) };
-	const units::Game kProjectileWidths[units::kMaxGunLevel] = { 4.0f, 8.0f, 16.0f };
+	const units::Game kProjectileWidths[units::MaxGunLevel] = { 4.0f, 8.0f, 16.0f };
+	const Uint8 kProjectileNums[units::MaxGunLevel] = { 2, 3, 3 };
+	const units::MS kProjectileDelay = 200;
 
-	const units::HP kDamages[units::kMaxGunLevel] = { 1, 2, 4 };
+	const units::HP kDamages[units::MaxGunLevel] = { 1, 2, 4 };
 
 	const units::GunExperience kExperiences[] = { 0, 10, 30, 40 };
-#endif
 }
 
 //Debug时可以把layer的arms改成foreground，以确定武器贴图位置
 Weapon::Weapon(Graphics& graphics, WeaponType type, Player& player): 
-	GameObject(LAYER::ARMS), type_(type), player_(player) {
+	GameObject(LAYER::FOREGROUND), type_(type), player_(player) {
 	using namespace units;
-	SDL_Rect pos{ gameToPixel(static_cast<uint8_t>(type) * kGunWidth), gameToPixel(kHorizontalOffset),
+	SDL_Rect weaponPos{ gameToPixel(static_cast<uint8_t>(type) * kGunWidth), gameToPixel(kHorizontalOffset),
 		gameToPixel(kGunWidth), gameToPixel(kGunHeight) };
 	for (int i = 0; i < states ; i++) {
-		weapon_sprite_[i] = make_shared<Sprite>(graphics, "res/Arms.bmp", pos);
-		pos.y += TileSize;
+		weapon_sprite_[i] = make_shared<Sprite>(graphics, "res/Arms.bmp", weaponPos);
+		weaponPos.y += TileSize;
+	}
+	SDL_Rect projectilePos{ 0, 0,units::HalfTile, units::HalfTile };
+	projectilePos.x = kHorizontalProjectileSourceXs[0];
+	projectilePos.y = kProjectileSourceYs[0];
+	for (int i = 0; i < 4; i++)	{
+		projectile_sprite_[i].reset(new Sprite(graphics, "res/Bullet.bmp", projectilePos));
+		projectilePos.x += units::HalfTile;
 	}
 }
 
 void Weapon::update(units::MS deltaTime) {
+	auto objsToRemove = remove_if(children_.begin(), children_.end(),
+		[](const shared_ptr<GameObject>& g) { return g->isDead(); });
+	children_.erase(objsToRemove, children_.end());
 }
 
 void Weapon::draw(Graphics& graphics) const {
 	weapon_sprite_[player_.state().faceType()]->draw(graphics, gunX(),
 		gunY());
+}
+
+void Weapon::launch() {
+	//只允许子弹同时出现特定的数目
+	//TODO 添加子弹发射延时，即发射一次后需要等待一定时间才能发射
+	const units::MS currentLaunch = SDL_GetTicks();
+	if (currentLaunch - lastLaunch_ < kProjectileDelay)
+		return;
+	//children.size()代表子弹数量
+	if (children_.size() > kProjectileNums[level_])
+		return;
+	lastLaunch_ = currentLaunch;
+	children_.emplace_back(make_shared<Projectile>
+		(player_.pos(), kProjectileSpeed, kProjectileMaxOffsets[level_],
+			player_.state(), projectile_sprite_[player_.state().faceType()]));
 }
 
 units::Game Weapon::gunX() const {
@@ -82,5 +107,33 @@ units::Game Weapon::gunY() const {
 	default:
 		break;
 	}
+	//1是人物走动的第二帧，这个时候手稍稍提起，然后我们让武器和手贴合住，这个offset是2像素
+	if (player_.getAnimation()->getCurFrame() == 1)
+		result -= kUpOffset;
 	return result;
+}
+
+//机枪发出的子弹有随机性，可以传入随机种子
+Projectile::Projectile(Position2D pos, units::Velocity vel, units::Game range,
+	FaceType faceType, shared_ptr<Sprite> sprite) :
+	GameObject(LAYER::ARMS),
+	startPos_(pos), pos_(pos), range_(range), vel_(vel, 0),
+	faceType_(faceType), sprite_(sprite) {
+	if (faceType_.verticalFacing == FORWARD)
+		vel_.setAngle((faceType_.horizontalFacing == FACING_RIGHT) ? 0 : 180);
+	else
+		vel_.setAngle((faceType_.verticalFacing == LOOKDOWN) ? 90 : 360);
+	cout << "created a projectile." << endl;
+	//添加从武器前部发出的offset
+}
+
+void Projectile::update(units::MS deltaTime) {
+	pos_.x += vel_.xLen() * deltaTime;
+	pos_.y += vel_.yLen() * deltaTime;
+	if (pos_.x - startPos_.x >= range_ || pos_.y - startPos_.y >= range_)
+		isDead_ = true;
+}
+
+void Projectile::draw(Graphics& graphics) const {
+	sprite_->draw(graphics, pos_.x, pos_.y);
 }

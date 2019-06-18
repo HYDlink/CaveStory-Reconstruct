@@ -14,6 +14,8 @@ namespace units {
 	typedef Uint32 MS;
 	typedef Uint32 FPS;
 	typedef Uint8 Frame;//动画的帧数
+	typedef Uint8 GunLevel;
+	typedef Uint8 GunExperience;
 	typedef float Degrees;
 
 	typedef int8_t HP;//原游戏数值, 最大伤害-128
@@ -30,6 +32,7 @@ namespace units {
 	constexpr const Tile ScreenTileWidth = ScreenWidth / units::TileSize;
 	constexpr const Tile ScreenTileHeight = ScreenHeight / units::TileSize;
 	constexpr const MS animationDelta = 4;
+	constexpr const Uint8 MaxGunLevel = 32;
 
 	enum ALIGN {
 		LEFT_ALIGNED,

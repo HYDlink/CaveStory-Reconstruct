@@ -27,7 +27,10 @@ public:
 	bool isDead() const { return isDead_; }
 	bool hasChildren() const { return !children_.empty(); }
 
-	std::vector<std::shared_ptr<GameObject>> getChildren(){
+	std::vector<std::shared_ptr<GameObject>> getChildren() const {
+#if 1
+		return children_;
+#else
 		if (!hasChildren()) return std::vector<std::shared_ptr<GameObject>>();
 		std::vector<std::shared_ptr<GameObject>> children;
 		for (auto child : children_) {
@@ -37,6 +40,7 @@ public:
 			//emplace_back原位构造，不会触发拷贝构造函数
 		}
 		return children;
+#endif
 	}
 	LAYER layer;
 protected:

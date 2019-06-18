@@ -111,6 +111,9 @@
     <ClCompile Include="src\Components\CollisionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scenes\TestScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Map.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="src\Utils\ErrorHandle.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\TestScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -42,6 +42,7 @@
     <ClCompile Include="src\Scenes\MainMenu.cpp" />
     <ClCompile Include="src\Scenes\ParticleTest.cpp" />
     <ClCompile Include="src\Scenes\Scene.cpp" />
+    <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Utils\ErrorHandle.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="src\Scenes\MainMenu.h" />
     <ClInclude Include="src\Scenes\ParticleTest.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
+    <ClInclude Include="src\Scenes\TestScene.h" />
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Utility.h" />
