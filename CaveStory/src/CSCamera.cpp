@@ -1,6 +1,7 @@
 #include "CSCamera.h"
 #include "Player.h"
-#include "Math.h"
+#include "Utils/Math.h"
+#include "Components/PhysicsComponent.h"
 
 //TODO
 //相机实现：
@@ -8,6 +9,8 @@
 //速度最大值为Quote速度，并紧跟Quote，Quote起步后速度上升，Quote停步后速度减慢
 namespace {
 	const units::Velocity maxVelocityX = 0.15859375f;
+	const units::Game FacingOffset = 100;
+	const units::Velocity CameraLerpVel = 0.01;
 }
 
 CSCamera::CSCamera() = default;
@@ -19,13 +22,11 @@ void CSCamera::setPlayer(std::shared_ptr<Player> player) { player_ = player; }
 
 // TODO 根据角色转向改变位置
 void CSCamera::update(units::MS deltaTime) {
-//	units::Game x = SmoothDamp(curPos_.x, player_->centerPos().x, velX,
-//		4, deltaTime, maxVelocityX);
-//	std::cout << deltaTime << " " << float(deltaTime) / 1000 << std::endl;
-	units::Game x = SmoothDamp(curPos_.x, player_->centerPos().x, velX,
-		0.1f, float(deltaTime)/1000);
-	x += velX * deltaTime;
+	units::Game targetX = player_->centerPos().x +
+		(player_->state().horizontalFacing == FACING_RIGHT ? FacingOffset : -FacingOffset);
+	curPos_.x = lerp(curPos_.x, targetX, CameraLerpVel*(1 + 2 * player_->velX()));
+	curPos_.x += velX * deltaTime;
 	auto tmpView = viewPort_;
-	tmpView.setLeft(x - tmpView.width() / 2);
+	tmpView.setLeft(curPos_.x - tmpView.width() / 2);
 	restrict(tmpView);
 }

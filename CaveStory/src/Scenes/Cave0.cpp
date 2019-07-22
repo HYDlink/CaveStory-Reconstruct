@@ -6,7 +6,9 @@
 #include "../Enemy.h"
 #include "..//Enemys/Bat.h"
 #include "..//Utils/Locator.h"
+#include "../CSCamera.h"
 using namespace std;
+#define CSCAMERA
 
 Cave0::Cave0() { init(); sortObjectsByLayer(); }
 
@@ -33,7 +35,9 @@ void Cave0::init() {
 }
 
 void Cave0::update(units::MS deltaTime) {
-#ifndef CSCAMERA
+#ifdef CSCAMERA
+	camera_->update(deltaTime);
+#else
 	camera_->follow(player_->centerPos());
 #endif
 	Scene::update(deltaTime);

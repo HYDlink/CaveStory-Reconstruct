@@ -38,6 +38,7 @@ void Scene::getAllObjects(std::vector<ObjPtr> objs) {
 void Scene::sortObjectsByLayer() {
 	sortedObjs_.clear();
 	getAllObjects(objects_);
+	if (sortedObjs_.size() == 1) return;
 	sort(sortedObjs_.begin(), sortedObjs_.end(),
 		[](const ObjPtr& l, const ObjPtr& r) {
 			return static_cast<int>(l->layer) > static_cast<int>(r->layer);

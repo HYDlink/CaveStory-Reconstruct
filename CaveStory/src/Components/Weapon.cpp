@@ -71,16 +71,21 @@ void Weapon::update(units::MS deltaTime) {
 	auto objsToRemove = remove_if(children_.begin(), children_.end(),
 		[](const shared_ptr<GameObject>& g) { return g->isDead(); });
 	children_.erase(objsToRemove, children_.end());
+
+	//测试用，待删除
+	for (auto child : children_)
+		child->update(deltaTime);
 }
 
 void Weapon::draw(Graphics& graphics) const {
 	weapon_sprite_[player_.state().faceType()]->draw(graphics, gunX(),
 		gunY());
+	for (auto child : children_)
+		child->draw(graphics);
 }
 
 void Weapon::launch() {
 	//只允许子弹同时出现特定的数目
-	//TODO 添加子弹发射延时，即发射一次后需要等待一定时间才能发射
 	const units::MS currentLaunch = SDL_GetTicks();
 	if (currentLaunch - lastLaunch_ < kProjectileDelay)
 		return;
@@ -88,9 +93,13 @@ void Weapon::launch() {
 	if (children_.size() > kProjectileNums[level_])
 		return;
 	lastLaunch_ = currentLaunch;
-	children_.emplace_back(make_shared<Projectile>
-		(player_.pos(), kProjectileSpeed, kProjectileMaxOffsets[level_],
-			player_.state(), projectile_sprite_[player_.state().faceType()]));
+
+	//TODO BUG 即使emplace_back，children.size()依旧为0
+	//为什么跳出这个地方，children_的size就变为0了呢，然后回到这里又是3
+	shared_ptr<Projectile> tmp(new Projectile
+	(player_.pos(), kProjectileSpeed, kProjectileMaxOffsets[level_],
+		player_.state(), projectile_sprite_[player_.state().faceType()]));
+	children_.emplace_back(tmp);
 }
 
 units::Game Weapon::gunX() const {
@@ -127,10 +136,14 @@ Projectile::Projectile(Position2D pos, units::Velocity vel, units::Game range,
 	//添加从武器前部发出的offset
 }
 
+Projectile::~Projectile() {
+	cout << "deleted a projectile." << endl;
+}
+
 void Projectile::update(units::MS deltaTime) {
 	pos_.x += vel_.xLen() * deltaTime;
 	pos_.y += vel_.yLen() * deltaTime;
-	if (pos_.x - startPos_.x >= range_ || pos_.y - startPos_.y >= range_)
+	if (abs(pos_.x - startPos_.x) >= range_ || abs(pos_.y - startPos_.y) >= range_)
 		isDead_ = true;
 }
 

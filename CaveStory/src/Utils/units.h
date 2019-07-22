@@ -6,6 +6,7 @@
 #include <SDL_types.h>
 #include "Vector2d.h"
 
+//TODO !! https://en.cppreference.com/w/cpp/language/user_literal
 //有一个想法是实现画面拉伸保持比例增大分辨率, 貌似有点麻烦
 namespace units {
 	typedef float Game;//可能使用float获取更精确的计算

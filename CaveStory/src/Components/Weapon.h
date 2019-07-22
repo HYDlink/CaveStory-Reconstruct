@@ -43,6 +43,7 @@ public:
 	//TODO 使用Animation而不是Sprite，有些子弹是动画
 	Projectile(Position2D pos, units::Velocity vel, units::Game range,  
 		FaceType faceType, std::shared_ptr<Sprite> sprite);
+	~Projectile();
 	void update(units::MS deltaTime) override;
 	void draw(Graphics& graphics) const override;
 private:

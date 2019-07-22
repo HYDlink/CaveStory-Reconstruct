@@ -25,12 +25,12 @@ public:
 	void draw(Graphics& graphics) const override {
 		SDL_Renderer* renderer = graphics.getRenderer();
 		Uint8 r, g, b, a;
-		SDL_GetRenderDrawColor(graphics.getRenderer(), &r, &g, &b, &a);
-		SDL_SetRenderDrawColor(graphics.getRenderer(), color_.r, color_.g, color_.b, color_.a);
+		SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+		SDL_SetRenderDrawColor(renderer, color_.r, color_.g, color_.b, color_.a);
 		SDL_Rect tmp{ units::gameToPixel(pos_.x), units::gameToPixel(pos_.y), 4, 4 };
 		//sprite_->draw(graphics, pos_.x, pos_.y);
-		SDL_assert(SDL_RenderFillRect(graphics.getRenderer(), &tmp) != -1);
-		SDL_SetRenderDrawColor(graphics.getRenderer(), r, g, b, a);
+		SDL_assert(SDL_RenderFillRect(renderer, &tmp) != -1);
+		SDL_SetRenderDrawColor(renderer, r, g, b, a);
 	}
 	bool isDead() { return dead_; }
 protected:

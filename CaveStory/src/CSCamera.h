@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include <memory>
 
+class PhysicsComponent;
 class Player;
 class CSCamera :public Camera {
 public:
@@ -13,4 +14,5 @@ protected:
 	std::shared_ptr<Player> player_;
 	//units::Game deadZoneX, deadZoneY;
 	units::Velocity velX;
+	PhysicsComponent* physics;
 };

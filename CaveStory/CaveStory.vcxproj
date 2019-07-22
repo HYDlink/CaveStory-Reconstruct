@@ -46,6 +46,7 @@
     <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Utils\ErrorHandle.cpp" />
+    <ClCompile Include="src\Utils\TestObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animator.h" />
@@ -70,7 +71,6 @@
     <ClInclude Include="src\HUD\HelthBar.h" />
     <ClInclude Include="src\HUD\NumberSprite.h" />
     <ClInclude Include="src\Map.h" />
-    <ClInclude Include="src\Math.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Rectangle.h" />
     <ClInclude Include="src\Scenes.h" />
@@ -85,8 +85,10 @@
     <ClInclude Include="src\Utils\ErrorHandle.h" />
     <ClInclude Include="src\Utils\FacingType.h" />
     <ClInclude Include="src\Utils\Locator.h" />
+    <ClInclude Include="src\Utils\Math.h" />
     <ClInclude Include="src\Utils\PolarVector.h" />
     <ClInclude Include="src\Utils\sideType.h" />
+    <ClInclude Include="src\Utils\TestObject.h" />
     <ClInclude Include="src\Utils\units.h" />
     <ClInclude Include="src\Utils\Vector2d.h" />
   </ItemGroup>
@@ -160,20 +162,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Work\Lib\Include;$(IncludePath)</IncludePath>
-    <ReferencePath>C:\Work\Lib\lib\x86;C:\Work\Study\SDL\SDL2-2.0.9\lib\x86;$(ReferencePath)</ReferencePath>
+    <IncludePath>$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(SolutionDir)Lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Work\Lib\Include;$(IncludePath)</IncludePath>
-    <ReferencePath>C:\Work\Lib\lib\x86;C:\Work\Study\SDL\SDL2-2.0.9\lib\x86;$(ReferencePath)</ReferencePath>
+    <IncludePath>$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(SolutionDir)Lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Work\Lib\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Work\Lib\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Work\Lib\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Work\Lib\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
